@@ -28,14 +28,16 @@
 	<!-- filter 역할은 서블렛은 컨트롤러만 확인, 루트는 컨트롤러만제외해서 확인 이라는 역할로 느려지는거방지 -->
 	<!-- 강사님이 스프링부트가 이식으로 작동한다고 문제없으시디야~ -->
 	
+	
+	
 	<!-- 유저검사 -->
-	<interceptors>
+	<!-- <interceptors>
 		<interceptor>
 			<mapping path="/**"/>
-			<!-- <exclude-mapping path="/"/> -->
+			<exclude-mapping path="/"/>
 			<beans:bean class = ""/>
 		</interceptor>
-	</interceptors>
+	</interceptors> -->
 	
 	
 </beans:beans>
