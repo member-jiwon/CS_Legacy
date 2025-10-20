@@ -20,8 +20,8 @@ import jakarta.mail.internet.MimeMessage;
 @Service
 public class EmailAuthService {
 	
-	private static final String FROM_EMAIL = ""; 
-	private static final String APP_PASSWORD = ""; 
+	private static final String FROM_EMAIL = "tlszn10@naver.com"; 
+	private static final String APP_PASSWORD = "C2NPG6CJE35S"; 
 	String authCode = generateAuthCode();
 
 	// 이메일 발송
@@ -61,7 +61,7 @@ public class EmailAuthService {
 		});
 
 		String htmlContent = String.format(
-				"<p>회원가입 페이지로 다시 이동하여 아래에 받으신 인증번호를 입력해 주세요.</p>" +
+				"<p>인증 페이지로 다시 이동하여 아래에 받으신 인증번호를 입력해 주세요.</p>" +
 						"<p>%s</p>" +
 						"<p>* 이메일 수정시 다시 인증해야합니다. *</p>",
 						authCode
@@ -71,7 +71,7 @@ public class EmailAuthService {
 		MimeMessage message = new MimeMessage(session);
 		message.setFrom(new InternetAddress(FROM_EMAIL));
 		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-		message.setSubject("CS 그룹웨어 회원가입 인증 확인", "UTF-8");
+		message.setSubject("CS 그룹웨어 이메일 인증 확인", "UTF-8");
 		message.setContent(htmlContent, "text/html; charset=UTF-8");
 
 		// 메일 발송
