@@ -15,9 +15,9 @@
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="url"
-			value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="kedu" />
-		<property name="password" value="kedu" />
+			value="jdbc:oracle:thin:@10.5.5.5:1521:xe" />
+		<property name="username" value="cs" />
+		<property name="password" value="cs" />
 		<property name="driverClassName"
 			value="oracle.jdbc.driver.OracleDriver" />
 		<property name="initialSize" value="5" />
@@ -31,7 +31,7 @@
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations"
-			value="classpath:/mappers/*-mapper.xml" />
+			value="classpath:/mappers/**/*-mapper.xml" />
 	</bean>
 
 	<bean id="SqlSessionTemplate"

@@ -11,6 +11,6 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
-사원관리 페이지
+근태관리 페이지
 </body>
 </html>

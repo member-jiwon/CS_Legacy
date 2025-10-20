@@ -21,9 +21,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.kedu">
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
+	<context:component-scan base-package="com.kedu" />
 	<!-- 전체 도메인 스캔 설정값. 안에 @Service, @Controller, @Repository 값만 잘 준다면 문제는 없음 -->
 	<!-- filter 역할은 서블렛은 컨트롤러만 확인, 루트는 컨트롤러만제외해서 확인 이라는 역할로 느려지는거방지 -->
 	<!-- 강사님이 스프링부트가 이식으로 작동한다고 문제없으시디야~ -->
