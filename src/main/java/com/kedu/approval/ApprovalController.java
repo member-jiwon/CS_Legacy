@@ -9,8 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 */
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/board")
 public class ApprovalController {
 	@Autowired
 	private ApprovalService ApprovalService;
+	
+
+	// 비밀번호 찾기 폼 이동
+	@RequestMapping("/boardList")
+	public String findpwPage() {
+		return "board/boardPost";
+	}
 }

@@ -35,4 +35,5 @@ public class NoticeController {
 		return noticeService.getAllNotices();
 	}
 
+
 }
