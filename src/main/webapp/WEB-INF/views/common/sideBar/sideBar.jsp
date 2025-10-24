@@ -1,17 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<head>
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/common/sideBar/sideBar.css'/>">
 
+</head>
 
 <div class="sidebar" id="sidebar">
 	<div class="menu-section">
 		<!-- 근태관리 -->
-		<a href="<c:url value='/attend' />" class="menu-item active"> <img
+		<a href="<c:url value='/commute.jsp' />" class="menu-item active"> <img
 			src="<c:url value='/resources/imgs/sideBar/Clock-active.svg' />"
 			class="menu-icon" alt="근태관리" />  <span class="menu-label">근태관리</span>
 		</a>
 		<!-- 게시판 -->
-		<a href="<c:url value='/board/list' />" class="menu-item"> <img
+		<a href="<c:url value='/boardList.jsp' />" class="menu-item"> <img
 			src="<c:url value='/resources/imgs/sideBar/Popup.svg' />"
 			class="menu-icon" alt="게시판" /> <span class="menu-label">게시판</span>
 		</a>
@@ -47,7 +51,5 @@
 	</div>
 </div>
 
-<!-- 오버레이 -->
-<div class="overlay" id="overlay"></div>
 
 <script src="<c:url value='/resources/js/common/sideBar/sideBar.js' />"></script>
