@@ -1,6 +1,8 @@
 package com.kedu.members.commute;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,9 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * */
 
 @RequestMapping("")
-@RestController
+@Controller
 public class CommuteController {
 	@Autowired
 	private CommuteService CommuteService;
 	// 알아 고쳐쓸려면 알아서 고쳐쓰소
+
 }

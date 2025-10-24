@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<head>
+<link rel="stylesheet"
+	href="<c:url value='/resources/css/common/sideBar/topBar.css'/>">
+</head>
 
 <!-- topbar -->
 <div class="topbar-container">
@@ -15,19 +18,15 @@
 
 		<!-- 아이콘 -->
 		<div class="topbar-icons">
+			<!-- 알람 -->
 			<img src="<c:url value='/resources/imgs/topBar/Notification.svg' />"
-				class="icon-alarm" alt="Notification" /> <img
-				src="<c:url value='/resources/imgs/topBar/UserAdd.svg' />"
+				class="icon-alarm" alt="Notification" />
+			<!-- 회사 초대코드 -->
+			<img src="<c:url value='/resources/imgs/topBar/UserAdd.svg' />"
 				class="icon-add" alt="User Add" />
-
-			<!-- 카테고리 -->
-			<button id="menuToggle" class="btn btn-light d-md-none me-0 p-0"
-				style="border: none; background: none;">
-				<img src="<c:url value='/resources/imgs/Menu.svg' />" alt="menu"
-					class="icon-menu" />
-			</button>
 		</div>
 	</div>
 </div>
 
+<!-- 사용할게 없긴함 아직은 -->
 <script src="<c:url value='/resources/js/common/sideBar/topBar.js' />"></script>
