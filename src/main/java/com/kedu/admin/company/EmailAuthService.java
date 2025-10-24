@@ -20,8 +20,8 @@ import jakarta.mail.internet.MimeMessage;
 @Service
 public class EmailAuthService {
 	
-	private static final String FROM_EMAIL = "tlszn10@naver.com"; 
-	private static final String APP_PASSWORD = "C2NPG6CJE35S"; 
+	private static final String FROM_EMAIL = ""; 
+	private static final String APP_PASSWORD = ""; 
 	String authCode = generateAuthCode();
 
 	// 이메일 발송
