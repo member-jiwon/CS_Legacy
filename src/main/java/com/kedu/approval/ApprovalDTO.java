@@ -3,55 +3,77 @@ package com.kedu.approval;
 import java.security.Timestamp;
 
 /*
-  	ì „ìê²°ì¬ DTO
+	ÀüÀÚ°áÁ¦ DTO
 */
 public class ApprovalDTO {
-	private int approval_seq; // ì „ì ê²°ì¬ ê³ ìœ ë²ˆí˜¸
-	private String member_email; // ì‚¬ì› ê³ ìœ  ì•„ì´ë”” ( ì‹ ì²­ì¸ )
-	private String approval_content; // ê²°ì¬ ë‚´ìš©
-	private Timestamp approval_at; // ê²°ì¬ ìš”ì²­ ë‚ ì§œ ( default : sysdate ) 
-	private String approval_status; // ê²°ì¬ ìŠ¹ì¸ ìƒíƒœ ( default : w(ëŒ€ê¸°), ë°˜ë ¤: n, ìŠ¹ì¸: y ) 
-	
-	public ApprovalDTO() {}
-	public ApprovalDTO(int approval_seq, String member_email, String approval_content, Timestamp approval_at,
-			String approval_status) {
-		super();
-		this.approval_seq = approval_seq;
-		this.member_email = member_email;
-		this.approval_content = approval_content;
-		this.approval_at = approval_at;
-		this.approval_status = approval_status;
-	}
-	public int getApproval_seq() {
-		return approval_seq;
-	}
-	public void setApproval_seq(int approval_seq) {
-		this.approval_seq = approval_seq;
-	}
-	public String getMember_email() {
-		return member_email;
-	}
-	public void setMember_email(String member_email) {
-		this.member_email = member_email;
-	}
-	public String getApproval_content() {
-		return approval_content;
-	}
-	public void setApproval_content(String approval_content) {
-		this.approval_content = approval_content;
-	}
-	public Timestamp getApproval_at() {
-		return approval_at;
-	}
-	public void setApproval_at(Timestamp approval_at) {
-		this.approval_at = approval_at;
-	}
-	public String getApproval_status() {
-		return approval_status;
-	}
-	public void setApproval_status(String approval_status) {
-		this.approval_status = approval_status;
-	}
-	
-	
+private int approval_seq; // ¿¬ÀÚ °íÀ¯¹øÈ£
+private String member_email; // »ç¿ø °íÀ¯ ¾ÆÀÌµğ
+private String approval_title; // °áÀç Á¦¸ñ
+private String approval_content; // °áÀç ³»¿ë
+private String approval_at; // ¿äÃ» ÀÏ½Ã ( default: sysdate ) 
+private String approval_status; // ½ÂÀÎ »óÅÂ ( default: w(´ë±â), ¹İ·Á: n, ½ÂÀÎ: y )
+
+public ApprovalDTO() {}
+public ApprovalDTO(int approval_seq, String member_email, String approval_title, String approval_content,
+		String approval_at, String approval_status) {
+	super();
+	this.approval_seq = approval_seq;
+	this.member_email = member_email;
+	this.approval_title = approval_title;
+	this.approval_content = approval_content;
+	this.approval_at = approval_at;
+	this.approval_status = approval_status;
+}
+
+
+public int getApproval_seq() {
+	return approval_seq;
+}
+
+public void setApproval_seq(int approval_seq) {
+	this.approval_seq = approval_seq;
+}
+
+public String getMember_email() {
+	return member_email;
+}
+
+public void setMember_email(String member_email) {
+	this.member_email = member_email;
+}
+
+public String getApproval_title() {
+	return approval_title;
+}
+
+public void setApproval_title(String approval_title) {
+	this.approval_title = approval_title;
+}
+
+public String getApproval_content() {
+	return approval_content;
+}
+
+public void setApproval_content(String approval_content) {
+	this.approval_content = approval_content;
+}
+
+public String getApproval_at() {
+	return approval_at;
+}
+
+public void setApproval_at(String approval_at) {
+	this.approval_at = approval_at;
+}
+
+public String getApproval_status() {
+	return approval_status;
+}
+
+public void setApproval_status(String approval_status) {
+	this.approval_status = approval_status;
+}
+
+
+
 }

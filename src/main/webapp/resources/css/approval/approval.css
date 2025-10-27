@@ -1,2 +1,138 @@
 @charset "UTF-8";
-/* 전자 결재 css */
+
+
+       body,
+        html {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .row{
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        
+
+        .container-fluid {
+            background-color: pink;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        .navi {
+            background-color: aquamarine;
+            height: 100vh;
+        }
+
+        .navibar {}
+
+        .contentbox {
+            padding: 30px;
+            height: 100vh;
+            /* width:100vw; */
+            background-color: rgb(222, 246, 255);
+        }
+
+        .content {
+            height: 100%;
+            width: 100%;
+            border: 1px solid black;
+            border-radius: 22px;
+        }
+
+        /* 1층 */
+        .firstFloor {
+            background-color: pink;
+            height: 10%;
+        }
+        .type {
+            float: left;
+            height: 100%;
+            background-color: purple;
+        }
+        
+        
+        /*드롭다운버튼*/
+      #approvalStatus, #departmentType {
+        background-color: white;        /* 배경 흰색 */
+        border: 1px solid #ccc;         /* 연한 회색 테두리 */
+        border-radius: 22px;            /* 둥근 모서리 */
+        padding: 8px 14px;              /* 안쪽 여백 */
+        font-size: 14px;
+        color: #333;                    /* 글자색 진회색 */
+        cursor: pointer;
+        outline: none;                  /* 클릭 시 파란 외곽선 제거 */
+        transition: background-color 0.2s, border-color 0.2s;
+      }
+        
+        /* 2층 */
+        .seq, .title, .name, .dept, .level, .date, .status{
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        .secondFloor {
+            background-color: rgb(255, 93, 120);
+            height: 10%;
+        }
+
+        /* 3층 */
+        .thirdFloor {
+            height: 70%;
+            background-color: pink;
+            overflow: hidden;
+        }
+        .line{ /*새로 생기는 줄*/
+            width: 100%; 
+            height: 60px;
+            background-color: blanchedalmond;
+            overflow: hidden;
+        }
+        /*상태변수 버튼*/
+        .status-btn-group {
+        display: flex;
+        background-color: #f4f6ff; /* 그룹 전체 배경 */
+        border-radius: 30px;
+        padding: 4px;
+        width: fit-content;
+      }
+      
+      .status-btn {
+        border: none;
+        background: transparent;
+        color: #bbb;
+        font-weight: 600;
+        padding: 8px 18px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      
+      .status-btn:hover {
+        background-color: #e0e7ff;
+        color: #333;
+      }
+      
+      .status-btn.active {
+        background-color: #007bff;
+        color: white;
+      }
+      .status-btn:disabled,
+	.status-btn.disabled-btn {
+	  opacity: 0.5;
+	  cursor: not-allowed;
+	  pointer-events: none;
+	}
+	      
+      
+      /*페이지 네비*/
+        .fourthFloor {
+            height: 10%;
+            background-color: rgb(255, 93, 120);
+        }

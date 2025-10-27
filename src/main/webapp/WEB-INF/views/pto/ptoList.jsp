@@ -8,9 +8,182 @@
 <title>Insert title here</title>
 <script src="<c:url value='/resources/js/pto/pto.js'/>"></script>
 <link rel="stylesheet" href="<c:url value='/resources/css/pto/pto.css'/>">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <!-- jqeruy -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script><!-- dayjs라이브러리 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+            crossorigin="anonymous"><!-- 부트스트랩 -->
+
+
 </head>
 <body>
-연차 신청 목록 기본값( 리스트 )
+
+
+    <div class="container-fluid g-0">
+        <div class="row">
+            <div class="navi col-2">
+                <div class="navibar">네비바 영역</div>
+            </div>
+
+            <div class="contentbox col-10">
+                <div class="content row g-0">
+                    <div class="firstFloor col-12">
+                        <div class="row g-0">
+                            <div class="type col-9">
+                                연차결재
+                            </div>
+                            
+                            <div class="dropDownBox col-3">
+		                       <form id="filterForm" method="get" action="/ptoRequest" class="d-flex gap-2">
+		                         <!-- 사용자 선택용 -->
+		                         <select id="ptoStatusTypeSelect" class="form-select">
+		                          <option value="all"
+		                            <c:if test="${selectedStatus eq 'all'}">selected</c:if>>연차리스트</option>
+		                          <option value="w"
+		                            <c:if test="${selectedStatus eq 'w'}">selected</c:if>>대기중</option>
+		                          <option value="y"
+		                            <c:if test="${selectedStatus eq 'y'}">selected</c:if>>완료</option>
+		                          <option value="n"
+		                            <c:if test="${selectedStatus eq 'n'}">selected</c:if>>반려</option>
+		                        </select>
+		                     
+		                         <select id="departmentTypeSelect" class="form-select">
+		                           <!-- 부서 동적으로 붙이기 -->
+		                         </select>
+		                     
+		                         <!-- 실제 제출용 -->
+		                           <input type="hidden" id="ptoStatusType" name="ptoStatus" value="${selectedStatus}" />
+		                           <input type="hidden" id="departmentType" name="departmentType" value="${selectedDept}" />
+		                       </form>
+		                     </div>
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="secondFloor col-12">
+                        <div class="row">
+                            <div class="col-1 seq">번호</div>
+                            <div class="col-4 title">제목</div>
+                            <div class="col-1 name">이름</div>
+                            <div class="col-1 dept">부서</div>
+                            <div class="col-1 level">직급</div>
+                            <div class="col-1 date">날짜</div>
+                            <div class="col-3 status">결재 상황</div>
+                        </div>
+
+                    </div>
+                    <div class="thirdFloor col-12">
+                        <!-- <div class="line">동적으로 여기다가 붙여야함</div> -->
+                    </div>
+                    <div class="fourthFloor col-12">
+						 <!-- 페이지네비바 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+	let recordTotalCount =${recordTotalCount};
+	let selectedDept = "${selectedDept}";
+	console.log(recordTotalCount);
+	
+	
+	// 1. 화면 렌더링시 기본으로 append시키기
+	$(document).ready(function () {
+		let list = JSON.parse('${list}');
+		console.log(list);
+
+		
+		
+	     //1-1. 드롭다운 옵션 불러오기
+	       let depts = JSON.parse('${depts}');
+	        console.log(depts);
+	       $("#departmentTypeSelect").append(
+	              createDepartmentOption({ dept_code: "all", dept_name: "전체부서" }, true));
+	       depts.forEach((item)=>{$("#departmentTypeSelect").append(createDepartmentOption(item))})
+	})
+	
+	
+	
+	
+	
+    //1-1. 드롭다운 옵션 추가하기 함수
+    function createDepartmentOption(item, isAllOption = false) {
+      const option = $("<option>")
+        .val(item.dept_code)
+        .text(item.dept_name);   
+      // "전체부서" 옵션일 경우
+      if (isAllOption && selectedDept === "all") {
+        option.prop("selected", true);
+      }
+    
+      // 일반 부서 옵션일 경우
+      if (!isAllOption && item.dept_code === selectedDept) {
+        option.prop("selected", true);
+      }
+    
+      return option;
+    }
+	
+	
+	//2.리스트 구성하는 페이지
+	function createApprovalRow(row) {
+	  const line = $("<div>").addClass("row g-0 line");
+	
+	  const seq = $("<div>").addClass("col-1 targetseq").text(row.APPROVAL_SEQ);
+	  const title = $("<div>").addClass("col-4");
+	  const a = $("<a>")
+	    .attr("href", "/approval/detail?seq=" + row.APPROVAL_SEQ)
+	    .text(row.APPROVAL_TITLE);
+	  title.append(a);
+	
+	  const name = $("<div>").addClass("col-1").text(row.MEMBER_NAME);
+	  const dept = $("<div>").addClass("col-1").text(row.DEPT_CODE);
+	  const level = $("<div>").addClass("col-1").text(row.LEVEL_CODE);
+	  const date = $("<div>").addClass("col-1").text(dayjs(row.APPROVAL_AT).format("YYYY-MM-DD"));
+	
+	  // 상태 버튼 묶음
+	  const statusDiv = $("<div>").addClass("col-3");
+	  const btnwrapper = $("<div>").addClass("status-btn-group");
+	
+	  const statuses = [
+	    { value: "w", label: "대기" },
+	    { value: "y", label: "승인" },
+	    { value: "n", label: "반려" },
+	  ];
+	
+	  statuses.forEach(s => {
+	    const btn = $("<button>")
+	      .addClass("status-btn")
+	      .attr("data-value", s.value)
+	      .text(s.label);
+	
+	    // ✅ 현재 상태일 경우 활성 표시
+	    if (row.APPROVAL_STATUS === s.value) {
+	      btn.addClass("active");
+	    }
+	
+	    // ✅ 승인(y) 또는 반려(n) 상태라면 비활성화
+	    if (row.APPROVAL_STATUS === "y" || row.APPROVAL_STATUS === "n") {
+	      btn.prop("disabled", true); // 버튼 비활성화
+	      btn.addClass("disabled-btn"); // (선택) 스타일 추가용
+	    }
+	
+	    btnwrapper.append(btn);
+	  });
+	
+	  statusDiv.append(btnwrapper);
+	  line.append(seq, title, name, dept, level, date, statusDiv);
+	  return line;
+	}
+	
+	
+	
+</script>
+
+
 </body>
 </html>
