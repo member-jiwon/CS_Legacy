@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.kedu.admin.department.DepartmentDTO;
 import com.kedu.admin.department.DepartmentService;
+import com.kedu.file.FileConstants;
+import com.kedu.file.FileDTO;
+import com.kedu.file.FileService;
 
 import util.PageConfig;
 
@@ -24,17 +27,19 @@ public class ApprovalController {
 
     @Autowired
     private ApprovalService approvalService;
-
     @Autowired
     private DepartmentService departmentService;
-
+    @Autowired
+    private FileService fileService;
+    
+    
     @Autowired
     private Gson gson;
 
     /*페이지에 맞게 데이터 구성, 필터 까지 합쳐서*/
     @RequestMapping("")
     public String approvalList(
-        @RequestParam(required = false, defaultValue = "all") String approvalStatus,
+        @RequestParam(required = false, defaultValue = "all") String status,
         @RequestParam(required = false, defaultValue = "all") String departmentType,
         @RequestParam(defaultValue = "1") int cpage,
         Model m) throws Exception {
@@ -43,10 +48,10 @@ public class ApprovalController {
         List<DepartmentDTO> depts = departmentService.getAllDeptCode();
 
         // 필터링용 값 처리
-        String rawStatus = approvalStatus;
+        String rawStatus = status;
         String rawDept = departmentType;
 
-        if ("all".equalsIgnoreCase(approvalStatus)) approvalStatus = null;
+        if ("all".equalsIgnoreCase(status)) status = null;
         if ("all".equalsIgnoreCase(departmentType)) departmentType = null;
 
         // 페이징 계산
@@ -54,8 +59,8 @@ public class ApprovalController {
         int end = cpage * PageConfig.RECORD_COUNT_PER_PAGE;
 
         // 결재 리스트 및 총 개수 조회
-        List<Map<String, Object>> list = approvalService.selectByFilterFromTo(approvalStatus, departmentType, start, end);
-        int totalCount = approvalService.getCountByFilter(approvalStatus, departmentType);
+        List<Map<String, Object>> list = approvalService.selectByFilterFromTo(status, departmentType, start, end);
+        int totalCount = approvalService.getCountByFilter(status, departmentType);
 
         // JSON 변환 및 모델에 담기
         m.addAttribute("list", gson.toJson(list));
@@ -96,9 +101,17 @@ public class ApprovalController {
     /*디테일 페이지로 이동*/
     @RequestMapping ("/detail")
     public String toDetailApproval(@RequestParam int seq, HttpSession session, Model m) {
+    	//1. 전자결재 내용
     	ApprovalDTO result = approvalService.toDetailApproval(seq);
 	    m.addAttribute("dtoJson", gson.toJson(result)); // JS 용
 	    m.addAttribute("dto", result);
+	    
+	    //2. 파일 리스트 내용
+	    List<FileDTO> fileList = fileService.getFilesByParent(seq, FileConstants.FA);
+	    m.addAttribute("dtofiles", gson.toJson(fileList));// JS 용
+	    m.addAttribute("files", fileList);
+	    System.out.println("파일 리스트: " + gson.toJson(fileList));
+
     	return "/approval/approvalDetail";
     }
     

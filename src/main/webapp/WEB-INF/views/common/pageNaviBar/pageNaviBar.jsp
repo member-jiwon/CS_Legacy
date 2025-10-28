@@ -6,7 +6,7 @@
   int recordPerPage = Integer.parseInt(request.getParameter("recordCountPerPage"));
   int naviPerPage = Integer.parseInt(request.getParameter("naviCountPerPage")); // 최대 버튼 수
   int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-  String approvalStatus = request.getParameter("approvalStatus");
+  String status = request.getParameter("status");
   String departmentType = request.getParameter("departmentType");
 
   // 페이지 계산
@@ -18,7 +18,7 @@
 
 <div class="pageNaviContainer">
   <form method="get" action="<%= action %>">
-    <input type="hidden" name="approvalStatus" value="<%= approvalStatus %>">
+    <input type="hidden" name="status" value="<%= status %>">
     <input type="hidden" name="departmentType" value="<%= departmentType %>">
 
     <nav class="paginationParent">

@@ -116,8 +116,8 @@ public class Pto_requestService {
     }
 
     // 디테일 페이지
-    public Pto_requestDTO toDetailPtoRequest(int seq) {
-    	return dao.toDetailPtoRequest(seq);
+    public Pto_requestDTO toDetailPtoRequest(int pto_seq) {
+    	return dao.toDetailPtoRequest(pto_seq);
     }
     
 }
