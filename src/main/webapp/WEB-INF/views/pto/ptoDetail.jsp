@@ -15,34 +15,38 @@
 <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script><!-- dayjs라이브러리 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
 crossorigin="anonymous"><!-- 부트스트랩 -->
-<link rel="stylesheet" href="<c:url value='/resources/css/approval/approvalDetail.css'/>"><!--css 파일-->
+<link rel="stylesheet" href="<c:url value='/resources/css/pto/ptoDetail.css'/>"><!--css 파일-->
 
 </head>
 
 
 
 <body>
-<div class="container-fluid g-0">
-	<div class="row">
+<!-- 탑바 -->
+   <header class="header d-flex align-items-center">
+      <jsp:include page="/WEB-INF/views/common/sideBar/topBar.jsp" />
+   </header>
+
+
+<!-- 탑바제외 영역 -->
+<div class="container-fluid body-wrapper">
+	<div class="row g-0">
 	
-	<div class="top col-12">
-    	<div class="topbar">탑바 영역</div>
-    </div>	
+<!-- 사이드바 -->      
+         <div class="col-2 px-0">
+            <div class="sidebarbox">
+               <jsp:include page="/WEB-INF/views/common/sideBar/sideBar.jsp" />
+            </div>
+         </div>	
 	
-	
-	<div class="navi col-2">
-    	<div class="navibar">네비바 영역</div>
-    </div>
-	
-	
-		<div class="contentbox col-10">
-		       <div class="detailBox">
-		       		
+<!-- 사이드바 제외 우측 영역 -->
+         <div class="col-10 px-0 content">
+            <div class="board-container">
+            
 		       		<!-- 버늩영역 제외한 네모박스 -->
 		            <div class = "parent">
-		                <div class="dateBox">
-		                    <div class="start" id="start">시작</div>
-		                    <div class="end" id="end">끝</div>
+		                <div class="div2">
+		                    <div class="div3"></div>
 		                </div>
 		
 		
@@ -52,33 +56,37 @@ crossorigin="anonymous"><!-- 부트스트랩 -->
 		                        <div class="div6 div6_right" id="ptoStatus"></div>
 		                    </div>
 		
-
 		                    <div class = "div10">
 		                        <div class = "txt">${dto.pto_content}</div>
 		                    </div>
 		                </div>
 		            </div>
-		
+            
 					<!-- 버늩영역 -->
 		            <div class="btns">
 						<button onclick="history.back()">뒤로가기</button>
 						<button type="button" onclick='handleStatus("y")' class="waiting">승인</button>
 						<button type="button" onclick='handleStatus("n")'class="waiting">반려</button>
-		            </div>
-		        </div>
-		
-		</div>
+		            </div>            
+              
+            </div>
+         </div>	
+	
+	
 	</div>
 </div>
+
+
+
 
 <script>
 let dtoJson = JSON.parse('${dtoJson}');
 console.log("dtoJson", dtoJson);
 
 //1️. 날짜 표시
-$("#start").text(dayjs(dtoJson.pto_start_at).format("YYYY-MM-DD HH:mm"));
-$("#end").text(dayjs(dtoJson.pto_end_at).format("YYYY-MM-DD HH:mm"));
-
+let start = $("<span>").text(dayjs(dtoJson.pto_start_at).format("YYYY-MM-DD HH:mm")).append("  ~  ");
+let end = $("<span>").text(dayjs(dtoJson.pto_end_at).format("YYYY-MM-DD HH:mm"));
+$(".div3").append("휴가일정 :  ", start, end);
 
 // 2️. 상태 코드 -> 한글 변환
 const statusMap = {

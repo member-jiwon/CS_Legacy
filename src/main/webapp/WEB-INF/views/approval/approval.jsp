@@ -8,7 +8,7 @@
          <title>Insert title here</title>
          
 
-         <link rel="stylesheet" href="<c:url value='/resources/css/approval/approval.css'/>"><!--css 파일-->
+         
          <link rel="stylesheet" href="<c:url value='/resources/css/common/pageNaviBar/pageNaviBar.css'/>"> <!--페이지 네비 css 파일-->
          
          
@@ -16,85 +16,114 @@
          <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script><!-- dayjs라이브러리 -->
          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
             crossorigin="anonymous"><!-- 부트스트랩 -->
+         
+         <link rel="stylesheet" href="<c:url value='/resources/css/approval/approval.css'/>"><!--css 파일-->
 
       </head>
 
 <body>
-    <div class="container-fluid g-0">
-        <div class="row">
-            <div class="navi col-2">
-                <div class="navibar">네비바 영역</div>
+
+
+<!-- 탑바 -->
+   <header class="header d-flex align-items-center">
+      <jsp:include page="/WEB-INF/views/common/sideBar/topBar.jsp" />
+   </header>
+
+
+<!-- 탑바 제외 영역 -->
+   <div class="container-fluid body-wrapper">
+      <div class="row g-0">
+
+<!-- 사이드바 -->      
+         <div class="col-2 px-0">
+            <div class="sidebarbox">
+               <jsp:include page="/WEB-INF/views/common/sideBar/sideBar.jsp" />
+            </div>
+         </div>
+
+<!-- 사이드바 제외 우측 영역 -->
+         <div class="col-10 px-0 content">
+            <div class="board-container">
+               
+               
+               <!-- 1층 헤더 -->
+               <div class="board-header">
+                  <h2 class="board-title">전자결재</h2>
+                      <form id="filterForm" method="get" action="/approval" class="d-flex gap-2">
+                      <!-- 사용자 선택용 -->
+                          <select id="approvalStatusSelect" class="form-select">
+                                <option value="all"
+                                  <c:if test="${selectedStatus eq 'all'}">selected</c:if>>전체</option>
+                                <option value="w"
+                                  <c:if test="${selectedStatus eq 'w'}">selected</c:if>>대기중</option>
+                                <option value="y"
+                                  <c:if test="${selectedStatus eq 'y'}">selected</c:if>>완료</option>
+                                <option value="n"
+                                  <c:if test="${selectedStatus eq 'n'}">selected</c:if>>반려</option>
+                          </select>
+                           
+                          <select id="departmentTypeSelect" class="form-select">
+                          <!-- 부서 동적으로 붙이기 -->
+                          </select>
+                           
+                        <!-- 실제 제출용 -->
+                        <input type="hidden" id="approvalStatus" name="status" value="${selectedStatus}" />
+                        <input type="hidden" id="departmentType" name="departmentType" value="${selectedDept}" />
+                     </form>
+               </div>
+
+
+               <!-- 2층 바디 영역-->
+               <div class="board-table">
+               
+               	<!-- 보드 테이블의 헤더 -->
+                  <div class="board-table-header">
+                     <div class="col-num">번호</div>
+                     <div class="col-title">제목</div>
+                     <div class="col-name">이름</div>
+                     <div class="col-dept">부서</div>
+                     <div class="col-level">직급</div>
+                     <div class="col-date">날짜</div>
+                     <div class="col-status">결재상황</div>
+                  </div>
+
+                     <div class="board-table-box">
+                        <!-- 반복문 돌려서 추가시키는 영역 -->
+               		</div>
+
+
+               <!-- footer - 페이지 네비게이션 -->
+               <div class="pagination">
+                       <jsp:include page="/WEB-INF/views/common/pageNaviBar/pageNaviBar.jsp">
+                            <jsp:param name="action" value="/approval" />
+                             <jsp:param name="recordTotalCount" value="${recordTotalCount}" />
+                             <jsp:param name="recordCountPerPage" value="${recordCountPerPage}" />
+                             <jsp:param name="naviCountPerPage" value="5" />
+                             <jsp:param name="currentPage" value="${currentPage}" />
+                             <jsp:param name="status" value="${selectedStatus}" />
+                             <jsp:param name="departmentType" value="${selectedDept}" />
+                        </jsp:include>
+               </div>
             </div>
 
-            <div class="contentbox col-10">
-                <div class="content row g-0">
-                    <div class="firstFloor col-12">
-                        <div class="row g-0">
-                            <div class="type col-9">
-                                전자결재
-                            </div>
-                            
-                            <div class="dropDownBox col-3">
-		                       <form id="filterForm" method="get" action="/approval" class="d-flex gap-2">
-		                         <!-- 사용자 선택용 -->
-		                         <select id="approvalStatusSelect" class="form-select">
-		                          <option value="all"
-		                            <c:if test="${selectedStatus eq 'all'}">selected</c:if>>전체결재</option>
-		                          <option value="w"
-		                            <c:if test="${selectedStatus eq 'w'}">selected</c:if>>대기중</option>
-		                          <option value="y"
-		                            <c:if test="${selectedStatus eq 'y'}">selected</c:if>>완료</option>
-		                          <option value="n"
-		                            <c:if test="${selectedStatus eq 'n'}">selected</c:if>>반려</option>
-		                        </select>
-		                     
-		                         <select id="departmentTypeSelect" class="form-select">
-		                           <!-- 부서 동적으로 붙이기 -->
-		                         </select>
-		                     
-		                         <!-- 실제 제출용 -->
-		                           <input type="hidden" id="approvalStatus" name="status" value="${selectedStatus}" />
-		                           <input type="hidden" id="departmentType" name="departmentType" value="${selectedDept}" />
-		                       </form>
-                     		</div>  
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="secondFloor col-12">
-                        <div class="row">
-                            <div class="col-1 seq">번호</div>
-                            <div class="col-4 title">제목</div>
-                            <div class="col-1 name">이름</div>
-                            <div class="col-1 dept">부서</div>
-                            <div class="col-1 level">직급</div>
-                            <div class="col-1 date">날짜</div>
-                            <div class="col-3 status">결재 상황</div>
-                        </div>
+         </div>
 
-                    </div>
-                    <div class="thirdFloor col-12">
-                        <!-- <div class="line">동적으로 여기다가 붙여야함</div> -->
-                    </div>
-	                    <div class="fourthFloor col-12">
-	                        <jsp:include page="/WEB-INF/views/common/pageNaviBar/pageNaviBar.jsp">
-	                         <jsp:param name="action" value="/approval" />
-	                          <jsp:param name="recordTotalCount" value="${recordTotalCount}" />
-	                          <jsp:param name="recordCountPerPage" value="${recordCountPerPage}" />
-	                          <jsp:param name="naviCountPerPage" value="5" />
-	                          <jsp:param name="currentPage" value="${currentPage}" />
-	                          <jsp:param name="status" value="${selectedStatus}" />
-	                          <jsp:param name="departmentType" value="${selectedDept}" />
-	                     </jsp:include>
-	                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+      </div>
+   </div>
+
 
 <script>
 let selectedDept = "${selectedDept}";
 
+
+const statuses = [
+    { value: "w", label: "대기" },
+    { value: "y", label: "승인" },
+    { value: "n", label: "반려" },
+  ];
+const statusMap = { w: "대기", y: "승인", n: "반려"};  
+  
   // 0.화면 뒤로가기 햇을떄 새로고침 시키기 (db내용 반영시키기 위해서)
     window.onpageshow = function (event) {
     if (event.persisted) {
@@ -106,6 +135,7 @@ let selectedDept = "${selectedDept}";
   $(document).ready(function () {
        console.log("선택된 부서",selectedDept)
        let list = JSON.parse('${list}');
+       console.log(list);
        
      //1-1. 드롭다운 옵션 불러오기
        let depts = JSON.parse('${depts}');
@@ -114,15 +144,18 @@ let selectedDept = "${selectedDept}";
        depts.forEach((item)=>{$("#departmentTypeSelect").append(createDepartmentOption(item))})
        
        console.log(list);
-       list.forEach((row) => $(".thirdFloor").append(createApprovalRow(row))); //기본값으로 가져다 놓기
-      
+       list.forEach((row) => $(".board-table-box").append(createApprovalRow(row))); //기본값으로 가져다 놓기
+       
+       $("#approvalStatusSelect").val("${selectedStatus}");
+       $("#departmentTypeSelect").val("${selectedDept}");
+       
        //폼태그의 인풋안에 밸류값 넣어주기
        $("#approvalStatusSelect, #departmentTypeSelect").on("change", function () {
             $("#approvalStatus").val($("#approvalStatusSelect").val());
             $("#departmentType").val($("#departmentTypeSelect").val());
             $("#filterForm").submit();
           });
-  });
+  	});
 
         //1-1. 드롭다운 옵션 추가하기 함수
       function createDepartmentOption(item, isAllOption = false) {
@@ -146,29 +179,22 @@ let selectedDept = "${selectedDept}";
   
   //2.리스트 구성하는 페이지
 	function createApprovalRow(row) {
-	  const line = $("<div>").addClass("row g-0 line");
-	
-	  const seq = $("<div>").addClass("col-1 targetseq").text(row.APPROVAL_SEQ);
-	  const title = $("<div>").addClass("col-4");
+	  const line = $("<div>").addClass("board-table-row");
+	  const seq = $("<div>").addClass("col-num").text(row.APPROVAL_SEQ);
+	  const title = $("<div>").addClass("col-title");
 	  const a = $("<a>")
 	    .attr("href", "/approval/detail?seq=" + row.APPROVAL_SEQ)
 	    .text(row.APPROVAL_TITLE);
 	  title.append(a);
 	
-	  const name = $("<div>").addClass("col-1").text(row.MEMBER_NAME);
-	  const dept = $("<div>").addClass("col-1").text(row.DEPT_CODE);
-	  const level = $("<div>").addClass("col-1").text(row.LEVEL_CODE);
-	  const date = $("<div>").addClass("col-1").text(dayjs(row.APPROVAL_AT).format("YYYY-MM-DD"));
+	  const name = $("<div>").addClass("col-name").text(row.MEMBER_NAME);
+	  const dept = $("<div>").addClass("col-dept").text(row.DEPT_NAME);
+	  const level = $("<div>").addClass("col-level").text(row.LEVEL_NAME);
+	  const date = $("<div>").addClass("col-date").text(dayjs(row.APPROVAL_AT).format("YYYY-MM-DD"));
 	
 	  // 상태 버튼 묶음
-	  const statusDiv = $("<div>").addClass("col-3");
+	  const statusDiv = $("<div>").addClass("col-status");
 	  const btnwrapper = $("<div>").addClass("status-btn-group");
-	
-	  const statuses = [
-	    { value: "w", label: "대기" },
-	    { value: "y", label: "승인" },
-	    { value: "n", label: "반려" },
-	  ];
 	
 	  statuses.forEach(s => {
 	    const btn = $("<button>")
@@ -199,14 +225,14 @@ let selectedDept = "${selectedDept}";
   // 상태 변경 AJAX
   $(document).on("click", ".status-btn", function () {
     const newStatus = $(this).data("value");
-    const targetseq = $(this).closest(".line").find(".col-1:first").text();
-
+    const targetseq = $(this).closest(".board-table-row").find(".col-num").text();
+	
     $.ajax({
       url: "/approval/updatestatus",
       type: "post",
       data: { targetseq, newStatus },
       success: function () {
-        alert("상태가 변경되었습니다.");
+    	alert(statusMap[newStatus] + "상태로 변경되었습니다.");
         location.reload();
       },
       error: function () {

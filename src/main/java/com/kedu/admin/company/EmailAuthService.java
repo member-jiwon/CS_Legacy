@@ -24,10 +24,10 @@ public class EmailAuthService {
 	private static final String APP_PASSWORD = ""; 
 	String authCode = generateAuthCode();
 
-	// 이메일 발송
+	// �씠硫붿씪 諛쒖넚
 	protected String doPost(String id)
 			throws ServletException, IOException {
-		String toEmail = URLDecoder.decode(id, StandardCharsets.UTF_8);; // 사용자가 입력한 이메일
+		String toEmail = URLDecoder.decode(id, StandardCharsets.UTF_8);; // �궗�슜�옄媛� �엯�젰�븳 �씠硫붿씪
 
 		try {
 			sendEmail(toEmail, authCode);
@@ -38,13 +38,13 @@ public class EmailAuthService {
 		}
 	}
 
-	// 6자리 인증번호 생성
+	// 6�옄由� �씤利앸쾲�샇 �깮�꽦
 	private String generateAuthCode() {
 		int code = (int) (Math.random() * 900000) + 100000;
 		return String.valueOf(code);
 	}
 
-	// 이메일 발송 준비
+	// �씠硫붿씪 諛쒖넚 以�鍮�
 	private void sendEmail(String toEmail, String authCode) throws MessagingException {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.naver.com");
@@ -53,7 +53,7 @@ public class EmailAuthService {
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.debug", "true");
 
-		// 서버 계정 인증
+		// �꽌踰� 怨꾩젙 �씤利�
 		Session session = Session.getInstance(props, new jakarta.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(FROM_EMAIL, APP_PASSWORD);
@@ -61,20 +61,20 @@ public class EmailAuthService {
 		});
 
 		String htmlContent = String.format(
-				"<p>인증 페이지로 다시 이동하여 아래에 받으신 인증번호를 입력해 주세요.</p>" +
+				"<p>�씤利� �럹�씠吏�濡� �떎�떆 �씠�룞�븯�뿬 �븘�옒�뿉 諛쏆쑝�떊 �씤利앸쾲�샇瑜� �엯�젰�빐 二쇱꽭�슂.</p>" +
 						"<p>%s</p>" +
-						"<p>* 이메일 수정시 다시 인증해야합니다. *</p>",
+						"<p>* �씠硫붿씪 �닔�젙�떆 �떎�떆 �씤利앺빐�빞�빀�땲�떎. *</p>",
 						authCode
 				);
 
-		// 메일 작성
+		// 硫붿씪 �옉�꽦
 		MimeMessage message = new MimeMessage(session);
 		message.setFrom(new InternetAddress(FROM_EMAIL));
 		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-		message.setSubject("CS 그룹웨어 이메일 인증 확인", "UTF-8");
+		message.setSubject("CS 洹몃９�썾�뼱 �씠硫붿씪 �씤利� �솗�씤", "UTF-8");
 		message.setContent(htmlContent, "text/html; charset=UTF-8");
 
-		// 메일 발송
+		// 硫붿씪 諛쒖넚
 		Transport.send(message);
 	}
 }

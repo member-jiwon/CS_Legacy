@@ -8,7 +8,15 @@
 		  border: none;       /* 테두리 제거 */
 		  cursor: pointer;    /* 커서 손가락 모양 */
 		}
-		
+		form {
+		  margin: 0;
+		  padding: 0;
+		  border: none;
+		  background: none;
+		  font: inherit;
+		  color: inherit;
+		}
+
         .pageNaviContainer {
 		  width: 100%;
 		  height: 100%;

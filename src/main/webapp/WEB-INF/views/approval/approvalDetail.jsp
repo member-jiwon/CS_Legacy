@@ -19,21 +19,28 @@
 
 </head>
 <body>
-<div class="container-fluid g-0">
-	<div class="row">
-	
-	<div class="top col-12">
-    	<div class="topbar">탑바 영역</div>
-    </div>	
-	
-	
-	<div class="navi col-2">
-    	<div class="navibar">네비바 영역</div>
-    </div>
+<!-- 탑바 -->
+   <header class="header d-flex align-items-center">
+      <jsp:include page="/WEB-INF/views/common/sideBar/topBar.jsp" />
+   </header>
+
+
+<!-- 탑바제외 영역 -->
+<div class="container-fluid body-wrapper">
+	<div class="row g-0">
 	
 	
-		<div class="contentbox col-10">
-		       <div class="detailBox">
+<!-- 사이드바 -->      
+         <div class="col-2 px-0">
+            <div class="sidebarbox">
+               <jsp:include page="/WEB-INF/views/common/sideBar/sideBar.jsp" />
+            </div>
+         </div>
+	
+	
+<!-- 사이드바 제외 우측 영역 -->
+         <div class="col-10 px-0 content">
+            <div class="board-container">
 		       		
 		       		<!-- 버늩영역 제외한 네모박스 -->
 		            <div class = "parent">

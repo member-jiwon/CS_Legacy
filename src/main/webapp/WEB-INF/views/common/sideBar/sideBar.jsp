@@ -1,16 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
+   pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="<c:url value='/resources/js/common/sedeBar/sedeBar.js'/>"></script>
-<link rel="stylesheet" href="<c:url value='/resources/css/common/sedeBar/sedeBar.css'/>">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet"
+   href="<c:url value='/resources/css/common/sideBar/sideBar.css'/>">
+
 </head>
-<body>
-사이드바 페이지
-</body>
-</html>
+
+<div class="sidebar" id="sidebar">
+   <div class="menu-section">
+      <!-- 근태관리 -->
+      <a href="<c:url value='/commute' />" class="menu-item"> <img
+         src="<c:url value='/resources/imgs/sideBar/Clock.svg' />"
+         class="menu-icon" alt="근태관리" /> <span class="menu-label">근태관리</span>
+      </a>
+      <!-- 게시판 -->
+      <a href="<c:url value='/notice/list' />" class="menu-item"> <img
+         src="<c:url value='/resources/imgs/sideBar/Popup.svg' />"
+         class="menu-icon" alt="게시판" /> <span class="menu-label">게시판</span>
+      </a>
+
+      <!-- 전자결재 -->
+      <a href="<c:url value='/approval' />" class="menu-item"> <img
+         src="<c:url value='/resources/imgs/sideBar/Sign_Document.svg' />"
+         class="menu-icon" alt="전자결재" /> <span class="menu-label">전자결재</span>
+      </a>
+
+      <!-- 연차 결재 -->
+      <a href="<c:url value='/pto' />" class="menu-item"> <img
+         src="<c:url value='/resources/imgs/sideBar/Document.svg' />"
+         class="menu-icon" alt="연차 결재" /> <span class="menu-label">연차
+            결재</span>
+      </a>
+
+      <!-- 사원관리 -->
+      <a href="#" class="menu-item"> <img
+         src="<c:url value='/resources/imgs/sideBar/Contacts.svg' />"
+         class="menu-icon" alt="사원관리" /> <span class="menu-label">사원관리</span>
+      </a>
+
+      <!-- 부서 관리 -->
+      <a href="#" class="menu-item"> <img
+         src="<c:url value='/resources/imgs/sideBar/Tree_Structure.svg' />"
+         class="menu-icon" alt="부서 관리" /> <span class="menu-label">부서
+            관리</span>
+      </a>
+   </div>
+
+   <!-- 로그아웃 -->
+   <div class="menu-section bottom">
+      <div class="menu-item menu-item-logout">
+         <img src="<c:url value='/resources/imgs/sideBar/Logout.svg' />"
+            alt="로그아웃" class="menu-icon" /> <span class="menu-label">로그아웃</span>
+      </div>
+   </div>
+</div>
+
+
+<script src="<c:url value='/resources/js/common/sideBar/sideBar.js' />"></script>

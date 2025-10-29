@@ -2,7 +2,6 @@ package com.kedu.approval;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +30,10 @@ public class ApprovalController {
     private DepartmentService departmentService;
     @Autowired
     private FileService fileService;
-    
-    
     @Autowired
     private Gson gson;
 
-    /*페이지에 맞게 데이터 구성, 필터 까지 합쳐서*/
+    /* 페이지에 맞게 데이터 구성, 필터까지 합쳐서 */
     @RequestMapping("")
     public String approvalList(
         @RequestParam(required = false, defaultValue = "all") String status,
@@ -85,8 +82,7 @@ public class ApprovalController {
         return "/approval/approval";
     }
 
-
-    /*상태 업데이트 (비동기 유지)*/
+    /* 상태 업데이트 (비동기 유지) */
     @RequestMapping("/updatestatus")
     @ResponseBody
     public String updateStatus(int targetseq, String newStatus) {
@@ -97,24 +93,21 @@ public class ApprovalController {
             return "fail";
         }
     }
-    
-    /*디테일 페이지로 이동*/
-    @RequestMapping ("/detail")
-    public String toDetailApproval(@RequestParam int seq, HttpSession session, Model m) {
-    	//1. 전자결재 내용
-    	ApprovalDTO result = approvalService.toDetailApproval(seq);
-	    m.addAttribute("dtoJson", gson.toJson(result)); // JS 용
-	    m.addAttribute("dto", result);
-	    
-	    //2. 파일 리스트 내용
-	    List<FileDTO> fileList = fileService.getFilesByParent(seq, FileConstants.FA);
-	    m.addAttribute("dtofiles", gson.toJson(fileList));// JS 용
-	    m.addAttribute("files", fileList);
-	    System.out.println("파일 리스트: " + gson.toJson(fileList));
 
-    	return "/approval/approvalDetail";
+    /* 디테일 페이지로 이동 */
+    @RequestMapping("/detail")
+    public String toDetailApproval(@RequestParam int seq, HttpSession session, Model m) {
+        // 1. 전자결재 내용
+        ApprovalDTO result = approvalService.toDetailApproval(seq);
+        m.addAttribute("dtoJson", gson.toJson(result)); // JS 용
+        m.addAttribute("dto", result);
+
+        // 2. 파일 리스트 내용
+        List<FileDTO> fileList = fileService.getFilesByParent(seq, FileConstants.FA);
+        m.addAttribute("dtofiles", gson.toJson(fileList)); // JS 용
+        m.addAttribute("files", fileList);
+        System.out.println("파일 리스트: " + gson.toJson(fileList));
+
+        return "/approval/approvalDetail";
     }
-    
-    
-    
 }
