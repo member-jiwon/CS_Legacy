@@ -1,0 +1,92 @@
+# ========================
+# Eclipse / STS 관련
+# ========================
+.classpath
+.project
+.settings/
+.apt_generated/
+.springBeans
+.factorypath
+.buildpath
+
+# ========================
+# IntelliJ IDEA 관련 (혹시 같이 쓸 경우)
+# ========================
+.idea/
+*.iml
+*.iws
+out/
+
+# ========================
+# Maven / Gradle 빌드 파일
+# ========================
+target/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ========================
+# 로그 / 임시 파일
+# ========================
+*.log
+*.tmp
+*.bak
+*.swp
+
+# ========================
+# OS 관련
+# ========================
+.DS_Store
+Thumbs.db
+
+# ========================
+# 자바 / 컴파일 결과물
+# ========================
+*.class
+*.jar
+*.war
+*.ear
+
+# ========================
+# 환경 파일
+# ========================
+application-local.yml
+application-local.properties
+.env
+*.env
+
+# ========================
+# 서버 관련 (Tomcat 등)
+# ========================
+*.pid
+*.seed
+*.out
+hs_err_pid*
+
+# ========================
+# IDE 캐시
+# ========================
+bin/
+tmp/
+.vscode/
+.cache/
+
+# ========================
+# Lombok / Annotation Processing
+# ========================
+lombok.config
+
+# ========================
+# 기타
+# ========================
+node_modules/
+dist/
+
+
+
+# ========================
+# Google Cloud Service Account Key (보안상 필수 제외)
+# ========================
+# GCP 키 파일은 절대 커밋하지 않음
+# 실제 경로: src/main/resources/google/gcp-key.json
+src/main/resources/google/
+

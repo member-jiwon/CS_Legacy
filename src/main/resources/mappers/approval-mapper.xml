@@ -5,63 +5,79 @@
 <mapper namespace="Approval">
 
   <!-- 전체 리스트 (페이징) -->
-  <select id="selectAllFromTo" parameterType="map" resultType="map">
-    SELECT *
-    FROM (
-      SELECT ROWNUM AS rnum, A.*
-      FROM (
-        SELECT 
-          a.approval_seq,
-          a.member_email,
-          a.approval_title,
-          a.approval_content,
-          a.approval_at,
-          a.approval_status,
-          m.name AS member_name,
-          m.dept_code,
-          m.level_code
-        FROM approval a
-        JOIN member m ON a.member_email = m.email
-        ORDER BY a.approval_seq DESC
-      ) A
-      WHERE ROWNUM &lt;= #{end}
-    )
-    WHERE rnum &gt;= #{start}
-  </select>
+	<select id="selectAllFromTo" parameterType="map" resultType="map">
+	  SELECT *
+	  FROM (
+	    SELECT ROWNUM AS rnum, A.*
+	    FROM (
+	      SELECT 
+	        a.approval_seq,
+	        a.member_email,
+	        a.approval_title,
+	        a.approval_content,
+	        a.approval_at,
+	        a.approval_status,
+	        m.name AS member_name,
+	        m.dept_code,
+	        d.dept_name,
+	        m.level_code,
+	        l.level_name        <!-- ✅ 추가 -->
+	      FROM approval a
+	      JOIN member m 
+	        ON a.member_email = m.email
+	      JOIN department d 
+	        ON m.dept_code = d.dept_code
+	      JOIN job_level l
+	        ON m.level_code = l.level_code
+	        AND m.company_code = l.company_code
+	      ORDER BY a.approval_seq DESC
+	    ) A
+	    WHERE ROWNUM &lt;= #{end}
+	  )
+	  WHERE rnum &gt;= #{start}
+	</select>
 
 
   <!-- 필터 리스트 (상태 + 부서코드) -->
-  <select id="selectByFilterFromTo" parameterType="map" resultType="map">
-    SELECT *
-    FROM (
-      SELECT ROWNUM AS rnum, A.*
-      FROM (
-        SELECT 
-          a.approval_seq,
-          a.member_email,
-          a.approval_title,
-          a.approval_content,
-          a.approval_at,
-          a.approval_status,
-          m.name AS member_name,
-          m.dept_code,
-          m.level_code
-        FROM approval a
-        JOIN member m ON a.member_email = m.email
-        <trim prefix="WHERE" prefixOverrides="AND |OR ">
-          <if test="status != null and status != ''">
-            AND a.approval_status = #{status}
-          </if>
-          <if test="deptCode != null and deptCode != ''">
-            AND m.dept_code = #{deptCode}
-          </if>
-        </trim>
-        ORDER BY a.approval_seq DESC
-      ) A
-      WHERE ROWNUM &lt;= #{end}
-    )
-    WHERE rnum &gt;= #{start}
-  </select>
+	<select id="selectByFilterFromTo" parameterType="map" resultType="map">
+	  SELECT *
+	  FROM (
+	    SELECT ROWNUM AS rnum, A.*
+	    FROM (
+	      SELECT 
+	        a.approval_seq,
+	        a.member_email,
+	        a.approval_title,
+	        a.approval_content,
+	        a.approval_at,
+	        a.approval_status,
+	        m.name AS member_name,
+	        m.dept_code,
+	        d.dept_name,
+	        m.level_code,
+	        l.level_name           <!-- ✅ 추가 -->
+	      FROM approval a
+	      JOIN member m 
+	        ON a.member_email = m.email
+	      JOIN department d 
+	        ON m.dept_code = d.dept_code
+	      JOIN job_level l          <!-- ✅ 새로 추가된 조인 -->
+	        ON m.level_code = l.level_code
+	        AND m.company_code = l.company_code
+	      <trim prefix="WHERE" prefixOverrides="AND |OR ">
+	        <if test="status != null and status != ''">
+	          AND a.approval_status = #{status}
+	        </if>
+	        <if test="deptCode != null and deptCode != ''">
+	          AND m.dept_code = #{deptCode}
+	        </if>
+	      </trim>
+	      ORDER BY a.approval_seq DESC
+	    ) A
+	    WHERE ROWNUM &lt;= #{end}
+	  )
+	  WHERE rnum &gt;= #{start}
+	</select>
 
 
   <!-- 전체 개수 -->

@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+* {
+	box-sizing: border-box;
+}
+.subSidebar {
+	height: 100%;
+	background-color: purple;
+	display: flex;
+	top: 60px;
+	padding-right: 20px;
+	justify-content: space-between;
+	overflow: hidden;
+	flex-direction: column;
+}

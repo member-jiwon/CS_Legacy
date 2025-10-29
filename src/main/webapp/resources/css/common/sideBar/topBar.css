@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+.topbar-container {
+	padding: 16px 20px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1060;
+	box-shadow: 0px 4px 7.9px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	display: block;
+	box-sizing: border-box;
+	font-family: Pretendard, sans-serif;
+}
+
+/* 💡 추가: 햄버거 버튼의 기본 스타일 제거 */
+.topbar-icons button#menuToggle {
+	border: none;
+	background: none;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+}
+
+.topbar {
+	width: 100%;
+	height: auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.topbar-logo {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.logo-icon {
+	width: 43px;
+	height: 40px;
+}
+
+.logo-text {
+	font-size: 32px;
+	font-weight: 800;
+	text-transform: uppercase;
+	color: #0090ff;
+}
+
+.topbar-icons {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.icon-alarm, .icon-add, .icon-menu {
+	width: 24px;
+	height: 24px;
+	object-fit: cover;
+}
