@@ -80,3 +80,4 @@ lombok.config
 # ========================
 node_modules/
 dist/
+"target/m2e-wtp/web-resources/META-INF/maven/com.kedu/controllers/pom.properties" 

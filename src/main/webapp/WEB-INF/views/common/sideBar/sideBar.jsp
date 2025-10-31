@@ -21,7 +21,7 @@
 		</a>
 
 		<!-- 전자결재 -->
-		<a href="<c:url value='/boardList.jsp' />" class="menu-item"> <img
+		<a href="<c:url value='/board/boardList' />" class="menu-item"> <img
 			src="<c:url value='/resources/imgs/sideBar/Sign_Document.svg' />"
 			class="menu-icon" alt="전자결재" /> <span class="menu-label">전자결재</span>
 		</a>
