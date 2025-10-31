@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MemberController {
 	@Autowired
-	private MemberService MemberService;
+	private MemberService memberService;
 	// 알아 고쳐쓸려면 알아서 고쳐쓰소
 }

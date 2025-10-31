@@ -1,5 +1,7 @@
 package com.kedu.admin.department;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,4 +14,8 @@ import org.springframework.stereotype.Repository;
 public class DepartmentDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
+	
+	public List<DepartmentDTO> getAllDept(){
+		return mybatis.selectList("Dept.getAllDept");
+	}
 }

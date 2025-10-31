@@ -1,5 +1,7 @@
 package com.kedu.admin.department;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,4 +13,8 @@ import org.springframework.stereotype.Service;
 public class DepartmentService {
 	@Autowired
 	private DepartmentDAO dao;
+	
+	public List<DepartmentDTO> getAllDept(){
+		return dao.getAllDept();
+	}
 }

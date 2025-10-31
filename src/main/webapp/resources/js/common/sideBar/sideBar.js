@@ -1,46 +1,45 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
     const menuItems = document.querySelectorAll(".menu-item");
+    const currentPath = window.location.pathname; // 현재 URL 경로 (예: /notice/post)
 
-    menuItems.forEach(function(item){
-        const icon = item.querySelector("img");
-        const baseFilename = icon.src.split("/").pop().replace("-active.svg","").replace(".svg","");
+    menuItems.forEach(function (item) {
+        const icon = item.querySelector("img"); // 메뉴 아이콘 이미지
+        const href = item.getAttribute("href"); // 메뉴 링크
 
-        item.addEventListener("click", function(e){
-            e.preventDefault(); // 클릭 시 페이지 새로고침 방지
+        // 아이콘 파일 이름 추출 (예: Popup.svg → Popup)
+        const baseFilename = icon.src
+            .split("/").pop()              // 파일명만 가져오기
+            .replace("-active.svg", "")    // -active 제거
+            .replace(".svg", "");          // .svg 제거
 
-            // 메뉴 활성화 토글
-            menuItems.forEach(function(i){
-                i.classList.remove("active");
-                const iIcon = i.querySelector("img");
-                const iBase = iIcon.src.split("/").pop().replace("-active.svg","").replace(".svg","");
-                iIcon.src = "/resources/imgs/sideBar/" + iBase + ".svg";
-            });
+        // ---------------------------
+        // URL 비교 로직
+        // /notice/list, /notice/post, /notice/view 등
+        // 모두 /notice로 시작하면 게시판 메뉴 활성화
+        // ---------------------------
+        if (href && currentPath.startsWith("/" + href.split("/")[1])) {
+            item.classList.add("active"); // 메뉴 활성화 클래스 추가
+            icon.src = `/resources/imgs/sideBar/${baseFilename}-active.svg`; // 활성화 아이콘으로 변경
+        } else {
+            item.classList.remove("active"); // 활성화 클래스 제거
+            icon.src = `/resources/imgs/sideBar/${baseFilename}.svg`; // 기본 아이콘으로 변경
+        }
 
-            item.classList.add("active");
-            icon.src = "/resources/imgs/sideBar/" + baseFilename + "-active.svg";
-
-            // mainContent에 해당 URL 로드 (AJAX)
-            const url = item.getAttribute("href");
-            if(url){
-                const mainContent = document.getElementById("mainContent");
-                if(mainContent){
-                    fetch(url)
-                        .then(response => response.text())
-                        .then(html => mainContent.innerHTML = html)
-                        .catch(err => console.error("컨텐츠 로드 실패:", err));
-                }
+        // ---------------------------
+        // 마우스 오버 시 임시 active 효과
+        // ---------------------------
+        item.addEventListener("mouseenter", function () {
+            if (!item.classList.contains("active")) {
+                icon.src = `/resources/imgs/sideBar/${baseFilename}-active.svg`;
             }
         });
 
-        item.addEventListener("mouseenter", function(){
+        // ---------------------------
+        // 마우스 떠날 시 원래 상태로 복원
+        // ---------------------------
+        item.addEventListener("mouseleave", function () {
             if (!item.classList.contains("active")) {
-                icon.src = "/resources/imgs/sideBar/" + baseFilename + "-active.svg";
-            }
-        });
-
-        item.addEventListener("mouseleave", function(){
-            if (!item.classList.contains("active")) {
-                icon.src = "/resources/imgs/sideBar/" + baseFilename + ".svg";
+                icon.src = `/resources/imgs/sideBar/${baseFilename}.svg`;
             }
         });
     });
