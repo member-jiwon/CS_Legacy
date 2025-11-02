@@ -59,5 +59,9 @@ public class Pto_requestDAO {
     	return mybatis.selectOne("Pto_request.toDetailPtoRequest", pto_seq);
     }
 	
+    //pto 삭감
+    public int subtractPto(Map<String, Object> param) {
+    	return mybatis.update("Pto_request.subtractPto", param);
+    }
 	
 }

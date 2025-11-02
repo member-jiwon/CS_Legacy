@@ -95,12 +95,13 @@ public class ApprovalService {
     /**
      * 필터 조건(status, deptCode)에 따른 조회
      */
-    public List<Map<String, Object>> selectByFilterFromTo(String status, String deptCode, int start, int end) {
+    public List<Map<String, Object>> selectByFilterFromTo(String status, String deptCode, int start, int end, String company_code) {
         Map<String, Object> param = new HashMap<>();
         param.put("status", status);
         param.put("deptCode", deptCode);
         param.put("start", start);
         param.put("end", end);
+        param.put("company_code", company_code);
 
         List<Map<String, Object>> result = dao.selectByFilterFromTo(param);
         convertStatusForUI(result);
@@ -117,10 +118,11 @@ public class ApprovalService {
     /**
      * 필터 조건 적용 시 총 개수 조회
      */
-    public int getCountByFilter(String status, String deptCode) {
+    public int getCountByFilter(String status, String deptCode, String company_code) {
         Map<String, Object> param = new HashMap<>();
         param.put("status", status);
         param.put("deptCode", deptCode);
+        param.put("company_code", company_code);
         return dao.getCountByFilter(param);
     }
 

@@ -21,7 +21,7 @@
 	        m.dept_code,
 	        d.dept_name,
 	        m.level_code,
-	        l.level_name        <!-- ✅ 추가 -->
+	        l.level_name        
 	      FROM approval a
 	      JOIN member m 
 	        ON a.member_email = m.email
@@ -40,7 +40,21 @@
 
   <!-- 필터 리스트 (상태 + 부서코드) -->
 	<select id="selectByFilterFromTo" parameterType="map" resultType="map">
-	  SELECT *
+	select * from (
+		  select rownum as rnum, a.* from (
+		    select a.approval_seq, a.member_email, a.approval_title, a.approval_content, a.approval_at, a.approval_status, m.name as member_name, m.dept_code, d.dept_name, m.level_code, l.level_name
+		    from approval a
+		    join member m on a.member_email = m.email
+		    join department d on m.dept_code = d.dept_code
+		    join job_level l on m.level_code = l.level_code and m.company_code = l.company_code
+		    where m.company_code = #{company_code}
+		    <if test="status != null and status != ''">and a.approval_status = #{status}</if>
+		    <if test="deptCode != null and deptCode != ''">and m.dept_code = #{deptCode}</if>
+		    order by a.approval_seq desc
+		  ) a where rownum &lt;= #{end}
+		) where rnum &gt;= #{start}
+
+<!--SELECT *
 	  FROM (
 	    SELECT ROWNUM AS rnum, A.*
 	    FROM (
@@ -55,13 +69,13 @@
 	        m.dept_code,
 	        d.dept_name,
 	        m.level_code,
-	        l.level_name           <!-- ✅ 추가 -->
+	        l.level_name           
 	      FROM approval a
 	      JOIN member m 
 	        ON a.member_email = m.email
 	      JOIN department d 
 	        ON m.dept_code = d.dept_code
-	      JOIN job_level l          <!-- ✅ 새로 추가된 조인 -->
+	      JOIN job_level l          
 	        ON m.level_code = l.level_code
 	        AND m.company_code = l.company_code
 	      <trim prefix="WHERE" prefixOverrides="AND |OR ">
@@ -76,8 +90,8 @@
 	    ) A
 	    WHERE ROWNUM &lt;= #{end}
 	  )
-	  WHERE rnum &gt;= #{start}
-	</select>
+	  WHERE rnum &gt;= #{start}-->
+	</select> 
 
 
   <!-- 전체 개수 -->
@@ -86,9 +100,18 @@
   </select>
 
 
-  <!-- 필터된 개수 -->
+  <!-- 필터된 개수 -->  
   <select id="getCountByFilter" parameterType="map" resultType="int">
-    SELECT COUNT(*)
+    select count(*)
+	from approval a
+	join member m on a.member_email = m.email
+	where m.company_code = #{company_code}
+	<if test="status != null and status != ''">and a.approval_status = #{status}</if>
+	<if test="deptCode != null and deptCode != ''">and m.dept_code = #{deptCode}</if>
+  
+  
+  
+ <!--   SELECT COUNT(*)
     FROM approval a
     JOIN member m ON a.member_email = m.email
     <trim prefix="WHERE" prefixOverrides="AND |OR ">
@@ -98,7 +121,7 @@
       <if test="deptCode != null and deptCode != ''">
         AND m.dept_code = #{deptCode}
       </if>
-    </trim>
+    </trim>-->
   </select>
 
 

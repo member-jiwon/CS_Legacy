@@ -2,6 +2,7 @@ package com.kedu.approval;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +40,13 @@ public class ApprovalController {
         @RequestParam(required = false, defaultValue = "all") String status,
         @RequestParam(required = false, defaultValue = "all") String departmentType,
         @RequestParam(defaultValue = "1") int cpage,
-        Model m) throws Exception {
+        Model m,
+        HttpSession session
+        ) throws Exception {
 
         // 부서 목록 조회
-        List<DepartmentDTO> depts = departmentService.getAllDeptCode();
+    	String company_code=(String)session.getAttribute("company_code");
+        List<DepartmentDTO> depts = departmentService.getAllDeptCode(company_code);// 회사코드 보내서 뽑아오기
 
         // 필터링용 값 처리
         String rawStatus = status;
@@ -56,8 +60,8 @@ public class ApprovalController {
         int end = cpage * PageConfig.RECORD_COUNT_PER_PAGE;
 
         // 결재 리스트 및 총 개수 조회
-        List<Map<String, Object>> list = approvalService.selectByFilterFromTo(status, departmentType, start, end);
-        int totalCount = approvalService.getCountByFilter(status, departmentType);
+        List<Map<String, Object>> list = approvalService.selectByFilterFromTo(status, departmentType, start, end, company_code);// 회사 코드 보내서 뽑아오기
+        int totalCount = approvalService.getCountByFilter(status, departmentType, company_code);
 
         // JSON 변환 및 모델에 담기
         m.addAttribute("list", gson.toJson(list));

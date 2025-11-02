@@ -25,10 +25,14 @@ public class CompanyController {
 	// 濡쒓렇�씤
 	@RequestMapping("/login")
 	public String login(CompanyDTO dto,  Model m, HttpSession session) {
-		int result = CompanyService.login(dto);
-		if(result > 0) {
-			session.setAttribute("id", dto.getAdmin_email());
+		CompanyDTO result = CompanyService.login(dto);
+		if(result!=null) {
+			session.setAttribute("id", result.getAdmin_email());
 			//m.addAttribute("id", dto.getAdmin_email()); 모델붙이면 쿼맆라미터로 값 전달되서 지움
+			
+			//세션에 회사이름도 저장해 놓아야지 해당이름으로 거를 수 있음
+			System.out.println("회사코드:"+result.getCompany_code());
+			session.setAttribute("company_code", result.getCompany_code());
 			return "redirect:/commute";//지원이 바꿔놓음 : 근태관리 내용가져오는 컨트롤러랑 매핑시킴
 		}else {
 			return "redirect:/";

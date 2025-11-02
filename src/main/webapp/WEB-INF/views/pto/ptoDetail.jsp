@@ -103,6 +103,9 @@ $("#ptoStatus").text(statusText);
 const handleStatus = (type)=>{
 	const targetseq= dtoJson.pto_seq;
 	const newStatus=type;
+	const pto_used=dtoJson.pto_used;
+	const pto_start_at=dtoJson.pto_start_at;
+	const pto_end_at =dtoJson.pto_end_at;
 	
     $.ajax({
         url: "/pto/updatestatus",

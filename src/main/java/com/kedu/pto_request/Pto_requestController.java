@@ -1,5 +1,6 @@
 package com.kedu.pto_request;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.kedu.admin.department.DepartmentDTO;
 import com.kedu.admin.department.DepartmentService;
+import com.kedu.schedule.ScheduleService;
 
 import util.PageConfig;
 
@@ -29,7 +31,7 @@ public class Pto_requestController {
     private DepartmentService departmentService;
     @Autowired
     private Gson gson;
-
+    
     
     /*페이지에 맞게 데이터 구성, 필터 까지 합쳐서*/
     @RequestMapping("")
@@ -37,10 +39,14 @@ public class Pto_requestController {
         @RequestParam(required = false, defaultValue = "all") String status,
         @RequestParam(required = false, defaultValue = "all") String departmentType,
         @RequestParam(defaultValue = "1") int cpage,
-        Model m) throws Exception {
+        Model m,
+        HttpSession session
+    		) throws Exception {
 
         // 부서 목록 조회
-        List<DepartmentDTO> depts = departmentService.getAllDeptCode();
+    	String company_code = (String)session.getAttribute("company_code");
+    	System.out.println(company_code);
+        List<DepartmentDTO> depts = departmentService.getAllDeptCode(company_code);// 회사 코드 넣어서 확인
 
         // 필터링용 값 처리
         String rawptoStatus= status;
@@ -54,8 +60,8 @@ public class Pto_requestController {
         int end = cpage * PageConfig.RECORD_COUNT_PER_PAGE;
 
         // 결재 리스트 및 총 개수 조회
-        List<Map<String, Object>> list = pto_requestService.selectByFilterFromTo(status, departmentType, start, end);
-        int totalCount = pto_requestService.getCountByFilter(status, departmentType);
+        List<Map<String, Object>> list = pto_requestService.selectByFilterFromTo(status, departmentType, start, end, company_code); // 회사코드 넣어서 가져오기
+        int totalCount = pto_requestService.getCountByFilter(status, departmentType, company_code);
 
         // JSON 변환 및 모델에 담기
         m.addAttribute("list", gson.toJson(list));
@@ -80,17 +86,27 @@ public class Pto_requestController {
         return "/pto/ptoList";
     }
     
-    /*상태 업데이트 (비동기 유지)*/
+    /*상태 업데이트*/
     @RequestMapping("/updatestatus")
     @ResponseBody
-    public String updateStatus(int targetseq, String newStatus) {
-        int result = pto_requestService.updateStatus(targetseq, newStatus);
-        if (result > 0) {
-            return newStatus; // 성공 시 변경된 상태 코드 그대로 리턴 ("y", "n" 등)
-        } else {
-            return "fail";
-        }
+    public String updateStatus(
+        int targetseq,
+        String newStatus,
+        int pto_used,
+        String member_email,
+        Timestamp pto_start_at,
+        Timestamp pto_end_at
+    ) {
+        return pto_requestService.processStatusUpdate(
+            targetseq,
+            newStatus,
+            pto_used,
+            member_email,
+            pto_start_at,
+            pto_end_at
+        );
     }
+
 	
     /*디테일 페이지로 이동*/
     @RequestMapping ("/detail")

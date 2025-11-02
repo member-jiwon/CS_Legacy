@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kedu.approval.ApprovalDTO;
+import com.kedu.schedule.ScheduleService;
 
 
 /*
@@ -22,7 +23,8 @@ import com.kedu.approval.ApprovalDTO;
 public class Pto_requestService {
 	@Autowired
 	private Pto_requestDAO dao;
-	
+	@Autowired
+    private ScheduleService scheduleService;
     /**
      * DB 결과값을 JSON 직렬화-friendly한 Map으로 변환
      * - CLOB, TIMESTAMP 등 안전하게 문자열로 변환
@@ -77,12 +79,13 @@ public class Pto_requestService {
     /**
      * 필터 조건(status, deptCode)에 따른 조회
      */
-    public List<Map<String, Object>> selectByFilterFromTo(String status, String deptCode, int start, int end) {
+    public List<Map<String, Object>> selectByFilterFromTo(String status, String deptCode, int start, int end, String company_code) {
         Map<String, Object> param = new HashMap<>();
         param.put("status", status);
         param.put("deptCode", deptCode);
         param.put("start", start);
         param.put("end", end);
+        param.put("company_code", company_code);
 
         List<Map<String, Object>> result = dao.selectByFilterFromTo(param);
         return sanitizeForJson(result);
@@ -98,10 +101,11 @@ public class Pto_requestService {
     /**
      * 필터 조건 적용 시 총 개수 조회
      */
-    public int getCountByFilter(String status, String deptCode) {
+    public int getCountByFilter(String status, String deptCode, String company_code) {
         Map<String, Object> param = new HashMap<>();
         param.put("status", status);
         param.put("deptCode", deptCode);
+        param.put("company_code", company_code);
         return dao.getCountByFilter(param);
     }
     
@@ -118,6 +122,37 @@ public class Pto_requestService {
     // 디테일 페이지
     public Pto_requestDTO toDetailPtoRequest(int pto_seq) {
     	return dao.toDetailPtoRequest(pto_seq);
+    }
+    
+    
+    // 연차 승인 + 거절 로직
+    public String processStatusUpdate(int targetseq, String newStatus,int pto_used,String member_email,Timestamp pto_start_at,Timestamp pto_end_at) {
+    	    if ("y".equals(newStatus)) {
+    	        int temp = subtractPto(pto_used, member_email); // PTO 차감
+    	        if (temp > 0) {
+    	            int result = updateStatus(targetseq, newStatus); // 상태 업데이트
+    	            if (result > 0) {
+    	                scheduleService.insertPtoSchedule(member_email, pto_start_at, pto_end_at); // 스케줄 등록
+    	            }
+    	        }
+    	        return newStatus;
+    	    } else if ("n".equals(newStatus)) {
+    	        updateStatus(targetseq, newStatus);
+    	        return newStatus;
+    	    } else {
+    	        return "fail";
+    	    }
+    	}
+
+    
+    
+    
+    //pto적용 시간만큼 삭감하기
+    public int subtractPto(int pto_used, String member_email) {
+    	Map<String, Object> param = new HashMap<>();
+        param.put("pto_used", pto_used);
+        param.put("member_email", member_email);
+    	return dao.subtractPto(param);
     }
     
 }

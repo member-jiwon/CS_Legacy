@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/kedu/admin/company/CompanyController.java=UTF-8
+encoding//src/main/java/com/kedu/admin/company/CompanyDAO.java=UTF-8
+encoding//src/main/java/com/kedu/admin/company/CompanyService.java=UTF-8
 encoding//src/main/java/com/kedu/admin/company/EmailAuthService.java=UTF-8
 encoding//src/main/java/com/kedu/admin/department/DepartmentDAO.java=UTF-8
 encoding//src/main/java/com/kedu/admin/department/DepartmentDTO.java=UTF-8

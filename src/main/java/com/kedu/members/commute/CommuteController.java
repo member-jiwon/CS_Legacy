@@ -3,6 +3,8 @@ package com.kedu.members.commute;
 import java.time.LocalDate;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -28,7 +30,8 @@ public class CommuteController {
 	        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
 	        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
 	        @RequestParam(defaultValue = "전체") String type,
-	        Model model) {
+	        Model model,
+	        HttpSession session) {
 
 	    // 기본값: 오늘 날짜
 	    LocalDate today = LocalDate.now();
@@ -38,11 +41,12 @@ public class CommuteController {
 	        startDate = today;
 	        endDate = today;
 	    }
-
+	    
+	    String company_code=(String)session.getAttribute("company_code");
 	    // 서비스 호출
-	    Map<String, Integer> attendanceStats = commuteService.getAttendanceStats(startDate, endDate, type);
-	    Map<String, Integer> workStats = commuteService.getWorkStats(startDate, endDate, type);
-	    Map<String, Integer> approvalStats = commuteService.getApprovalStats(startDate, endDate, type);
+	    Map<String, Integer> attendanceStats = commuteService.getAttendanceStats(startDate, endDate, type,company_code);
+	    Map<String, Integer> workStats = commuteService.getWorkStats(startDate, endDate, type,company_code);
+	    Map<String, Integer> approvalStats = commuteService.getApprovalStats(startDate, endDate, type,company_code);
 
 	    model.addAttribute("attendanceStatsJson", gson.toJson(attendanceStats));
 	    model.addAttribute("workStatsJson", gson.toJson(workStats));
@@ -52,7 +56,7 @@ public class CommuteController {
 	    model.addAttribute("endDate", endDate);
 	    model.addAttribute("type", type);
 
-	    // 🔹 min/max용 날짜 추가
+	    // min/max용 날짜 추가
 	    model.addAttribute("today", today);
 	    model.addAttribute("oneYearAgo", oneYearAgo);
 

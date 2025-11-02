@@ -224,6 +224,10 @@
 	
 	  statusDiv.append(btnwrapper);
 	  line.append(seq, content, name, dept, level, date, statusDiv);
+	  line.attr("data-pto-used", row.PTO_USED);
+	  line.attr("data-member-email", row.MEMBER_EMAIL);
+	  line.attr("data-pto-start-at", row.PTO_START_AT);
+	  line.attr("data-pto-end-at", row.PTO_END_AT);
 	  return line;
 	}
 	
@@ -232,11 +236,13 @@
 	  $(document).on("click", ".status-btn", function () {
 	    const newStatus = $(this).data("value");
 	    const targetseq = $(this).closest(".board-table-row").find(".col-num").text();
-
+		const pto_used = $(this).closest(".board-table-row").data("pto-used");
+		const pto_start_at = $(this).closest(".board-table-row").data("pto-start-at");
+		const pto_end_at = $(this).closest(".board-table-row").data("pto-end-at");
 	    $.ajax({
 	      url: "/pto/updatestatus",
 	      type: "post",
-	      data: { targetseq, newStatus },
+	      data: { targetseq, newStatus ,pto_used,member_email, pto_start_at,pto_end_at},
 	      success: function () {
 	    	alert(statusMap[newStatus] + "상태로 변경되었습니다.");
 	        location.reload();
