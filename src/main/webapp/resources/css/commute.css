@@ -49,8 +49,9 @@ body, html {
 * {
 	box-sizing: border-box;
 }
+
 .subSidebar {
-	padding-top:30px;
+	padding:30px;
 	height: 100%;
 	width: 100%; 
 
@@ -60,15 +61,16 @@ body, html {
 	overflow: hidden;
   	flex-direction: column;
 }
+label{
+	margin-bottom:5px;
+}
 .dateBox{
-	margin-bottom:60px;
-	border: 1px solid yellow;
+	margin-bottom:30px;
 }
 /*서브사이드바 버튼 개당*/
 .tapWrapper{
 	width:100%;
 	height:50px;
-	border: 1px solid yellow;	
 }
 .tap {
   all: unset;              /* 모든 기본 스타일 제거 */
@@ -93,7 +95,27 @@ body, html {
 	background-color:#eef6ff;
 	font-weight:bold;
 }
+.teamListBox {
+  border-radius: 0 !important;  /* 모서리 둥글기 제거 */
+}
+#teamListContainer {
+  margin-top: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-left:30px;
+}
 
+.list-group-item {
+  border: none !important; /* 부트스트랩 기본 border 제거 */
+  box-shadow: none !important; /* 혹시 그림자 있을 때 대비 */
+}
+.team-item {
+  cursor: pointer;
+}
+.team-item:hover {
+  border-left:2px solid #0090ff !important;
+  background-color: #eef6ff;
+}
 
 
 /*좌측 : 콘텐츠 */
@@ -149,8 +171,10 @@ body, html {
 
 /*차트*/
 .donut-container {
+  margin-left:40px;
+  margin-top:30px;
   width: 100%;
-  height: 280px;          /* ✅ 컨테이너 높이 고정 */
+  height: 300px;          /* ✅ 컨테이너 높이 고정 */
   overflow: hidden;       /* ✅ 흰색 바탕 넘치면 자르기 */
   display: flex;
   justify-content: center;

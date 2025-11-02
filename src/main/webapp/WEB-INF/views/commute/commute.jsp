@@ -40,36 +40,37 @@
          <div class="col-2 px-0">
 			  <div class="subSidebar" id="subSidebar">
 			      
-			    <form method="get" action="/commute">
-			      
-			      <!-- 날짜 -->
-			      <div class="dateBox">
-			        <label for="startDate">조회 기간</label><br>
-			
-			        <input type="date" id="startDate" name="startDate"
-			               value="${startDate}"
-			               min="${oneYearAgo}" max="${today}"
-			               class="form-control mb-2"
-			               onchange="this.form.submit()">
-			
-			        <input type="date" id="endDate" name="endDate"
-			               value="${endDate}"
-			               min="${oneYearAgo}" max="${today}"
-			               class="form-control mb-3"
-			               onchange="this.form.submit()">
-			      </div>
-			
-			      <!-- 전체 -->
-			      <div class="tapWrapper">
-			        <button type="submit" class="tap" name="type" value="전체">전체</button>
-			      </div>
-			
-			      <!-- 팀원 -->
-			      <div class="tapWrapper">
-			        <button type="submit" class="tap" name="type" value="팀별">팀원</button>
-			      </div>
-			
-			    </form>
+			    <form method="get" action="/commute" id="commuteForm">
+				  <!-- 날짜 -->
+				  <div class="dateBox">
+				    <label for="startDate">시작</label><br>
+				    
+				    <input type="date" id="startDate" name="startDate"
+				           value="${startDate}"
+				           min="${oneYearAgo}" max="${today}"
+				           class="form-control mb-2">
+				    <br>
+				    <label for="endDate">종료</label><br>
+				    <input type="date" id="endDate" name="endDate"
+				           value="${endDate}"
+				           min="${oneYearAgo}" max="${today}"
+				           class="form-control mb-3">
+				  </div>
+				
+				  <!-- 전체 -->
+				  <div class="tapWrapper">
+				    <button type="submit" class="tap" name="type" value="전체">전체</button>
+				  </div>
+				
+				  <!-- 팀원 -->
+				  <div class="tapWrapper">
+				    <button type="button" class="tap team-btn">팀별</button>
+				    <div id="teamListContainer">
+				    	<!-- 여기에 팀 목록이 동적으로 들어감 -->
+				    </div> 
+				  </div>
+				</form>
+				
 			  </div>
 			</div>
               
@@ -105,9 +106,103 @@
 
 
 <script>
+
+
+$(document).ready(function () {
+// 팀별 버튼 클릭
+$(".team-btn").on("click", function() {
+  const $container = $("#teamListContainer");
+
+  // 이미 열려 있으면 닫기
+  if ($container.children().length > 0) {
+    $container.empty();
+    return;
+  }
+
+  $.get("<c:url value='/commute/teamList'/>")
+    .then(function(list) {
+      console.log(list);
+
+      if (list && list.length > 0) {
+        const $divlist = $("<div>").addClass("teamListBox list-group");
+
+        
+        list.forEach(dept => {
+          const $button = $("<button>")
+            .addClass("list-group-item team-item").attr({type:"submit", name:"type", value :dept.dept_name})
+            .text(dept.dept_name);
+          $divlist.append($button);
+        });
+
+        $container.empty().append($divlist).hide().fadeIn(200);
+      } else {
+        $container.html("<p>등록된 팀이 없습니다.</p>");
+      }
+    })
+    .catch(function() {
+      alert("팀 목록을 불러오지 못했습니다.");
+    });
+});
+	
+	
+	
+	  const $form = $("#commuteForm");
+	  const $start = $("#startDate");
+	  const $end = $("#endDate");
+
+	  // 오늘 / 1년 전
+	  const today = new Date().toISOString().split("T")[0];
+	  const oneYearAgo = new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString().split("T")[0];
+
+	  // 기본 min/max 설정
+	  $start.attr({ min: oneYearAgo, max: today });
+	  $end.attr({ min: oneYearAgo, max: today });
+
+	  // 이전 값 저장용 변수
+	  let prevStart = $start.val();
+	  let prevEnd = $end.val();
+	  
+	  // 날짜 보내는 함수
+	  function handleDateChange(e) {
+	    const startVal = $start.val();
+	    const endVal = $end.val();
+
+	    // 시작 > 종료 → 경고 후 원복
+	    if (startVal && endVal && startVal > endVal) {
+	      alert("시작일은 종료일보다 앞서야 합니다.");
+
+	      // 변경한 input만 이전 값으로 복원
+	      if (e.target.id === "startDate") $start.val(prevStart);
+	      if (e.target.id === "endDate") $end.val(prevEnd);
+	      return;
+	    }
+
+	    // 정상 범위일 때만 이전 값 갱신 + 전송
+	    prevStart = startVal;
+	    prevEnd = endVal;
+
+	    if (startVal || endVal) $form.submit();
+	  }
+
+	  // 이벤트 등록
+	  $start.on("change", handleDateChange);
+	  $end.on("change", handleDateChange);
+	});
+
+
+
+
+
+
+
+
 const attendanceStats = ${attendanceStatsJson};
 const workStats = ${workStatsJson};
 const approvalStats = ${approvalStatsJson};
+console.log(attendanceStats);
+console.log(workStats);
+console.log(approvalStats);
+
 
 //1. 근태관리 (도넛차트)
 const aLabels = Object.keys(attendanceStats);
@@ -124,7 +219,7 @@ const data1 = [{
 	}];
 
 	const layout1 = {
-	  height: 280, width: 380,
+	  height: 280, width: 420,
 	  margin: { t:0, b:0, l:30, r:30 },
 	  showlegend: true,
 	  legend: { x: 1.1, y: 0.5, font: { size: 14 } }
@@ -147,7 +242,7 @@ const data2 = [{
 	}];
 
 	const layout2 = {
-	  height: 280, width: 380,
+	  height: 280, width: 420,
 	  margin: { t:0, b:0, l:30, r:30 },
 	  showlegend: true,
 	  legend: { x: 1.1, y: 0.5, font: { size: 14 } }

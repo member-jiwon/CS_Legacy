@@ -42,7 +42,7 @@
             
                <!-- 1층 헤더 -->
                <div class="board-header">
-                  <h2 class="board-title">전자결재</h2>
+                  <h2 class="board-title">연차 결재</h2>
                     <form id="filterForm" method="get" action="/pto" class="d-flex gap-2">
                      <!-- 사용자 선택용 -->
                      <select id="ptoStatusTypeSelect" class="form-select">

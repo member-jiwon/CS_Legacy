@@ -23,7 +23,11 @@
           END AS STATUS
       FROM MEMBER m
       JOIN COMMUTE c ON m.EMAIL = c.MEMBER_EMAIL
+      JOIN DEPARTMENT d ON m.DEPT_CODE = d.DEPT_CODE  
       WHERE TRUNC(c.COMMUTE_AT) BETWEEN #{startDate, jdbcType=DATE} AND #{endDate, jdbcType=DATE}
+      <if test="type != null and type != '전체'">
+        AND d.DEPT_NAME = #{type} 
+      </if>
   )
   GROUP BY STATUS
 </select>
@@ -31,10 +35,18 @@
   <!-- 2️. 출근관리 -->
 <select id="getWorkStats" parameterType="map" resultType="map">
   SELECT
-    NVL(SUM(CASE WHEN c.LATENESS = 'n' THEN 1 ELSE 0 END), 0) AS "정근",
-    NVL(SUM(CASE WHEN c.LATENESS = 'y' THEN 1 ELSE 0 END), 0) AS "지각"
-  FROM COMMUTE c
-  WHERE TRUNC(c.COMMUTE_AT) BETWEEN #{start, jdbcType=DATE} AND #{end, jdbcType=DATE}
+    NVL(SUM(CASE WHEN LATENESS = 'n' AND ABSENCE = '출근' THEN 1 ELSE 0 END), 0) AS "정근",
+    NVL(SUM(CASE WHEN LATENESS = 'y' AND ABSENCE = '출근' THEN 1 ELSE 0 END), 0) AS "지각"
+  FROM (
+      SELECT c.LATENESS, c.ABSENCE
+      FROM COMMUTE c
+      JOIN MEMBER m ON c.MEMBER_EMAIL = m.EMAIL
+      JOIN DEPARTMENT d ON m.DEPT_CODE = d.DEPT_CODE
+      WHERE TRUNC(c.COMMUTE_AT) BETWEEN #{startDate, jdbcType=DATE} AND #{endDate, jdbcType=DATE}
+      <if test="type != null and type.trim() != '전체' and type.trim().length() > 0">
+        AND TRIM(d.DEPT_NAME) = TRIM(#{type})
+      </if>
+  )
 </select>
 
 <!-- 3️⃣ 전자결재 처리현황 -->
@@ -45,11 +57,12 @@
     NVL(SUM(CASE WHEN a.APPROVAL_STATUS = 'y' THEN 1 ELSE 0 END), 0) AS "승인"
   FROM APPROVAL a
   JOIN MEMBER m ON a.MEMBER_EMAIL = m.EMAIL
-  WHERE TRUNC(a.APPROVAL_AT) BETWEEN #{start, jdbcType=DATE} AND #{end, jdbcType=DATE}
-  <if test="type == '팀별'">
-    AND m.DEPT_CODE = #{sessionDeptCode}
+  JOIN DEPARTMENT d ON m.DEPT_CODE = d.DEPT_CODE
+  WHERE TRUNC(a.APPROVAL_AT) BETWEEN #{startDate, jdbcType=DATE} AND #{endDate, jdbcType=DATE}
+  <if test="type != null and type.trim().length() > 0 and type != '전체'">
+    AND TRIM(d.DEPT_NAME) = TRIM(#{type})
   </if>
 </select>
- 
+
 
 </mapper>
