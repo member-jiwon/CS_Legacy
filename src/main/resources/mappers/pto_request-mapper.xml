@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Pto_request">
+
+  <!-- 전체 리스트 (페이징) -->
+	<select id="selectAllFromTo" parameterType="map" resultType="map">
+		select * from (
+		  select rownum as rnum, a.* from (
+		    select a.pto_seq, a.member_email, a.pto_content, a.pto_start_at, a.pto_end_at, a.pto_status,
+		           m.name as member_name, m.dept_code, d.dept_name, m.level_code
+		    from pto_request a
+		    join member m on a.member_email = m.email
+		    join department d on m.dept_code = d.dept_code
+		    order by a.pto_seq desc
+		  ) a where rownum &lt;= #{end}
+		) where rnum &gt;= #{start}
+	</select>
+
+
+
+  <!-- 필터 리스트 (상태 + 부서코드) -->
+	<select id="selectByFilterFromTo" parameterType="map" resultType="map">
+	      select * from (
+		    select rownum as rnum, a.* from (
+		      select a.pto_seq, a.member_email, a.pto_content, a.pto_start_at, a.pto_end_at, a.pto_status, a.pto_used,
+		             m.name as member_name, m.dept_code, d.dept_name, m.level_code
+		      from pto_request a
+		      join member m on a.member_email = m.email
+		      join department d on m.dept_code = d.dept_code
+		      where m.company_code = #{company_code}
+		      <if test="status != null and status != ''">and a.pto_status = #{status}</if>
+		      <if test="deptCode != null and deptCode != ''">and m.dept_code = #{deptCode}</if>
+		      order by a.pto_seq desc
+		    ) a where rownum &lt;= #{end}
+		  ) where rnum &gt;= #{start}
+
+
+	
+	
+		<!-- select * from (
+		  select rownum as rnum, a.* from (
+		    select a.pto_seq, a.member_email, a.pto_content, a.pto_start_at, a.pto_end_at, a.pto_status,
+		           m.name as member_name, m.dept_code, d.dept_name, m.level_code
+		    from pto_request a
+		    join member m on a.member_email = m.email
+		    join department d on m.dept_code = d.dept_code
+		    <trim prefix="where" prefixOverrides="and |or ">
+		      <if test="status != null and status != ''">
+		        and a.pto_status = #{status}
+		      </if>
+		      <if test="deptCode != null and deptCode != ''">
+		        and m.dept_code = #{deptCode}
+		      </if>
+		    </trim>
+		    order by a.pto_seq desc
+		  ) a where rownum &lt;= #{end}
+		) where rnum &gt;= #{start}-->
+	</select>
+
+
+  <!-- 전체 개수 -->
+  <select id="getCount" resultType="int">
+    SELECT COUNT(*) FROM pto_request
+  </select>
+
+
+  <!-- 필터된 개수 -->
+  <select id="getCountByFilter" parameterType="map" resultType="int">
+<!--SELECT COUNT(*)
+    FROM pto_request a
+    JOIN member m ON a.member_email = m.email
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+      <if test="status != null and status != ''">
+        AND a.pto_status = #{status}
+      </if>
+      <if test="deptCode != null and deptCode != ''">
+        AND m.dept_code = #{deptCode}
+      </if>
+    </trim>-->
+    select count(*)
+	  from pto_request a
+	  join member m on a.member_email = m.email
+	  where m.company_code = #{company_code}
+	  <if test="status != null and status != ''">and a.pto_status = #{status}</if>
+	  <if test="deptCode != null and deptCode != ''">and m.dept_code = #{deptCode}</if>
+  </select>
+
+
+  <!-- 상태 업데이트 -->
+  <update id="updateStatus" parameterType="map">
+    UPDATE pto_request
+    SET pto_status = #{newStatus}
+    WHERE pto_seq = #{targetseq}
+  </update>
+
+
+  <!-- 디테일 하나 가져오기 -->
+	<select id="toDetailPtoRequest" resultType="com.kedu.pto_request.Pto_requestDTO">
+	  SELECT 
+	      p.pto_seq, m.name AS member_email,p.pto_start_at,p.pto_end_at,p.pto_used,p.pto_content,p.pto_status, p.pto_used
+	  FROM pto_request p JOIN member m ON p.member_email = m.email
+	  WHERE p.pto_seq = #{pto_seq}
+	</select>
+	
+	<!-- pto 삭감 -->
+	<update id="subtractPto">
+	    update member_pto set remaining_pto = remaining_pto - (#{pto_used} / 8)
+	    where member_email = #{member_email} and remaining_pto >= #{pto_used}
+	</update>
+
+</mapper>

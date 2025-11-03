@@ -1,24 +1,25 @@
 package com.kedu.members.commute;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 /*
- 	ê·¼íƒœ ê´€ë¦¬ìš© DTO
+ 	±ÙÅÂ °ü¸®¿ë DTO
  
  */
 
 public class CommuteDTO {
-	private String member_email; // ì‚¬ì› ê³ ìœ  ì•„ì´ë””
-	private String lateness; // ì§€ê°ì—¬ë¶€ ( default: n , y )
-	private String leave_early; // ì¡°í‡´ì—¬ë¶€ ( default: n , y )
-	private String absence; // ê²°ê·¼ì—¬ë¶€ ( default : ì¶œê·¼, ì—°ì°¨, ê²°ê·¼ )
-	private Timestamp work_at; // ì¶œê·¼ì‹œê°„
-	private Timestamp leave_at; // í‡´ê·¼ì‹œê°„
-	private Timestamp commute_at; // ì˜¤ëŠ˜ ë‚ ì§œ ( default : sysdate )
+	private String member_email; // »ç¿ø °íÀ¯ ¾ÆÀÌµğ
+	private String lateness; // Áö°¢¿©ºÎ ( default: n , y )
+	private String leave_early; // Á¶Åğ¿©ºÎ ( default: n , y )
+	private String absence; // °á±Ù¿©ºÎ ( default : Ãâ±Ù, ¿¬Â÷, °á±Ù )
+	private Timestamp work_at; // Ãâ±Ù½Ã°£
+	private Timestamp leave_at; // Åğ±Ù½Ã°£
+	private LocalDate  commute_at; // ¿À´Ã ³¯Â¥ ( default : sysdate )
 	
 	public CommuteDTO () {}
 	public CommuteDTO(String member_email, String lateness, String leave_early, String absence, Timestamp work_at,
-			Timestamp leave_at, Timestamp commute_at) {
+			Timestamp leave_at, LocalDate commute_at) {
 		super();
 		this.member_email = member_email;
 		this.lateness = lateness;
@@ -64,10 +65,10 @@ public class CommuteDTO {
 	public void setLeave_at(Timestamp leave_at) {
 		this.leave_at = leave_at;
 	}
-	public Timestamp getCommute_at() {
+	public LocalDate getCommute_at() {
 		return commute_at;
 	}
-	public void setCommute_at(Timestamp commute_at) {
+	public void setCommute_at(LocalDate commute_at) {
 		this.commute_at = commute_at;
 	}
 	

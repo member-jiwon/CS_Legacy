@@ -80,4 +80,13 @@ lombok.config
 # ========================
 node_modules/
 dist/
-"target/m2e-wtp/web-resources/META-INF/maven/com.kedu/controllers/pom.properties" 
+
+
+
+# ========================
+# Google Cloud Service Account Key (보안상 필수 제외)
+# ========================
+# GCP 키 파일은 절대 커밋하지 않음
+# 실제 경로: src/main/resources/google/gcp-key.json
+src/main/resources/google/
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Commute">
+  <!-- 1️.근태관리 -->
+<select id="getAttendanceStats" parameterType="map" resultType="map">
+  SELECT STATUS, COUNT(*) AS CNT
+  FROM (
+      SELECT 
+          c.MEMBER_EMAIL,
+          CASE 
+              WHEN c.WORK_AT IS NOT NULL THEN '출근'
+              WHEN c.WORK_AT IS NULL 
+                   AND EXISTS (
+                       SELECT 1 FROM PTO_REQUEST p
+                       WHERE p.MEMBER_EMAIL = c.MEMBER_EMAIL
+                         AND p.PTO_STATUS = 'y'
+                         AND TRUNC(c.COMMUTE_AT) BETWEEN TRUNC(p.PTO_START_AT) AND TRUNC(p.PTO_END_AT)
+                   )
+                   THEN '연차'
+              ELSE '결근'
+          END AS STATUS
+      FROM MEMBER m
+      JOIN COMMUTE c ON m.EMAIL = c.MEMBER_EMAIL
+      WHERE TRUNC(c.COMMUTE_AT) BETWEEN #{startDate, jdbcType=DATE} AND #{endDate, jdbcType=DATE}
+  )
+  GROUP BY STATUS
+</select>
+
+  <!-- 2️. 출근관리 -->
+<select id="getWorkStats" parameterType="map" resultType="map">
+  SELECT
+    NVL(SUM(CASE WHEN c.LATENESS = 'n' THEN 1 ELSE 0 END), 0) AS "정근",
+    NVL(SUM(CASE WHEN c.LATENESS = 'y' THEN 1 ELSE 0 END), 0) AS "지각"
+  FROM COMMUTE c
+  WHERE TRUNC(c.COMMUTE_AT) BETWEEN #{start, jdbcType=DATE} AND #{end, jdbcType=DATE}
+</select>
+
+<!-- 3️⃣ 전자결재 처리현황 -->
+<select id="getApprovalStats" parameterType="map" resultType="map">
+  SELECT
+    NVL(SUM(CASE WHEN a.APPROVAL_STATUS = 'w' THEN 1 ELSE 0 END), 0) AS "처리중",
+    NVL(SUM(CASE WHEN a.APPROVAL_STATUS = 'n' THEN 1 ELSE 0 END), 0) AS "반려",
+    NVL(SUM(CASE WHEN a.APPROVAL_STATUS = 'y' THEN 1 ELSE 0 END), 0) AS "승인"
+  FROM APPROVAL a
+  JOIN MEMBER m ON a.MEMBER_EMAIL = m.EMAIL
+  WHERE TRUNC(a.APPROVAL_AT) BETWEEN #{start, jdbcType=DATE} AND #{end, jdbcType=DATE}
+  <if test="type == '팀별'">
+    AND m.DEPT_CODE = #{sessionDeptCode}
+  </if>
+</select>
+ 
+
+</mapper>

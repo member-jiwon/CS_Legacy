@@ -1,19 +1,19 @@
 package com.kedu.pto_request;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 /*
-	연차 신청용 DTO	
+	�뿰李� �떊泥��슜 DTO	
 */
 public class Pto_requestDTO {
-private int pto_seq; // 연차 고유번호
-private String member_email; // 사원 고유 아이디
-private Timestamp pto_start_at; // 연차 시작 날짜 
-private Timestamp pto_end_at; // 연차 종료 날짜
-private int pto_used; // 연차 총 소모 일수 
-private String pto_content; // 연차 사유
-private String all_day; // 종일 여부 (default: y, 단일: n)
-private String pto_status; // 연차 승인 상태 ( default: w(대기), 반려: n, 승인: y )
+private int pto_seq; // �뿰李� 怨좎쑀踰덊샇
+private String member_email; // �궗�썝 怨좎쑀 �븘�씠�뵒
+private Timestamp pto_start_at; // �뿰李� �떆�옉 �궇吏� 
+private Timestamp pto_end_at; // �뿰李� 醫낅즺 �궇吏�
+private int pto_used; // �뿰李� 珥� �냼紐� �씪�닔 
+private String pto_content; // �뿰李� �궗�쑀
+private String all_day; // 醫낆씪 �뿬遺� (default: y, �떒�씪: n)
+private String pto_status; // �뿰李� �듅�씤 �긽�깭 ( default: w(��湲�), 諛섎젮: n, �듅�씤: y )
 
 public Pto_requestDTO() {}
 public Pto_requestDTO(int pto_seq, String member_email, Timestamp pto_start_at, Timestamp pto_end_at, int pto_used,
