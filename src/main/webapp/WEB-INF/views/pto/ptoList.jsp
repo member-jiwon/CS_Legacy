@@ -281,9 +281,10 @@
 	
 	      // 성공 시
 	      alert(statusMap[resp] + " 상태로 변경되었습니다.");
-	      row.find(".status-btn").prop("disabled", true).addClass("disabled-btn");
 	      row.find(".status-btn").removeClass("active");
 	      row.find(`.status-btn[data-value='${resp}']`).addClass("active");
+	      row.find(".status-btn").prop("disabled", true).addClass("disabled-btn");
+	      location.reload();
 	    },
 	    error: function () {
 	      alert("서버 요청 실패");
