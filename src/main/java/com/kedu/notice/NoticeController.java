@@ -23,7 +23,7 @@ public class NoticeController {
 	@Autowired
 	private FileService fileService;
 
-	/* 공지사항 목록 */
+	/* 怨듭��궗�빆 紐⑸줉 */
 	@GetMapping("/list")
 	public String noticeList(Model model) {
 		List<NoticeDTO> notices = noticeService.getAllNotices();
@@ -32,54 +32,54 @@ public class NoticeController {
 
 	}
 
-	/* 공지사항 등록 페이지 */
+	/* 怨듭��궗�빆 �벑濡� �럹�씠吏� */
 	@GetMapping("/post")
 	public String boardPost() {
 		return "board/boardPost";
 	}
 
-	/* 공지사항 등록 처리 */
+	/* 怨듭��궗�빆 �벑濡� 泥섎━ */
 	@PostMapping("/post")
 	public String boardPost(@ModelAttribute NoticeDTO dto,
 			@RequestParam(value = "file", required = false) MultipartFile file, HttpSession session) {
 
 		String email = (String) session.getAttribute("loginEmail");
 		if (email == null)
-			email = "admin@company.com"; // 테스트용
+			email = "admin@company.com"; // �뀒�뒪�듃�슜
 		dto.setWriter_email(email);
 		dto.setCompany_code("COMP001");
 
 		noticeService.insertNotice(dto);
 
-		// 파일 업로드 처리
+		// �뙆�씪 �뾽濡쒕뱶 泥섎━
 		if (file != null && !file.isEmpty()) {
 			FileDTO fileDTO = new FileDTO();
 			fileDTO.setMember_email(email);
 			fileDTO.setParent_seq(dto.getNotice_seq());
-			fileDTO.setSysname(file.getOriginalFilename()); // 실제는 서버에 저장 후 이름 넣어야 함
-			fileDTO.setOryname(file.getOriginalFilename());
+			fileDTO.setSysname(file.getOriginalFilename()); // �떎�젣�뒗 �꽌踰꾩뿉 ���옣 �썑 �씠由� �꽔�뼱�빞 �븿
+			//fileDTO.setOryname(file.getOriginalFilename());
 			fileDTO.setFile_type("NOTICE");
-			fileService.saveFile(fileDTO, file);
+			//fileService.saveFile(fileDTO, file);
 		}
 
 		return "redirect:/notice/list";
 	}
 
-	/* 공지사항 상세페이지 + 조회수 증가 */
+	/* 怨듭��궗�빆 �긽�꽭�럹�씠吏� + 議고쉶�닔 利앷� */
 	@GetMapping("/detail")
 	public String noticeDetail(@RequestParam("notice_seq") int notice_seq, Model model) {
-		noticeService.increaseViewCount(notice_seq); // 조회수 증가
+		noticeService.increaseViewCount(notice_seq); // 議고쉶�닔 利앷�
 		NoticeDTO notice = noticeService.selectNoticeById(notice_seq);
 
-		// 첨부파일 조회 - 파일 목록 추가 (FileService 사용 시)
-		List<FileDTO> files = fileService.getFilesByParentSeq(notice_seq, "NOTICE");
+		// 泥⑤��뙆�씪 議고쉶 - �뙆�씪 紐⑸줉 異붽� (FileService �궗�슜 �떆)
+		List<FileDTO> files = fileService.getFilesByParent(notice_seq, "NOTICE");
 		notice.setFiles(files);
 
 		model.addAttribute("notice", notice);
 		return "board/boardDatail";
 	}
 
-	/* 공지사항 수정 페이지 */
+	/* 怨듭��궗�빆 �닔�젙 �럹�씠吏� */
 	@GetMapping("/edit")
 	public String editNotice(@RequestParam("notice_seq") int notice_seq, Model model) {
 		NoticeDTO notice = noticeService.selectNoticeById(notice_seq);
@@ -87,14 +87,14 @@ public class NoticeController {
 		return "board/boardDatail";
 	}
 
-	/* 공지사항 수정 처리 */
+	/* 怨듭��궗�빆 �닔�젙 泥섎━ */
 	@PostMapping("/edit")
 	public String updateNotice(@ModelAttribute NoticeDTO dto,
 			@RequestParam(value = "file", required = false) MultipartFile file, HttpSession session) {
 
 		String email = (String) session.getAttribute("loginEmail");
 		if (email == null)
-			email = "admin@company.com"; // 테스트용
+			email = "admin@company.com"; // �뀒�뒪�듃�슜
 		dto.setWriter_email(email);
 
 		noticeService.updateNotice(dto);
@@ -104,15 +104,15 @@ public class NoticeController {
 			fileDTO.setMember_email(email);
 			fileDTO.setParent_seq(dto.getNotice_seq());
 			fileDTO.setSysname(file.getOriginalFilename());
-			fileDTO.setOryname(file.getOriginalFilename());
+			//fileDTO.setOryname(file.getOriginalFilename());
 			fileDTO.setFile_type("NOTICE");
-			fileService.saveFile(fileDTO, file);
+			//fileService.saveFile(fileDTO, file);
 		}
 
 		return "redirect:/notice/detail?notice_seq=" + dto.getNotice_seq();
 	}
 
-	/* 공지사항 삭제 처리 */
+	/* 怨듭��궗�빆 �궘�젣 泥섎━ */
 	@PostMapping("/delete")
 	public String deleteNotice(@RequestParam("notice_seq") int notice_seq) {
 		noticeService.deleteNotice(notice_seq);

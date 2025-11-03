@@ -8,9 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+//import com.kedu.admin.company.EmailAuthService;
 /*
-  		 회사 정보 이용 기능 구현 controller
+  		 �쉶�궗 �젙蹂� �씠�슜 湲곕뒫 援ы쁽 controller
 */
 
 @Controller
@@ -22,33 +22,37 @@ public class CompanyController {
 	private EmailAuthService emailService;
 	
 	
-	// 로그인
+	// 濡쒓렇�씤
 	@RequestMapping("/login")
 	public String login(CompanyDTO dto,  Model m, HttpSession session) {
-		int result = CompanyService.login(dto);
-		if(result > 0) {
-			session.setAttribute("id", dto.getAdmin_email());
-			m.addAttribute("id", dto.getAdmin_email());
-			return "commute/commute";
+		CompanyDTO result = CompanyService.login(dto);
+		if(result!=null) {
+			session.setAttribute("id", result.getAdmin_email());
+			//m.addAttribute("id", dto.getAdmin_email()); 모델붙이면 쿼맆라미터로 값 전달되서 지움
+			
+			//세션에 회사이름도 저장해 놓아야지 해당이름으로 거를 수 있음
+			System.out.println("회사코드:"+result.getCompany_code());
+			session.setAttribute("company_code", result.getCompany_code());
+			return "redirect:/commute";//지원이 바꿔놓음 : 근태관리 내용가져오는 컨트롤러랑 매핑시킴
 		}else {
 			return "redirect:/";
 		}
 	}
 	
-	// 비밀번호 찾기 폼 이동
+	// 鍮꾨�踰덊샇 李얘린 �뤌 �씠�룞
 	@RequestMapping("/findpwPage")
 	public String findpwPage() {
 		return "findpw/findpw";
 	}
 	
-	// 존재하는 관리자인지 검색
+	// 議댁옱�븯�뒗 愿�由ъ옄�씤吏� 寃��깋
 	@RequestMapping("/emilAuth")
 	@ResponseBody
 	public int emailAuth(CompanyDTO dto) {
 		return CompanyService.emailAuth(dto);
 	}
 	
-	// 이메일 인증 발송
+	// �씠硫붿씪 �씤利� 諛쒖넚
 	@RequestMapping("/emailCheck")
 	@ResponseBody
 	public String emailCheck(CompanyDTO dto) throws Exception{
@@ -57,18 +61,18 @@ public class CompanyController {
 		if(result!=null) {
 			return result;
 		}else {
-			return "실패";
+			return "�떎�뙣";
 		}
 	}
 	
-	// 비밀번호 재설정 화면 이동
+	// 鍮꾨�踰덊샇 �옱�꽕�젙 �솕硫� �씠�룞
 	@RequestMapping("/gnewpw")
 	public String gnewpw(CompanyDTO dto, Model m) {
 		m.addAttribute("admin_email", dto.getAdmin_email());
 		return "findpw/gnewpw";
 	}
 	
-	// 비밀번호 재설정
+	// 鍮꾨�踰덊샇 �옱�꽕�젙
 	@RequestMapping("/updatePw")
 	public String updatePw(CompanyDTO dto, Model m) {
 		int result = CompanyService.updatePw(dto);
@@ -81,11 +85,11 @@ public class CompanyController {
 	}
 	
 	
-	// 예외 처리
+	// �삁�쇅 泥섎━
     @ExceptionHandler
     public String handleMessagingException(Exception e, Model model) {
         e.printStackTrace();
-        model.addAttribute("errorMessage", "이메일 발송 중 오류가 발생했습니다.");
-        return "emailError"; // emailError.jsp 로 포워딩
+        model.addAttribute("errorMessage", "�씠硫붿씪 諛쒖넚 以� �삤瑜섍� 諛쒖깮�뻽�뒿�땲�떎.");
+        return "emailError"; // emailError.jsp 濡� �룷�썙�뵫
     }
 }

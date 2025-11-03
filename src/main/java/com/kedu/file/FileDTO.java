@@ -1,6 +1,6 @@
 package com.kedu.file;
 /*
-	파일 업로드 및 다운로드 DTO
+	�뙆�씪 �뾽濡쒕뱶 諛� �떎�슫濡쒕뱶 DTO
 */
 
 import java.sql.Timestamp;
@@ -9,29 +9,24 @@ public class FileDTO {
 	private int file_seq; // 파일 고유번호
 	private String member_email; // 사원 고유 아이디 (올린이)
 	private String sysname; // 시스템 저장 파일명
-	private String oryname; // 원본 파일명
-	private String oriname; // DB 컬럼명과 맞춤
+	private String oriname; // 원본 파일명
 	private Timestamp upload_at; // 업로드 날짜 ( default : sysdate )
-	private String file_type; // DB 컬럼명과 맞춤
-	private Integer parent_seq; // null 처리 가능하도록 Integer
-
-	public FileDTO() {
-	}
+	private String file_type; // 파일 종류 코드
+	private int parent_seq; // 부모 시퀀스
 	
-	public FileDTO(int file_seq, String member_email, String sysname, String oryname, String oriname,
-			Timestamp upload_at, String file_type, Integer parent_seq) {
+	public FileDTO() {}
+
+	public FileDTO(int file_seq, String member_email, String sysname, String oriname, Timestamp upload_at,
+			String file_type, int parent_seq) {
 		super();
 		this.file_seq = file_seq;
 		this.member_email = member_email;
 		this.sysname = sysname;
-		this.oryname = oryname;
 		this.oriname = oriname;
 		this.upload_at = upload_at;
 		this.file_type = file_type;
 		this.parent_seq = parent_seq;
 	}
-
-
 
 	public int getFile_seq() {
 		return file_seq;
@@ -55,14 +50,6 @@ public class FileDTO {
 
 	public void setSysname(String sysname) {
 		this.sysname = sysname;
-	}
-
-	public String getOryname() {
-		return oryname;
-	}
-
-	public void setOryname(String oryname) {
-		this.oryname = oryname;
 	}
 
 	public String getOriname() {
@@ -89,12 +76,13 @@ public class FileDTO {
 		this.file_type = file_type;
 	}
 
-	public Integer getParent_seq() {
+	public int getParent_seq() {
 		return parent_seq;
 	}
 
-	public void setParent_seq(Integer parent_seq) {
+	public void setParent_seq(int parent_seq) {
 		this.parent_seq = parent_seq;
 	}
-
+	
 }
+

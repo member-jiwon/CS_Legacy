@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /*
-  	부서 설정 등 관련 기능 구현 DAO
+  	遺��꽌 �꽕�젙 �벑 愿��젴 湲곕뒫 援ы쁽 DAO
 */
 
 @Repository
 public class DepartmentDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
-	
+
 	// 부서 리스트
 	public List<DepartmentDTO> getAllDept(){
 		return mybatis.selectList("Dept.getAllDept");
@@ -35,4 +35,10 @@ public class DepartmentDAO {
 		return mybatis.delete("Dept.deleteDepartment", dept_code);
 	}
 	
+	
+	//존재하는 모든 부서코드 리스트로 뽑아오기
+	public List<DepartmentDTO> getAllDeptCode(String company_code){
+		return mybatis.selectList("Department.getAllDeptCode",company_code);
+	}
+
 }

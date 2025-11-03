@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /*
-  		 회사 정보 이용 기능 구현 service
+  		 �쉶�궗 �젙蹂� �씠�슜 湲곕뒫 援ы쁽 service
 */
 
 @Service
@@ -12,18 +12,19 @@ public class CompanyService {
 	@Autowired
 	private CompanyDAO dao;
 	
-	// 로그인
-	public int login(CompanyDTO dto) {
-		dto.setPw(com.kedu.common.Encryptor.encrypt(dto.getPw()));
-		return dao.login(dto);
+	// dto 반환으로 변경, 회사코드 세션에 저장하기 위해서
+	public CompanyDTO login(CompanyDTO dto) {
+	    dto.setPw(com.kedu.common.Encryptor.encrypt(dto.getPw()));
+	    return dao.login(dto); // 로그인 성공 시 CompanyDTO 객체 반환
 	}
+
 	
-	// 존재하는 관리자인지 검색
+	// 議댁옱�븯�뒗 愿�由ъ옄�씤吏� 寃��깋
 	public int emailAuth(CompanyDTO dto) {
 		return dao.emailAuth(dto);
 	}
 	
-	// 비밀번호 재설정
+	// 鍮꾨�踰덊샇 �옱�꽕�젙
 	public int updatePw(CompanyDTO dto) {
 		dto.setPw(com.kedu.common.Encryptor.encrypt(dto.getPw()));
 		return dao.updatePw(dto);

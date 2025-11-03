@@ -10,11 +10,10 @@ public class DepartmentDTO {
 	// 추가 필드
 	private int employeeCount; // 부서 직원 수
 	private Date create_date; // 부서 생성일
-
-	public DepartmentDTO() {
-	}
-
-	public DepartmentDTO(String dept_code, String dept_name, String company_code, int employeeCount, Date create_date) {
+	
+	public DepartmentDTO() {}
+	public DepartmentDTO(String dept_code, String dept_name, String company_code) {
+		super();
 		this.dept_code = dept_code;
 		this.dept_name = dept_name;
 		this.company_code = company_code;
@@ -22,7 +21,6 @@ public class DepartmentDTO {
 		this.create_date = create_date;
 	}
 
-	// getter & setter
 	public String getDept_code() {
 		return dept_code;
 	}
@@ -62,4 +60,5 @@ public class DepartmentDTO {
 	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
 	}
+
 }

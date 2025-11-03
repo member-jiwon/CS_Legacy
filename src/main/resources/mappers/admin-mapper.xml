@@ -5,9 +5,13 @@
   
   
 <mapper namespace="Admin">
-	<select id="login" resultType="int" parameterType="com.kedu.admin.company.CompanyDTO">
-		select count(*) from company where admin_email = #{admin_email} and pw = #{pw}
+	<select id="login" resultType="com.kedu.admin.company.CompanyDTO" parameterType="com.kedu.admin.company.CompanyDTO">
+	  select company_seq, admin_email, pw, company_name, company_code, work_at, leave_at, pto_date
+	  from company
+	  where admin_email = #{admin_email} and pw = #{pw}
+
 	</select>
+
 	
 	<select id="emailAuth" resultType="int" parameterType="com.kedu.admin.company.CompanyDTO">
 		select count(*) from company where admin_email = #{admin_email}
