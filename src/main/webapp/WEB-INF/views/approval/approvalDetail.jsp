@@ -13,6 +13,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
             crossorigin="anonymous"><!-- 부트스트랩 -->
+
 <link rel="stylesheet" href="<c:url value='/resources/css/approval/approvalDetail.css'/>"><!--css 파일-->
 <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script><!-- dayjs라이브러리 -->
 
@@ -51,7 +52,7 @@
 		
 		                <div class="div4">
 		                    <div class ="div5">
-		                        <div class = "div6 div6_left" id="unseen">${dto.member_email}</div>
+		                        <div class = "div6 div6_left" id="unseen">${name}</div>
 		                        <div class="div6 div6_center" id="approvalDate"></div>
 		                        <div class="div6 div6_right" id="approvalStatus"></div>
 		                    </div>
@@ -71,9 +72,9 @@
 		
 					<!-- 버늩영역 -->
 		            <div class="btns">
-						<button onclick="history.back()">뒤로가기</button>
-						<button type="button" onclick='handleStatus("y")' class="waiting">승인</button>
-						<button type="button" onclick='handleStatus("n")'class="waiting">반려</button>
+						<button onclick="history.back()" id="btn3">뒤로가기</button>
+						<button type="button" onclick='handleStatus("n")'class="waiting" id="btn2">반려</button>
+						<button type="button" onclick='handleStatus("y")' class="waiting"  id="btn1">승인</button>
 		            </div>
 		        </div>
 		
@@ -119,14 +120,25 @@ $("#approvalDate").text(dayjs(dtoJson.approval_at).format("YYYY-MM-DD"));
 
 // 2️. 상태 코드 -> 한글 변환
 const statusMap = {
-  "w": "대기중",
+  "w": "대기",
   "n": "반려",
   "y": "승인"
 };
 
 // 3️. 매핑 후 표시 (기본값은 '알 수 없음')
 const statusText = statusMap[dtoJson.approval_status] || "알 수 없음";
-$("#approvalStatus").text(statusText);
+const $statusDiv = $("#approvalStatus");
+$statusDiv.text(statusText);
+
+// 상태별 색상 클래스 추가
+$statusDiv.removeClass("inProgress approved denied"); // 혹시 이전 클래스가 남아 있을 경우 초기화
+if (statusText === "대기") {
+  $statusDiv.addClass("inProgress");
+} else if (statusText === "승인") {
+  $statusDiv.addClass("approved");
+} else if (statusText === "반려") {
+  $statusDiv.addClass("denied");
+}
 
 
 //3. 승인하기, 반려버튼 눌럿을때
@@ -139,11 +151,26 @@ const handleStatus = (type)=>{
         type: "post",
         data: { targetseq, newStatus },
         success: function (resp) {
-        	const statusMap = { w: "대기중", n: "반려", y: "승인" };
-            $("#approvalStatus").text(statusMap[resp]);
-            handleHideButton();
-            alert("상태가 '" + statusMap[resp] + "' 으로 변경되었습니다.");
-        },
+        	  const statusMap = { w: "대기", n: "반려", y: "승인" };
+        	  const text = statusMap[resp];
+        	  const $statusDiv = $("#approvalStatus"); // 기존 상태 div 가져오기
+
+        	  // 상태 텍스트 갱신
+        	  $statusDiv.text(text);
+
+        	  // 색상 클래스도 함께 갱신
+        	  $statusDiv.removeClass("inProgress approved denied");
+        	  if (text === "대기") {
+        	    $statusDiv.addClass("inProgress");
+        	  } else if (text === "승인") {
+        	    $statusDiv.addClass("approved");
+        	  } else if (text === "반려") {
+        	    $statusDiv.addClass("denied");
+        	  }
+
+        	  handleHideButton();
+        	  alert("상태가 '" + text + "' 상태로 변경되었습니다.");
+        	},
         error: function () {
           alert("업데이트 실패");
         }
@@ -153,7 +180,7 @@ const handleStatus = (type)=>{
 //4. 상태 따라 버튼 숨기기
 const handleHideButton = ()=>{
 	const currrentStatus =$("#approvalStatus").text();
-	if (currrentStatus !== "대기중") {
+	if (currrentStatus !== "대기") {
 	    // 대기 상태가 아닐 경우 승인/반려 버튼 숨김
 	    $(".waiting").hide();
 	  }

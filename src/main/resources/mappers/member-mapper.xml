@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Member">
+
+<!-- 이메일로 이름 뽑기 -->
+	<select id="getNameByEmail" resultType="String">
+		select name from member where email =#{member_email} 
+	</select>
+ 		
+</mapper>

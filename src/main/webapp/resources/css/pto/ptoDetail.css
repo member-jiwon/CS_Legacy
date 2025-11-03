@@ -17,6 +17,22 @@ body, html {
     background-color: var(--color-white);
     overflow: hidden;
 }
+.inProgress {
+  color: #B0B0B0;
+  font-weight: 500;
+}
+
+.approved {
+  color: #0090FF; 
+  font-weight: 600;
+}
+
+.denied {
+  color:  #ED7833;
+  font-weight: 600;
+}
+
+
 
 .header {
     width: 100%;
@@ -63,7 +79,7 @@ body, html {
     border: 1px solid #8c8c8c;
 
      align-self: stretch;
-     height: 90%;
+     height: 80vh;
      display: flex;
      flex-direction: column;
      align-items: center;
@@ -113,6 +129,7 @@ flex-shrink: 0;
   align-items: center;
 }
 .div6_left {
+  padding-left:10px;
   flex: 1;
 }
 .div6_right {
@@ -129,10 +146,15 @@ flex-shrink: 0;
      
 }
 .txt {
-    overflow-y: auto;
-     width: 100%;
-     height: 100%;
-     padding: 5px;
+      overflow-y: auto;      
+	  overflow-x: hidden;      
+	  width: 100%;
+	  height: 100%;
+	  padding: 5px;
+	
+	  white-space: normal;    
+	  word-wrap: break-word;    
+	  word-break: break-word;   
 }
 
 /*버튼*/
@@ -159,16 +181,32 @@ button{
      justify-content: center;
      padding: 16px;
      box-sizing: border-box;
+     border:none;
 }
-.btn1{ /*파랑*/
-    background-color: #0090ff;
+#btn1{ /*파랑
+	color: var(--color-white)  !important;
+    background-color: var(--color-primary)  !important;*/
+    background-color: #0090FF;
 }
-.btn2{/*주황*/
-    color: #ed7833;
-    background-color: #ffceb1;
+#btn1:hover{ /*파랑*/
+    background-color: var(--color-hover)  !important;
 }
-.btn3{/*회색*/
-    background-color: #d9d9d9;
+
+#btn2{/*주황
+    color: var(--color-white)  !important;
+    background-color: var(--color-delete)  !important;*/
+    background-color: #FFCEB1;
+}
+#btn2:hover{ /*주황*/
+    background-color: var(--color-delete-hover)  !important;
+}
+#btn3{/*회색
+	color: var(--color-white) !important; 
+    background-color: var(--color-font-back)  !important;*/
+    background-color: #D9D9D9;
+}
+#btn3:hover{ /*회색*/
+    background-color: var(--color-back-hover)  !important;
 }
 
 /*수정영역*/

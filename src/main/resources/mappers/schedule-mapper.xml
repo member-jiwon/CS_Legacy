@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Schedule">
+<!-- 휴가 승인나면 스케줄 입력 -->
+
+  <insert id="insertPtoSchedule" parameterType="com.kedu.schedule.ScheduleDTO">
+    insert into schedule (schedule_seq,member_email,title,all_day,color,start_at,end_at,created_at,chat_seq)
+    values (
+        schedule_seq.NEXTVAL,
+        #{member_email, jdbcType=VARCHAR},
+        #{title, jdbcType=VARCHAR},
+        #{all_day, jdbcType=CHAR},
+        #{color, jdbcType=VARCHAR},
+        #{start_at, jdbcType=TIMESTAMP},
+        #{end_at, jdbcType=TIMESTAMP},
+        NVL(#{created_at, jdbcType=TIMESTAMP}, SYSDATE),
+        #{chat_seq, jdbcType=NUMERIC}
+    )
+  </insert>
+
+
+
+
+</mapper>

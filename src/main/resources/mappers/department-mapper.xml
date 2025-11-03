@@ -7,7 +7,7 @@
 
   	<!-- 부서리스트 가져오기 -->
   	<select id="getAllDeptCode" resultType="com.kedu.admin.department.DepartmentDTO">
-  		select * from department 
+  		select * from department where company_code = #{company_code}
   	</select>
   		
 </mapper>

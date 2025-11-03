@@ -12,22 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kedu.approval.ApprovalDTO;
+import com.kedu.schedule.ScheduleService;
 
 
-/*
- * 		�뿰李� �떊泥� 湲곕뒫 愿��젴 service
- * */
 
 @Service
 public class Pto_requestService {
 	@Autowired
 	private Pto_requestDAO dao;
-	
-    /**
-     * DB 결과값을 JSON 직렬화-friendly한 Map으로 변환
-     * - CLOB, TIMESTAMP 등 안전하게 문자열로 변환
-     * - JSP에서 Gson으로 JSON 출력 시 에러 방지
-     */
+	@Autowired
+    private ScheduleService scheduleService;
+
+    // DB 결과값을 JSON 직렬화
     private List<Map<String, Object>> sanitizeForJson(List<Map<String, Object>> list) {
         List<Map<String, Object>> sanitized = new ArrayList<>();
         if (list == null) return sanitized;
@@ -62,27 +58,26 @@ public class Pto_requestService {
         return sanitized;
     }
 	
-    /**
-     * 페이지 범위 내 전체 리스트 조회
-     */
-    public List<Map<String, Object>> selectAllFromTo(int start, int end) {
-        Map<String, Object> param = new HashMap<>();
-        param.put("start", start);
-        param.put("end", end);
 
-        List<Map<String, Object>> result = dao.selectAllFromTo(param);
-        return sanitizeForJson(result);
-    }
+     //페이지 범위 내 전체 리스트 조회
+		/*
+		 * public List<Map<String, Object>> selectAllFromTo(int start, int end) {
+		 * Map<String, Object> param = new HashMap<>(); param.put("start", start);
+		 * param.put("end", end);
+		 * 
+		 * List<Map<String, Object>> result = dao.selectAllFromTo(param); return
+		 * sanitizeForJson(result); }
+		 */
     
-    /**
-     * 필터 조건(status, deptCode)에 따른 조회
-     */
-    public List<Map<String, Object>> selectByFilterFromTo(String status, String deptCode, int start, int end) {
+
+     //필터 조건(status, deptCode)에 따른 조회
+    public List<Map<String, Object>> selectByFilterFromTo(String status, String deptCode, int start, int end, String company_code) {
         Map<String, Object> param = new HashMap<>();
         param.put("status", status);
         param.put("deptCode", deptCode);
         param.put("start", start);
         param.put("end", end);
+        param.put("company_code", company_code);
 
         List<Map<String, Object>> result = dao.selectByFilterFromTo(param);
         return sanitizeForJson(result);
@@ -91,17 +86,18 @@ public class Pto_requestService {
     /**
      * 전체 레코드 개수 조회
      */
-    public int getRecordTotalCount() {
-        return dao.getCount();
-    }
+//    public int getRecordTotalCount() {
+//        return dao.getCount();
+//    }
 
     /**
      * 필터 조건 적용 시 총 개수 조회
      */
-    public int getCountByFilter(String status, String deptCode) {
+    public int getCountByFilter(String status, String deptCode, String company_code) {
         Map<String, Object> param = new HashMap<>();
         param.put("status", status);
         param.put("deptCode", deptCode);
+        param.put("company_code", company_code);
         return dao.getCountByFilter(param);
     }
     
@@ -118,6 +114,57 @@ public class Pto_requestService {
     // 디테일 페이지
     public Pto_requestDTO toDetailPtoRequest(int pto_seq) {
     	return dao.toDetailPtoRequest(pto_seq);
+    }
+    
+    
+    // 연차 승인 + 거절 로직
+    public String processStatusUpdate( int targetseq, String newStatus, int pto_used,
+    	    							String member_email, Timestamp pto_start_at, Timestamp pto_end_at) {
+    	    try {
+    	        if ("y".equals(newStatus)) {//승인 이면
+    	            //1. PTO 차감
+    	            int temp = subtractPto(pto_used, member_email);
+    	            if (temp <= 0) {
+    	                System.out.println("PTO 잔여일 부족 또는 차감 실패");
+    	                return "lack";
+    	            }
+    	            // 2️. 상태 업데이트
+    	            int result = updateStatus(targetseq, newStatus);
+    	            if (result <= 0) {
+    	                System.out.println("상태 업데이트 실패");
+    	                return "fail";
+    	            }
+    	            // 3️. 스케줄 등록
+    	            try {
+    	                scheduleService.insertPtoSchedule(member_email, pto_start_at, pto_end_at);
+    	            } catch (Exception e) {
+    	                e.printStackTrace();
+    	                System.out.println("스케줄 등록 실패 (승인은 완료)");
+    	            }
+    	            return newStatus;
+
+    	            
+    	        } else if ("n".equals(newStatus)) {// 반려라면
+    	            updateStatus(targetseq, newStatus);
+    	            return newStatus;
+    	        }
+
+    	    } catch (Exception e) {
+    	        e.printStackTrace();
+    	    }
+
+    	    return "fail";
+    	}
+
+    
+    
+    
+    //pto적용 시간만큼 삭감하기
+    public int subtractPto(int pto_used, String member_email) {
+    	Map<String, Object> param = new HashMap<>();
+        param.put("pto_used", pto_used);
+        param.put("member_email", member_email);
+    	return dao.subtractPto(param);
     }
     
 }

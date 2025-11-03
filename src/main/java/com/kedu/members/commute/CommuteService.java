@@ -17,33 +17,33 @@ public class CommuteService {
 	@Autowired
 	private CommuteDAO dao;
 	
-    // 1. 洹쇳깭愿�由� �넻怨�
-    public Map<String, Integer> getAttendanceStats(LocalDate start, LocalDate end, String type) {
+    // 1.근태관리 표
+    public Map<String, Integer> getAttendanceStats(LocalDate start, LocalDate end, String type, String company_code) {
         Map<String, Object> param = new HashMap<>();
         param.put("startDate", Date.valueOf(start));
         param.put("endDate", Date.valueOf(end));
         param.put("type", type);
+        param.put("company_code", company_code);
         return dao.getAttendanceStats(param);
     }
 
-    // 2. �젙�떆異쒓렐�쑉
-    public Map<String, Integer> getWorkStats(LocalDate start, LocalDate end, String type) {
+    // 2. 출근관리
+    public Map<String, Integer> getWorkStats(LocalDate start, LocalDate end, String type, String company_code) {
         Map<String, Object> param = new HashMap<>();
-        // �쐟 LocalDate �넂 java.sql.Date 濡� 蹂��솚 (Oracle DATE 諛붿씤�뵫)
         param.put("startDate", java.sql.Date.valueOf(start));
         param.put("endDate",   java.sql.Date.valueOf(end));
         param.put("type", type);
+        param.put("company_code", company_code);
         return dao.getWorkStats(param);
     }
 
- // 3. �쟾�옄寃곗옱 泥섎━�쁽�솴
-    public Map<String, Integer> getApprovalStats(LocalDate start, LocalDate end, String type) {
+    // 3.전자결재 진행
+    public Map<String, Integer> getApprovalStats(LocalDate start, LocalDate end, String type, String company_code) {
         Map<String, Object> param = new HashMap<>();
-        param.put("startDate", Date.valueOf(start)); // �쐟 java.time.LocalDate �넂 java.sql.Date 蹂��솚
+        param.put("startDate", Date.valueOf(start)); 
         param.put("endDate", Date.valueOf(end));
         param.put("type", type);
-        // ��蹂� 議고쉶�슜 �꽭�뀡 遺��꽌 肄붾뱶媛� �엳�떎硫� 媛숈씠 �쟾�떖
-        // param.put("sessionDeptCode", sessionDeptCode);
+        param.put("company_code", company_code);
         return dao.getApprovalStats(param);
     }
 }

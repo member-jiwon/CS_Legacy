@@ -16,7 +16,7 @@ public class DepartmentService {
 	
 	
 	/*존재하는 부서코드 뽑아오기*/
-	public List<DepartmentDTO> getAllDeptCode (){
-		return dao.getAllDeptCode();
+	public List<DepartmentDTO> getAllDeptCode (String company_code){
+		return dao.getAllDeptCode(company_code);
 	}
 }

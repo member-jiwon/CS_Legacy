@@ -2,6 +2,7 @@ package com.kedu.approval;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.kedu.admin.department.DepartmentService;
 import com.kedu.file.FileConstants;
 import com.kedu.file.FileDTO;
 import com.kedu.file.FileService;
+import com.kedu.members.member.MemberService;
 
 import util.PageConfig;
 
@@ -31,6 +33,8 @@ public class ApprovalController {
     @Autowired
     private FileService fileService;
     @Autowired
+    private MemberService memberService;
+    @Autowired
     private Gson gson;
 
     /* 페이지에 맞게 데이터 구성, 필터까지 합쳐서 */
@@ -39,10 +43,13 @@ public class ApprovalController {
         @RequestParam(required = false, defaultValue = "all") String status,
         @RequestParam(required = false, defaultValue = "all") String departmentType,
         @RequestParam(defaultValue = "1") int cpage,
-        Model m) throws Exception {
+        Model m,
+        HttpSession session
+        ) throws Exception {
 
         // 부서 목록 조회
-        List<DepartmentDTO> depts = departmentService.getAllDeptCode();
+    	String company_code=(String)session.getAttribute("company_code");
+        List<DepartmentDTO> depts = departmentService.getAllDeptCode(company_code);// 회사코드 보내서 뽑아오기
 
         // 필터링용 값 처리
         String rawStatus = status;
@@ -56,8 +63,8 @@ public class ApprovalController {
         int end = cpage * PageConfig.RECORD_COUNT_PER_PAGE;
 
         // 결재 리스트 및 총 개수 조회
-        List<Map<String, Object>> list = approvalService.selectByFilterFromTo(status, departmentType, start, end);
-        int totalCount = approvalService.getCountByFilter(status, departmentType);
+        List<Map<String, Object>> list = approvalService.selectByFilterFromTo(status, departmentType, start, end, company_code);// 회사 코드 보내서 뽑아오기
+        int totalCount = approvalService.getCountByFilter(status, departmentType, company_code);
 
         // JSON 변환 및 모델에 담기
         m.addAttribute("list", gson.toJson(list));
@@ -72,12 +79,6 @@ public class ApprovalController {
         // 드롭다운 선택값 유지용
         m.addAttribute("selectedDept", String.valueOf(rawDept));
         m.addAttribute("selectedStatus", rawStatus);
-
-        // 디버깅 로그
-        System.out.println("결재 리스트 JSON: " + gson.toJson(list));
-        System.out.println("부서 목록 JSON: " + gson.toJson(depts));
-        System.out.println("선택된 회사: " + rawDept);
-        System.out.println("선택된 상태: " + rawStatus);
 
         return "/approval/approval";
     }
@@ -106,7 +107,10 @@ public class ApprovalController {
         List<FileDTO> fileList = fileService.getFilesByParent(seq, FileConstants.FA);
         m.addAttribute("dtofiles", gson.toJson(fileList)); // JS 용
         m.addAttribute("files", fileList);
-        System.out.println("파일 리스트: " + gson.toJson(fileList));
+        
+        //3. 이메일로 이름 가져오기
+        String name = memberService.getNameByEmail(result.getMember_email());
+        m.addAttribute("name", name);
 
         return "/approval/approvalDetail";
     }

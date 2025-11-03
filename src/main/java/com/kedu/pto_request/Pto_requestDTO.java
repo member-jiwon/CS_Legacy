@@ -2,22 +2,19 @@ package com.kedu.pto_request;
 
 import java.sql.Timestamp;
 
-/*
-	ï¿½ë¿°ï§¡ï¿½ ï¿½ë–Šï§£ï¿½ï¿½ìŠœ DTO	
-*/
+
 public class Pto_requestDTO {
-private int pto_seq; // ï¿½ë¿°ï§¡ï¿½ æ€¨ì¢Žì‘€è¸°ëŠìƒ‡
-private String member_email; // ï¿½ê¶—ï¿½ì æ€¨ì¢Žì‘€ ï¿½ë¸˜ï¿½ì” ï¿½ëµ’
-private Timestamp pto_start_at; // ï¿½ë¿°ï§¡ï¿½ ï¿½ë–†ï¿½ì˜‰ ï¿½ê¶‡ï§žï¿½ 
-private Timestamp pto_end_at; // ï¿½ë¿°ï§¡ï¿½ é†«ë‚…ì¦º ï¿½ê¶‡ï§žï¿½
-private int pto_used; // ï¿½ë¿°ï§¡ï¿½ ç¥ï¿½ ï¿½ëƒ¼ï§ï¿½ ï¿½ì”ªï¿½ë‹” 
-private String pto_content; // ï¿½ë¿°ï§¡ï¿½ ï¿½ê¶—ï¿½ì‘€
-private String all_day; // é†«ë‚†ì”ª ï¿½ë¿¬éºï¿½ (default: y, ï¿½ë–’ï¿½ì”ª: n)
-private String pto_status; // ï¿½ë¿°ï§¡ï¿½ ï¿½ë“…ï¿½ì”¤ ï¿½ê¸½ï¿½ê¹­ ( default: w(ï¿½ï¿½æ¹²ï¿½), è«›ì„Žì ®: n, ï¿½ë“…ï¿½ì”¤: y )
+private int pto_seq; // ¿¬Â÷ ½ÃÄö½º
+private String member_email; // ¸â¹öÀÌ¸ÞÀÏ
+private Timestamp pto_start_at; // ½ÃÀÛ½Ã°£
+private Timestamp pto_end_at; // ³¡½Ã°£
+private int pto_used; // pto»ç¿ë "½Ã°£" -> 4½Ã°£ ´ÜÀ§, ÀÌÈÄ¿¡ remaining_pto¿¡¼­´Â ÀÏÀÚ·Î °è»êÇÏ±â ¶§¹®¿¡ /8ÇØ¼­ »ç¿ëÇÔ
+private String pto_content; //³»¿ë
+private String pto_status; // ¿¬Â÷ »óÈ²
 
 public Pto_requestDTO() {}
 public Pto_requestDTO(int pto_seq, String member_email, Timestamp pto_start_at, Timestamp pto_end_at, int pto_used,
-		String pto_content, String all_day, String pto_status) {
+		String pto_content, String pto_status) {
 	super();
 	this.pto_seq = pto_seq;
 	this.member_email = member_email;
@@ -25,58 +22,65 @@ public Pto_requestDTO(int pto_seq, String member_email, Timestamp pto_start_at, 
 	this.pto_end_at = pto_end_at;
 	this.pto_used = pto_used;
 	this.pto_content = pto_content;
-	this.all_day = all_day;
-	this.pto_status = pto_status;
-}
-public int getPto_seq() {
-	return pto_seq;
-}
-public void setPto_seq(int pto_seq) {
-	this.pto_seq = pto_seq;
-}
-public String getMember_email() {
-	return member_email;
-}
-public void setMember_email(String member_email) {
-	this.member_email = member_email;
-}
-public Timestamp getPto_start_at() {
-	return pto_start_at;
-}
-public void setPto_start_at(Timestamp pto_start_at) {
-	this.pto_start_at = pto_start_at;
-}
-public Timestamp getPto_end_at() {
-	return pto_end_at;
-}
-public void setPto_end_at(Timestamp pto_end_at) {
-	this.pto_end_at = pto_end_at;
-}
-public int getPto_used() {
-	return pto_used;
-}
-public void setPto_used(int pto_used) {
-	this.pto_used = pto_used;
-}
-public String getPto_content() {
-	return pto_content;
-}
-public void setPto_content(String pto_content) {
-	this.pto_content = pto_content;
-}
-public String getAll_day() {
-	return all_day;
-}
-public void setAll_day(String all_day) {
-	this.all_day = all_day;
-}
-public String getPto_status() {
-	return pto_status;
-}
-public void setPto_status(String pto_status) {
 	this.pto_status = pto_status;
 }
 
+
+public int getPto_seq() {
+	return pto_seq;
+}
+
+public void setPto_seq(int pto_seq) {
+	this.pto_seq = pto_seq;
+}
+
+public String getMember_email() {
+	return member_email;
+}
+
+public void setMember_email(String member_email) {
+	this.member_email = member_email;
+}
+
+public Timestamp getPto_start_at() {
+	return pto_start_at;
+}
+
+public void setPto_start_at(Timestamp pto_start_at) {
+	this.pto_start_at = pto_start_at;
+}
+
+public Timestamp getPto_end_at() {
+	return pto_end_at;
+}
+
+public void setPto_end_at(Timestamp pto_end_at) {
+	this.pto_end_at = pto_end_at;
+}
+
+public int getPto_used() {
+	return pto_used;
+}
+
+public void setPto_used(int pto_used) {
+	this.pto_used = pto_used;
+}
+
+public String getPto_content() {
+	return pto_content;
+}
+
+public void setPto_content(String pto_content) {
+	this.pto_content = pto_content;
+}
+
+public String getPto_status() {
+	return pto_status;
+}
+
+public void setPto_status(String pto_status) {
+	this.pto_status = pto_status;
+}
 
 
 }

@@ -49,9 +49,9 @@
                         <option value="all"
                         <c:if test="${selectedStatus eq 'all'}">selected</c:if>>전체</option>
                         <option value="w"
-                        <c:if test="${selectedStatus eq 'w'}">selected</c:if>>대기중</option>
+                        <c:if test="${selectedStatus eq 'w'}">selected</c:if>>대기</option>
                         <option value="y"
-                        <c:if test="${selectedStatus eq 'y'}">selected</c:if>>완료</option>
+                        <c:if test="${selectedStatus eq 'y'}">selected</c:if>>승인</option>
                         <option value="n"
                         <c:if test="${selectedStatus eq 'n'}">selected</c:if>>반려</option>
                       </select>
@@ -191,7 +191,7 @@
 	
 	  const name = $("<div>").addClass("col-name").text(row.MEMBER_NAME);
 	  const dept = $("<div>").addClass("col-dept").text(row.DEPT_NAME);
-	  const level = $("<div>").addClass("col-level").text(row.LEVEL_CODE);
+	  const level = $("<div>").addClass("col-level").text(row.LEVEL_CODE || row.level_code);
 	  const date = $("<div>").addClass("col-date")
 	  const start =$("<span>").text(dayjs(row.PTO_START_AT).format("YY-MM-DD HH:mm")).append("~");
 	  const end =$("<span>").text(dayjs(row.PTO_END_AT).format("YY-MM-DD HH:mm"));
@@ -224,28 +224,72 @@
 	
 	  statusDiv.append(btnwrapper);
 	  line.append(seq, content, name, dept, level, date, statusDiv);
+	  line.attr("data-pto-used", row.PTO_USED);
+	  line.attr("data-member-email", row.MEMBER_EMAIL);
+	  line.attr("data-pto-start-at", row.PTO_START_AT);
+	  line.attr("data-pto-end-at", row.PTO_END_AT);
 	  return line;
 	}
 	
     
 	  // 상태 변경 AJAX
 	  $(document).on("click", ".status-btn", function () {
-	    const newStatus = $(this).data("value");
-	    const targetseq = $(this).closest(".board-table-row").find(".col-num").text();
-
-	    $.ajax({
-	      url: "/pto/updatestatus",
-	      type: "post",
-	      data: { targetseq, newStatus },
-	      success: function () {
-	    	alert(statusMap[newStatus] + "상태로 변경되었습니다.");
-	        location.reload();
-	      },
-	      error: function () {
-	        alert("업데이트 실패");
+	  const newStatus = $(this).data("value");
+	  const row = $(this).closest(".board-table-row");
+	
+	  const targetseq = row.find(".col-num").text();
+	  const pto_used = row.data("pto-used");
+	  const pto_start_at = row.data("pto-start-at");
+	  const pto_end_at = row.data("pto-end-at");
+	  const member_email = row.data("member-email");
+	
+	  $.ajax({
+	    url: "/pto/updatestatus",
+	    type: "post",
+	    data: { targetseq, newStatus, pto_used, member_email, pto_start_at, pto_end_at },
+	    success: function (resp) {
+	      const statusMap = { w: "대기", y: "승인", n: "반려" };
+	
+	      // 잔여 연차 부족 시 → 자동 반려 처리
+	      if (resp === "lack") {
+	        alert("연차가 부족합니다. 자동으로 반려 처리됩니다.");
+	
+	        // 서버에 다시 반려로 업데이트 요청
+	        $.ajax({
+	          url: "/pto/updatestatus",
+	          type: "post",
+	          data: { targetseq, newStatus: "n", pto_used, member_email, pto_start_at, pto_end_at },
+	          success: function () {
+	            alert("자동으로 반려 처리되었습니다.");
+	            row.find(".status-btn").prop("disabled", true).addClass("disabled-btn");
+	            row.find(".status-btn").removeClass("active");
+	            row.find(`.status-btn[data-value='n']`).addClass("active");
+	          },
+	          error: function () {
+	            alert("자동 반려 처리 중 오류 발생");
+	          },
+	        });
+	
+	        return;
 	      }
-	    });
+	
+	      // 일반 실패
+	      if (resp === "fail" || !statusMap[resp]) {
+	        alert("업데이트 실패");
+	        return;
+	      }
+	
+	      // 성공 시
+	      alert(statusMap[resp] + " 상태로 변경되었습니다.");
+	      row.find(".status-btn").prop("disabled", true).addClass("disabled-btn");
+	      row.find(".status-btn").removeClass("active");
+	      row.find(`.status-btn[data-value='${resp}']`).addClass("active");
+	    },
+	    error: function () {
+	      alert("서버 요청 실패");
+	    },
 	  });
+});
 	
 </script>
 

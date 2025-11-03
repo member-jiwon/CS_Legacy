@@ -207,97 +207,104 @@ console.log(approvalStats);
 //1. 근태관리 (도넛차트)
 const aLabels = Object.keys(attendanceStats);
 const aValues = Object.values(attendanceStats);
-const data1 = [{
-	  values: aValues,
-	  labels: aLabels,
-	  type: 'pie',
-	  hole: 0.6,
-	  textinfo: 'none',
-	  marker: { colors: ['#3B82F6','#C084FC','#FDBA74'] },
-	  scalegroup: 'donutGroup',            // ✅ 여기!
-	  domain: { x: [0, 1], y: [0, 1] }  // ✅ 여기!
-	}];
 
-	const layout1 = {
-	  height: 280, width: 420,
-	  margin: { t:0, b:0, l:30, r:30 },
-	  showlegend: true,
-	  legend: { x: 1.1, y: 0.5, font: { size: 14 } }
-	};
+if (aValues.reduce((s, v) => s + v, 0) === 0) {
+  $("#attendancePlot").html("<h5>기록이 존재하지 않습니다.</h5>");
+} else {
+  const data1 = [{
+    values: aValues,
+    labels: aLabels,
+    type: 'pie',
+    hole: 0.6,
+    textinfo: 'none',
+    marker: { colors: ['#3B82F6','#C084FC','#FDBA74'] },
+    scalegroup: 'donutGroup',
+    domain: { x: [0, 1], y: [0, 1] }
+  }];
 
-	Plotly.newPlot('attendancePlot', data1, layout1, {responsive: true});
+  const layout1 = {
+    height: 280, width: 420,
+    margin: { t:0, b:0, l:30, r:30 },
+    showlegend: true,
+    legend: { x: 1.1, y: 0.5, font: { size: 14 } }
+  };
+
+  Plotly.newPlot('attendancePlot', data1, layout1, {responsive: true});
+}
+
 
 //2. 출근관리 (도넛차트)
 const wLabels = Object.keys(workStats);
 const wValues = Object.values(workStats);
-const data2 = [{
-	  values: wValues,
-	  labels: wLabels,
-	  type: 'pie',
-	  hole: 0.6,
-	  textinfo: 'none',
-	  marker: { colors: ['#FF6384','#FDBA74'] },
-	  scalegroup: 'donutGroup',            // ✅ 동일 그룹
-	  domain: { x: [0, 1], y: [0, 1] }  // ✅ 동일 도메인
-	}];
 
-	const layout2 = {
-	  height: 280, width: 420,
-	  margin: { t:0, b:0, l:30, r:30 },
-	  showlegend: true,
-	  legend: { x: 1.1, y: 0.5, font: { size: 14 } }
-	};
+if (wValues.reduce((s, v) => s + v, 0) === 0) {
+  $("#workPlot").html("<h5>기록이 존재하지 않습니다.</h5>");
+} else {
+  const data2 = [{
+    values: wValues,
+    labels: wLabels,
+    type: 'pie',
+    hole: 0.6,
+    textinfo: 'none',
+    marker: { colors: ['#FF6384','#FDBA74'] },
+    scalegroup: 'donutGroup',
+    domain: { x: [0, 1], y: [0, 1] }
+  }];
 
-	Plotly.newPlot('workPlot', data2, layout2, {responsive: true});
+  const layout2 = {
+    height: 280, width: 420,
+    margin: { t:0, b:0, l:30, r:30 },
+    showlegend: true,
+    legend: { x: 1.1, y: 0.5, font: { size: 14 } }
+  };
 
+  Plotly.newPlot('workPlot', data2, layout2, {responsive: true});
+}
 
 
 //3. 전자결재 (막대그래프)
 const labels = Object.keys(approvalStats);
 const values = Object.values(approvalStats);
 
-const data3 = [{
-  x: labels,
-  y: values,
-  type: 'bar',
-  marker: { color: ['#3B82F6', '#3B82F6', '#3B82F6'] }
-}];
-const layout3 = {
-		  autosize: true,
-		  height: 560,
-		  margin: { t: 30, b: 50, l: 40, r: 20 },
+if (values.reduce((s, v) => s + v, 0) === 0) {
+  $("#approvalPlot").html("<h5>기록이 존재하지 않습니다.</h5>");
+} else {
+  const data3 = [{
+    x: labels,
+    y: values,
+    type: 'bar',
+    marker: { color: ['#3B82F6', '#3B82F6', '#3B82F6'] }
+  }];
+  const layout3 = {
+    autosize: true,
+    height: 560,
+    margin: { t: 30, b: 50, l: 40, r: 20 },
+    plot_bgcolor: '#ffffff',
+    paper_bgcolor: '#ffffff',
+    xaxis: {
+      tickfont: { size: 13 },
+      showgrid: false,
+      zeroline: false,
+      linecolor: '#000000',
+      linewidth: 1,
+      mirror: false
+    },
+    yaxis: {
+      showgrid: true,
+      gridcolor: '#e5e5e5',
+      gridwidth: 1,
+      zeroline: false,
+      linecolor: '#000000',
+      linewidth: 1,
+      mirror: false
+    },
+    showlegend: false,
+    bargap: 0.35
+  };
 
-		  // 하얀 배경 + 회색 줄무늬
-		  plot_bgcolor: '#ffffff',
-		  paper_bgcolor: '#ffffff',
+  Plotly.newPlot('approvalPlot', data3, layout3, { responsive: true });
+}
 
-		  // X축 설정
-		  xaxis: {
-		    tickfont: { size: 13 },
-		    showgrid: false,
-		    zeroline: false,
-		    linecolor: '#000000', // X축 라인 색상 (검정)
-		    linewidth: 1,       // 두께
-		    mirror: false         // 아래쪽만 표시
-		  },
-
-		  // Y축 설정
-		  yaxis: {
-		    showgrid: true,       // 가로 줄무늬
-		    gridcolor: '#e5e5e5', // 줄 색상
-		    gridwidth: 1,
-		    zeroline: false,
-		    linecolor: '#000000', // Y축 라인 색상 (검정)
-		    linewidth: 1,       // 두께
-		    mirror: false         // 왼쪽만 표시
-		  },
-
-		  showlegend: false,
-		  bargap: 0.35
-		};
-
-		// ✅ 반응형 옵션
-		Plotly.newPlot('approvalPlot', data3, layout3, { responsive: true });
 
 
 

@@ -55,9 +55,9 @@
                                 <option value="all"
                                   <c:if test="${selectedStatus eq 'all'}">selected</c:if>>전체</option>
                                 <option value="w"
-                                  <c:if test="${selectedStatus eq 'w'}">selected</c:if>>대기중</option>
+                                  <c:if test="${selectedStatus eq 'w'}">selected</c:if>>대기</option>
                                 <option value="y"
-                                  <c:if test="${selectedStatus eq 'y'}">selected</c:if>>완료</option>
+                                  <c:if test="${selectedStatus eq 'y'}">selected</c:if>>승인</option>
                                 <option value="n"
                                   <c:if test="${selectedStatus eq 'n'}">selected</c:if>>반려</option>
                           </select>
