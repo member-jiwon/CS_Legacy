@@ -31,7 +31,6 @@ body, html {
     flex: 1;
     width: 100%;
     padding: 0;
-    overflow: hidden;
 }
 
 /* 사이드바 */
@@ -56,9 +55,8 @@ body, html {
     height: 100%;
     box-sizing: border-box;
     padding: 20px;
-    font-family: Pretendard, sans-serif;
-    color: #404040;
-    overflow: hidden
+    font-family: var(--font-family);
+    color: var(--color-font-color1);
 }
 
 .header-title { 
@@ -74,7 +72,7 @@ body, html {
 
 /* 헤더 스타일 */
 .table-header {
-    border-bottom: 1px solid #8c8c8c;
+    border-bottom: 1px solid var(--color-font-color2);
     font-size: 18px;
     height: auto;
 }
@@ -127,24 +125,25 @@ body, html {
 }
 
 /* 드롭다운 */
+.dropdown-menu {
+    z-index: 10000 !important;
+    border-radius: 12px;
+    font-size: 16px;
+    border-bottom: 1px solid  var(--color-font-color2);
+}
+
 .dropdown-toggle {
-    width: 100%;
-    border-radius: 22px;
+    border-radius: var(--border-radius-main);
  	width: 150px;
     font-size: 16px;
-    color: #404040;
-    border: 1px solid #8c8c8c;
+    color: var(--color-font-color1);
+    border: 1px solid var(--color-font-color2);
     transition: all 0.2s ease;
 }
 
 .dropdown-toggle:hover, .dropdown-toggle:focus {
-    background-color: #8c8c8c;
-    color: #fff;
-}
-
-.dropdown-menu {
-    border-radius: 12px;
-    font-size: 16px;
+    background-color: var(--color-font-color2);
+    color: var(--color-white);
 }
 
 /* 버튼 그룹 (기존 코드 그대로 유지) */
@@ -155,8 +154,8 @@ body, html {
     height: 40px; 
     width:auto;
     flex: 1;
-    border-radius: 22px;
-    background-color: #eff3ff;
+    border-radius: var(--border-radius-main);
+    background-color: var(--color-sud-color2);
 }
 
 .button-group .btn {

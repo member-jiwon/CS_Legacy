@@ -41,4 +41,10 @@ public class Job_levelDAO {
 	public int updateMemberLevel(Map<String, Object> param) {
 		return mybatis.update("Job.updateMemberLevel", param);
 	}
+
+	// 사원 상태 업데이트 - 퇴사 & 직원 클릭시
+	public int updateMemberStatus(Map<String, Object> param) {
+		// param 맵에는 email, status, company_code가 포함되어야 합니다.
+		return mybatis.update("Job.updateMemberStatus", param);
+	}
 }

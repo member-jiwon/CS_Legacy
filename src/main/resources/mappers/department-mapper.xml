@@ -7,8 +7,45 @@
 	<!-- 부서 목록 조회 -->
 	<select id="getAllDept"
 		resultType="com.kedu.admin.department.DepartmentDTO">
-        SELECT * from department ORDER BY dept_code DESC
-    </select>
-    
-    
+		SELECT * from department ORDER BY dept_code DESC
+	</select>
+
+	<select id="selectDepartmentsEmployee"
+		resultType="com.kedu.admin.department.DepartmentDTO">
+		SELECT
+		d.dept_code,
+		d.dept_name,
+		d.company_code,
+		COUNT(m.email) AS employeeCount,
+		d.create_date AS create_date
+		FROM
+		department d
+		LEFT JOIN member m ON d.dept_code = m.dept_code
+		GROUP BY
+		d.dept_code, d.dept_name, d.company_code,
+		d.create_date
+		ORDER BY
+		d.dept_code ASC
+	</select>
+
+	<select id="countDepartmentByName" resultType="int">
+		SELECT COUNT(*)
+		FROM department
+		WHERE DEPT_NAME = #{dept_name}
+		  AND COMPANY_CODE = #{company_code}
+	</select>
+	
+	<insert id="insertDepartment"
+		parameterType="com.kedu.admin.department.DepartmentDTO">
+		INSERT INTO department (dept_code, dept_name, company_code, create_date)
+		VALUES (DEPT_CODE.NEXTVAL, #{dept_name}, #{company_code}, SYSDATE)
+	</insert>
+
+	<delete id="deleteDepartment" parameterType="int">
+		DELETE FROM department
+		WHERE dept_code = #{dept_code}
+	</delete>
+	
+
+
 </mapper>

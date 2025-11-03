@@ -11,4 +11,9 @@ import org.springframework.stereotype.Repository;
 public class QuitterDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
+
+	// 퇴사자 정보 DB에 기록
+	public int insertQuitter(QuitterDTO dto) {
+		return mybatis.insert("Quitter.insertQuitter", dto);
+	}
 }

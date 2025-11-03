@@ -71,7 +71,7 @@
 											class="btn ${invite.status == null || invite.status == '미승인' ? 'active' : ''} btn-status"
 											data-status="미승인">미승인</button>
 										<button
-											class="btn ${invite.status == '승인' ? 'active' : ''} btn-status"
+											class="btn ${invite.status eq '승인'|| invite.status eq '직원' ? 'active' : ''} btn-status"
 											data-status="승인">승인</button>
 										<button
 											class="btn ${invite.status == '거절' ? 'active' : ''} btn-status"
@@ -108,6 +108,14 @@
 
 		</div>
 	</div>
+	
+		<!-- JS -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
 
 	<script src="<c:url value='/resources/js/invite.js'/>"></script>
 

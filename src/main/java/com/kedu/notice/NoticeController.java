@@ -26,15 +26,10 @@ public class NoticeController {
 	/* 공지사항 목록 */
 	@GetMapping("/list")
 	public String noticeList(Model model) {
-		try {
-			List<NoticeDTO> notices = noticeService.getAllNotices();
-			model.addAttribute("notices", notices);
-			return "board/boardList";
+		List<NoticeDTO> notices = noticeService.getAllNotices();
+		model.addAttribute("notices", notices);
+		return "board/boardList";
 
-		} catch (Exception e) {
-			model.addAttribute("errorMessage", "데이터를 불러오는 중 오류가 발생했습니다.");
-			return "error/dbError";
-		}
 	}
 
 	/* 공지사항 등록 페이지 */
@@ -77,8 +72,8 @@ public class NoticeController {
 		NoticeDTO notice = noticeService.selectNoticeById(notice_seq);
 
 		// 첨부파일 조회 - 파일 목록 추가 (FileService 사용 시)
-	    List<FileDTO> files = fileService.getFilesByParentSeq(notice_seq, "NOTICE");
-	    notice.setFiles(files);
+		List<FileDTO> files = fileService.getFilesByParentSeq(notice_seq, "NOTICE");
+		notice.setFiles(files);
 
 		model.addAttribute("notice", notice);
 		return "board/boardDatail";
@@ -124,4 +119,3 @@ public class NoticeController {
 		return "redirect:/notice/list";
 	}
 }
-

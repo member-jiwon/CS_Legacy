@@ -32,10 +32,6 @@
 
 		<!-- 아이콘 -->
 		<div class="topbar-icons">
-			<!-- 알람 -->
-			<img src="<c:url value='/resources/imgs/topBar/Notification.svg' />"
-				class="icon-alarm" alt="Notification" />
-
 			<!-- 회사 초대코드 버튼 -->
 			<button id="inviteBtn" class="icon-button">
 				<img src="<c:url value='/resources/imgs/topBar/UserAdd.svg' />"
@@ -45,10 +41,5 @@
 	</div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    var contextPath = '${pageContext.request.contextPath}';
-</script>
+
 <script src="<c:url value='/resources/js/common/sideBar/topBar.js' />"></script>

@@ -40,11 +40,24 @@ public class Job_levelService {
 
 	// 사원 직급 업데이트
 	public int updateMemberLevel(String email, String level_code, String company_code) {
-	    Map<String, Object> paramMap = new HashMap<>();
-	    paramMap.put("email", email);
-	    paramMap.put("level_code", level_code);
-	    paramMap.put("company_code", company_code); // 🚨 이 로직을 서비스에서 처리합니다.
-	    
-	    return job_levelDAO.updateMemberLevel(paramMap);
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("email", email);
+		paramMap.put("level_code", level_code);
+		paramMap.put("company_code", company_code); // 이 로직을 서비스에서 처리
+
+		return job_levelDAO.updateMemberLevel(paramMap);
 	}
+
+	// 퇴사 & 직원 버튼 클릭 시
+	public int updateMemberStatus(String email, String status, String company_code) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("email", email);
+		paramMap.put("status", status); // '직원' 또는 '퇴사'
+		paramMap.put("company_code", company_code);
+
+		// DAO는 paramMap을 받도록 합니다.
+		return job_levelDAO.updateMemberStatus(paramMap);
+	}
+	
+	
 }

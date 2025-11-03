@@ -5,11 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kedu.admin.job.level.Job_levelService;
+
 @Service
 public class InviteService {
 
 	@Autowired
 	private InviteDAO dao;
+
+	@Autowired
+	private Job_levelService job_levelService;
 
 	// company_code 기준 초대 리스트 조회
 	public List<InviteDTO> getInvitesByCompany(String company_code) {
@@ -31,7 +36,14 @@ public class InviteService {
 	// 초대 상태 변경
 	@Transactional
 	public int changeInviteStatus(InviteDTO dto) {
-		return dao.updateInviteStatus(dto);
+		int result = dao.updateInviteStatus(dto);
+
+		// 초대가 승인된 경우, MEMBER 테이블의 STATUS도 '직원'으로 변경
+		if (result > 0 && "승인".equals(dto.getStatus())) {
+			job_levelService.updateMemberStatus(dto.getEmail(), "직원", dto.getCompany_code());
+		}
+
+		return result;
 	}
 
 	// 이메일 + 회사코드로 초대 정보 조회

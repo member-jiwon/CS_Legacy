@@ -12,6 +12,7 @@ import com.kedu.admin.department.DepartmentDTO;
 import com.kedu.admin.department.DepartmentService;
 import com.kedu.admin.invite.InviteDTO;
 import com.kedu.admin.invite.InviteService;
+import com.kedu.members.quitter.QuitterService;
 
 @Controller
 @RequestMapping("/job")
@@ -22,6 +23,9 @@ public class Job_levelController {
 
 	@Autowired
 	private DepartmentService departmentService;
+
+	@Autowired
+	private QuitterService quitterService;
 
 	// 회사 초대 코드
 	@GetMapping("/invitationCode")
@@ -73,6 +77,25 @@ public class Job_levelController {
 			@RequestParam String company_code) {
 		int result = job_levelService.updateMemberDept(email, dept_code, company_code);
 		// 반환 로직 추가
+		return result > 0 ? "success" : "fail";
+	}
+
+	// 사원 상태 업데이트 (직원/퇴사) - 퇴사 처리 시 이 메서드를 사용하도록 수정
+	@PostMapping("/updateStatus")
+	@ResponseBody
+	public String updateStatus(@RequestParam String email, @RequestParam String status,
+			@RequestParam String company_code) {
+
+		int result = 0;
+
+		if ("퇴사".equals(status)) {
+			// '퇴사' 버튼 클릭 시: 트랜잭션 서비스 호출 (상태 변경 및 퇴사 인서트 동시 처리)
+			result = quitterService.processQuitter(email, company_code);
+		} else {
+			// 직원 버튼 클릭 시: 기존 상태 변경 로직만 호출 (퇴사 테이블에 영향 없음)
+			result = job_levelService.updateMemberStatus(email, status, company_code);
+		}
+
 		return result > 0 ? "success" : "fail";
 	}
 }

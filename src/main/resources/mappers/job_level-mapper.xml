@@ -5,25 +5,25 @@
 <mapper namespace="Job">
 	<!-- 사원 목록 조회 (직급 + 부서 + 초대 상태 포함) -->
 	<select id="getApprovedMembersWithJobDetail" resultType="map">
-		SELECT
-		    m.email,
-		    m.name,
-		    m.company_code,
-		    m.signup_at,
-		    m.status AS member_status,
-		    m.dept_code,
-		    NVL(d.dept_name, '미정') AS dept_name,
-		    m.level_code,
-		    NVL(j.level_name, '미정') AS level_name 
-		FROM member m
-		    LEFT JOIN job_level j
-		    ON m.level_code = j.level_code
-		    AND m.company_code = j.company_code
-		    LEFT JOIN department d
-		    ON m.dept_code = d.dept_code
-		    AND m.company_code = d.company_code
-		WHERE m.status = '승인'
-		ORDER BY m.signup_at DESC
+	    SELECT
+	        m.EMAIL,
+	        m.NAME,
+	        m.COMPANY_CODE,
+	        m.signup_at,
+	        m.status AS STATUS,
+	        m.dept_code,
+	        NVL(d.dept_name, '미정') AS dept_name,
+	        m.level_code,
+	        NVL(j.level_name, '미정') AS level_name
+	    FROM member m
+	        LEFT JOIN job_level j
+	            ON m.level_code = j.level_code
+	            AND m.company_code = j.company_code
+	        LEFT JOIN department d
+	            ON m.dept_code = d.dept_code
+	            AND m.company_code = d.company_code
+	    WHERE m.status IN ('직원', '퇴사', '승인')
+	    ORDER BY m.signup_at DESC
 	</select>
 
 	<!-- 회사 코드 출력 -->
@@ -58,6 +58,15 @@
 		WHERE email = #{email}
 		AND company_code =
 		#{company_code}
+	</update>
+
+	<!-- 퇴사 혹은 직원 버튼 클릭 시 -->
+	<update id="updateMemberStatus" parameterType="map">
+		UPDATE member
+		SET
+		STATUS = #{status}
+		WHERE EMAIL= #{email}
+		AND COMPANY_CODE = #{company_code}
 	</update>
 
 </mapper>

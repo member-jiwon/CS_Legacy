@@ -73,9 +73,9 @@ body, html {
     font-weight: bold;
 }
 
-/* 굴 작성 버튼 */
+/* 글 작성 버튼 */
 .board-header button {
-	width: 130px;
+	width: 150px;
 	height: 40px;
 }
 

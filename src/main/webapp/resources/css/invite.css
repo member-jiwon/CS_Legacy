@@ -95,6 +95,8 @@ body, html {
 .table-header .col-id, .table-row .col-id { width: 50px; }
 .table-header .col-name, .table-row .col-name { width: 150px; }
 .table-header .col-email, .table-row .col-email { width: 250px; }
+.table-header .col-date, .table-row .col-date { width: 250px; }
+.table-header .col-status, .table-row .col-status { flex: 1;}
 
 /* 테이블 행 스타일 */
 .table-row { margin: 10px 0; }

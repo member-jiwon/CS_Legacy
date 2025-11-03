@@ -62,7 +62,8 @@
 
 					<!-- 버튼 -->
 					<div class="notice-actions">
-						<a href="<c:url value='/notice/list'/>" class="btn btn-secondary" id="backBtn">뒤로가기</a>
+						<a href="<c:url value='/notice/list'/>" class="btn btn-secondary"
+							id="backBtn">뒤로가기</a>
 						<button class="btn btn-secondary d-none" id="cancelBtn">취소</button>
 						<button class="btn btn-success d-none" id="saveBtn">저장</button>
 						<button class="btn btn-danger" id="deleteBtn">삭제</button>
@@ -73,6 +74,14 @@
 
 		</div>
 	</div>
+
+	<!-- JS -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
 
 	<script src="<c:url value='/resources/js/board/boardDtail.js'/>"></script>
 </body>

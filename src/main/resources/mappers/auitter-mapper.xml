@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Quitter">
+
+	<insert id="insertQuitter"
+		parameterType="com.kedu.members.quitter.QuitterDTO">
+		INSERT INTO QUITTER (
+		member_email,
+		company_code,
+		quit_at
+		) VALUES (
+		#{member_email},
+		#{company_code},
+		SYSDATE
+		)
+	</insert>
+</mapper>
