@@ -5,14 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /*
-  	í‡´ì‚¬ ì²˜ë¦¬ ë“± ê¸°ëŠ¥ êµ¬í˜„ DAO
+    Åğ»çÀÚ µî·Ï¿ë DAO
 */
 @Repository
 public class QuitterDAO {
+
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
-	// í‡´ì‚¬ì ì •ë³´ DBì— ê¸°ë¡
+	// Åğ»çÀÚ Á¤º¸ DB¿¡ µî·Ï
 	public int insertQuitter(QuitterDTO dto) {
 		return mybatis.insert("Quitter.insertQuitter", dto);
 	}

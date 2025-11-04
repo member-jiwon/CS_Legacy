@@ -3,21 +3,22 @@ package com.kedu.admin.invite;
 import java.sql.Timestamp;
 
 public class InviteDTO {
-	private Long invite_seq; // ì´ˆëŒ€ ê³ ìœ ë²ˆí˜¸
-	private String email; // ì‚¬ì› ì´ë©”ì¼
-	private String company_code; // íšŒì‚¬/ì´ˆëŒ€ ì½”ë“œ
-	private String status; // ì´ˆëŒ€ ìƒíƒœ (ë¯¸ìŠ¹ì¸/ìŠ¹ì¸/ê±°ì ˆ)
+	private Long invite_seq; // ÃÊ´ë ½ÃÄö½º ¹øÈ£
+	private String email; // È¸¿ø ÀÌ¸ŞÀÏ
+	private String company_code; // È¸»ç/ÃÊ´ë ÄÚµå
+	private String status; // ÃÊ´ë »óÅÂ (¹Ì½ÂÀÎ/½ÂÀÎ/°ÅÀı)
 	private Timestamp created_at;
 	private Timestamp updated_at;
 
-	// member ì •ë³´
+	// È¸¿ø Á¤º¸
 	private String name;
 	private Timestamp signup_at;
 	private String dept_code;
 	private String level_code;
-	
-	public InviteDTO() {}
-	
+
+	public InviteDTO() {
+	}
+
 	public InviteDTO(Long invite_seq, String email, String company_code, String status, Timestamp created_at,
 			Timestamp updated_at, String name, Timestamp signup_at, String dept_code, String level_code) {
 		super();
@@ -112,4 +113,5 @@ public class InviteDTO {
 	public void setLevel_code(String level_code) {
 		this.level_code = level_code;
 	}
+
 }

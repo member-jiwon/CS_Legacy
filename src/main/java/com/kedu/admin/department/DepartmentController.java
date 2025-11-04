@@ -1,20 +1,15 @@
 package com.kedu.admin.department;
 
 import java.util.List;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /*
-	부서 설정 등 관련 기능 구현 controller
+	부서 관리 관련 등록, 수정, 삭제 기능 처리 컨트롤러
 */
 
 @Controller
@@ -31,25 +26,25 @@ public class DepartmentController {
 		return "department/department";
 	}
 
-	// 부서 추가 팝업/모달 뷰
+	// 부서 등록 페이지 이동
 	@GetMapping("/post")
 	public String departmentPost(Model model) {
-		// 부서 추가 모달에서 기존 부서 목록을 보여주기 위해 다시 리스트를 전달할 수도 있습니다.
+		// 모든 부서 리스트를 조회
 		List<DepartmentDTO> departments = departmentService.getAllDept();
 		model.addAttribute("allDepartments", departments);
 		return "department/departmentPost";
 	}
 
-	// 부서 추가
+	// 부서 등록
 	@PostMapping("/add")
 	@ResponseBody
-	public String addDepartment(@RequestParam("dept_name") String dept_name) {
+	public String addDepartment(@RequestParam("dept_name") String dept_name, HttpSession session) {
 		try {
-			String company_code = "회사코드요"; // 회사 코드 입력
+			// String company_code = (String) session.getAttribute("company_code");
+			String company_code = "회사코드요"; // 세션에서 가져올 예정
 			departmentService.insertDepartment(dept_name, company_code);
 			return "success";
-		} catch (Exception e) { 
-			// 오류 시
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "failure";
 		}

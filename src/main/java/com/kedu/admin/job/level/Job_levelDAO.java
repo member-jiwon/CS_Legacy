@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /*
-     ì§ê¸‰ ê´€ë ¨ ê¸°ëŠ¥ êµ¬í˜„ DAO
+    Á÷±Ş °ü·Ã µ¥ÀÌÅÍ Ã³¸® DAO
 */
 @Repository
 public class Job_levelDAO {
@@ -17,34 +17,33 @@ public class Job_levelDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 
-	// ì‚¬ì› ëª©ë¡ ì¡°íšŒ (map íƒ€ì…)
+	// ½ÂÀÎµÈ È¸¿ø ¸ñ·Ï Á¶È¸ (map ÇüÅÂ)
 	public List<Map<String, Object>> getApprovedMembersWithJobDetail() {
 		return mybatis.selectList("Job.getApprovedMembersWithJobDetail");
 	}
 
-	// ì§ê¸‰ ì „ì²´ ì¡°íšŒ
+	// Á÷±Ş ÀüÃ¼ Á¶È¸
 	public List<Job_levelDTO> getselect() {
 		return mybatis.selectList("Job.getselect");
 	}
 
-	// íšŒì‚¬ ì½”ë“œ ì¡°íšŒ
+	// È¸»ç ÄÚµå Á¶È¸
 	public String selectCompanyCode() {
 		return mybatis.selectOne("Job.selectCompanyCode");
 	}
 
-	// ì‚¬ì› ë¶€ì„œ ì—…ë°ì´íŠ¸
+	// È¸¿ø ºÎ¼­ º¯°æ
 	public int updateMemberDept(Map<String, Object> param) {
 		return mybatis.update("Job.updateMemberDept", param);
 	}
 
-	// ì‚¬ì› ì§ê¸‰ ì—…ë°ì´íŠ¸
+	// È¸¿ø Á÷±Ş º¯°æ
 	public int updateMemberLevel(Map<String, Object> param) {
 		return mybatis.update("Job.updateMemberLevel", param);
 	}
 
-	// ì‚¬ì› ìƒíƒœ ì—…ë°ì´íŠ¸ - í‡´ì‚¬ & ì§ì› í´ë¦­ì‹œ
+	// È¸¿ø »óÅÂ º¯°æ (ÀçÁ÷/Åğ»ç)
 	public int updateMemberStatus(Map<String, Object> param) {
-		// param ë§µì—ëŠ” email, status, company_codeê°€ í¬í•¨ë˜ì–´ì•¼ í•©ë‹ˆë‹¤.
 		return mybatis.update("Job.updateMemberStatus", param);
 	}
 }

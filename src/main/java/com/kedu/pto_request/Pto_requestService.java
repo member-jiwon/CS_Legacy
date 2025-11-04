@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service;
 import com.kedu.approval.ApprovalDTO;
 import com.kedu.schedule.ScheduleService;
 
-
 /*
- * 		�뿰李� �떊泥� 湲곕뒫 愿��젴 service
- * */
+ * 연차 요청 관련 비즈니스 로직 서비스
+ */
 
 @Service
 public class Pto_requestService {

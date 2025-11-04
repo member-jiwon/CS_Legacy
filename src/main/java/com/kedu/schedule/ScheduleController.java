@@ -5,13 +5,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /*
-ë¨¼ìŠ¬ë¦¬ ( ì¼ì • í…Œì´ë¸” ) ê¸°ëŠ¥ êµ¬í˜„ controller
-*/
+ * ÀÏÁ¤ (½ºÄÉÁÙ °ü¸®) °ü·Ã ÄÁÆ®·Ñ·¯
+ */
 
 @RequestMapping("")
 @RestController
 public class ScheduleController {
 	@Autowired
-	private ScheduleService ScheduleService;
-	// ì•Œì•„ ê³ ì³ì“¸ë ¤ë©´ ì•Œì•„ì„œ ê³ ì³ì“°ì†Œ
+	private ScheduleService scheduleService;
+
+	// TODO: È¸¿øº° ÀÏÁ¤ Á¶È¸ ¹× °ü¸® ±â´É ±¸Çö
 }

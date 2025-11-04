@@ -11,12 +11,12 @@ public class InviteDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// company_code ê¸°ì¤€ ëª¨ë“  ì´ˆëŒ€ + íšŒì› ì •ë³´ ì¡°íšŒ
+	// company_code¿¡ µû¸¥ ÃÊ´ë ¸®½ºÆ® Á¶È¸
 	public List<InviteDTO> getInvitesByCompany(String company_code) {
 		return sqlSession.selectList("InviteMapper.getInvitesByCompany", company_code);
 	}
 
-	// ì´ë©”ì¼ + íšŒì‚¬ì½”ë“œë¡œ ì´ˆëŒ€ ì •ë³´ ì¡°íšŒ
+	// ÀÌ¸ŞÀÏ + È¸»ç ÄÚµå·Î ÃÊ´ë Á¤º¸ Á¶È¸
 	public InviteDTO getInviteByEmailAndCompany(String email, String companyCode) {
 		java.util.Map<String, Object> param = new java.util.HashMap<>();
 		param.put("email", email);
@@ -24,17 +24,17 @@ public class InviteDAO {
 		return sqlSession.selectOne("InviteMapper.getInviteByEmailAndCompany", param);
 	}
 
-	// ì´ˆëŒ€ ì¶”ê°€
+	// ÃÊ´ë µî·Ï
 	public int insertInvite(InviteDTO dto) {
 		return sqlSession.insert("InviteMapper.insertInvite", dto);
 	}
 
-	// ì´ˆëŒ€ ìƒíƒœ ì—…ë°ì´íŠ¸
+	// ÃÊ´ë »óÅÂ ¼öÁ¤
 	public int updateInviteStatus(InviteDTO dto) {
 		return sqlSession.update("InviteMapper.updateInviteStatus", dto);
 	}
 
-	// ìŠ¹ì¸ëœ ì´ˆëŒ€ + íšŒì› ì •ë³´ ì¡°íšŒ
+	// ½ÂÀÎµÈ ÃÊ´ë + È¸¿ø Á¤º¸ Á¶È¸
 	public List<InviteDTO> getApprovedInvitesWithMember() {
 		return sqlSession.selectList("InviteMapper.getApprovedInvitesWithMember");
 	}

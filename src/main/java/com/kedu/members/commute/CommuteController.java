@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /*
- *  	洹쇳깭愿�由� 湲곕뒫 援ы쁽 Controller
+ *  	근태 관리용 Controller
  * */
 
 @RequestMapping("/commute")

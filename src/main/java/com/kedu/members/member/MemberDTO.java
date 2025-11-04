@@ -2,35 +2,35 @@ package com.kedu.members.member;
 
 import java.sql.Timestamp;
 
+/*
+ * 		È¸¿ø DTO
+ */
 public class MemberDTO {
-	private String email; // ì‚¬ì› ê³ ìœ  ì•„ì´ë””
-	private String dept_code; // ë¶€ì„œì½”ë“œ ( default : null , ê´€ë¦¬ìê°€ ë¶€ì—¬ì‹œ ê°’ë“±ë¡ )
-	private String level_code; // ì§ê¸‰ì½”ë“œ ( default : null , ê´€ë¦¬ìê°€ ë¶€ì—¬ì‹œ ê°’ë“±ë¡ )
-	private String pw; // ë¹„ë°€ë²ˆí˜¸
-	private String name; // ì´ë¦„
-	private String phoen; // ì „í™”ë²ˆí˜¸
-	private String company_code; // íšŒì‚¬ì½”ë“œ
-	private Timestamp signup_at; // ê°€ì… ë‚ ì§œ ë° ìŠ¹ì¸ ë‚ ì§œ
-	private String status;
+	private String email; // È¸¿ø ÀÌ¸ŞÀÏ
+	private String dept_code; // ºÎ¼­ ÄÚµå (default: null)
+	private String level_code; // Á÷±Ş ÄÚµå (default: null)
+	private String pw; // ºñ¹Ğ¹øÈ£
+	private String name; // ÀÌ¸§
+	private String phone; // ÀüÈ­¹øÈ£
+	private String company_code; // È¸»ç ÄÚµå
+	private Timestamp signup_at; // È¸¿ø °¡ÀÔ ÀÏÀÚ
+	private String status; // È¸¿ø »óÅÂ
 
 	public MemberDTO() {
 	}
 
-	public MemberDTO(String email, String dept_code, String level_code, String pw, String name, String phoen,
+	public MemberDTO(String email, String dept_code, String level_code, String pw, String name, String phone,
 			String company_code, Timestamp signup_at, String status) {
-		super();
 		this.email = email;
 		this.dept_code = dept_code;
 		this.level_code = level_code;
 		this.pw = pw;
 		this.name = name;
-		this.phoen = phoen;
+		this.phone = phone;
 		this.company_code = company_code;
 		this.signup_at = signup_at;
 		this.status = status;
 	}
-
-
 
 	public String getEmail() {
 		return email;
@@ -72,12 +72,12 @@ public class MemberDTO {
 		this.name = name;
 	}
 
-	public String getPhoen() {
-		return phoen;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setPhoen(String phoen) {
-		this.phoen = phoen;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getCompany_code() {
@@ -103,7 +103,4 @@ public class MemberDTO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	
-
 }

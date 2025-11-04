@@ -7,30 +7,30 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kedu.admin.job.level.Job_levelService;
 
 /*
-	í‡´ì‚¬ ì²˜ë¦¬ ë“± ê¸°ëŠ¥ êµ¬í˜„ service
+    Åğ»çÀÚ µî·Ï¿ë Service
 */
-
 @Service
 public class QuitterService {
+
 	@Autowired
 	private QuitterDAO dao;
 
 	@Autowired
 	private Job_levelService job_levelService;
 
-	// í‡´ì‚¬ ì²˜ë¦¬ íŠ¸ëœì­ì…˜ (MEMBER ìƒíƒœ ë³€ê²½ + QUITTER ê¸°ë¡)
-	// ë‘ ì¿¼ë¦¬ ëª¨ë‘ ì„±ê³µí•´ì•¼ í•˜ë¯€ë¡œ íŠ¸ëœì­ì…˜ ì²˜ë¦¬
+	// Åğ»ç Ã³¸®: È¸¿ø »óÅÂ º¯°æ + Åğ»çÀÚ DB µî·Ï
 	@Transactional
 	public int processQuitter(String email, String company_code) {
 
-		// member í…Œì´ë¸”ì˜ statusë¥¼ 'í‡´ì‚¬'ë¡œ ë³€ê²½ (ê¸°ì¡´ ë¡œì§ ì¬ì‚¬ìš©)
-		int statusUpdate = job_levelService.updateMemberStatus(email, "í‡´ì‚¬", company_code);
+		// memberÀÇ status¸¦ 'Åğ»ç'·Î º¯°æ
+		int statusUpdate = job_levelService.updateMemberStatus(email, "Åğ»ç", company_code);
 
 		if (statusUpdate > 0) {
-			// í‡´ì‚¬ í…Œì´ë¸”ì— í‡´ì‚¬ ì •ë³´ ê¸°ë¡ (í‡´ì‚¬ ë‚ ì§œëŠ” DBê°€ SYSDATEë¡œ ì²˜ë¦¬)
+			// Åğ»çÀÚ DB µî·Ï (Åğ»çÀÏÀÚ: ÇöÀç ½Ã°£)
 			QuitterDTO dto = new QuitterDTO();
 			dto.setMember_email(email);
 			dto.setCompany_code(company_code);
+			dto.setQuit_at(new java.sql.Timestamp(System.currentTimeMillis()));
 
 			return dao.insertQuitter(dto);
 		}

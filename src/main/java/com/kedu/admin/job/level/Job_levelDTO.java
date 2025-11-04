@@ -1,13 +1,12 @@
 package com.kedu.admin.job.level;
 
 /*
-		ì§ê¸‰ DTO
+    Á÷±Ş DTO
 */
 public class Job_levelDTO {
-	private String level_code; // ì§ê¸‰ ê³ ìœ ë²ˆí˜¸
-	private String level_name; // ì§ê¸‰ëª…
-	private String company_code; // íšŒì‚¬ ê³ ìœ  ì½”ë“œ
-
+	private String level_code; // Á÷±Ş ÄÚµå
+	private String level_name; // Á÷±Ş¸í
+	private String company_code; // È¸»ç ÄÚµå
 
 	public Job_levelDTO() {
 	}
@@ -19,37 +18,27 @@ public class Job_levelDTO {
 		this.company_code = company_code;
 	}
 
-
-
 	public String getLevel_code() {
 		return level_code;
 	}
-
 
 	public void setLevel_code(String level_code) {
 		this.level_code = level_code;
 	}
 
-
 	public String getLevel_name() {
 		return level_name;
 	}
-
 
 	public void setLevel_name(String level_name) {
 		this.level_name = level_name;
 	}
 
-
 	public String getCompany_code() {
 		return company_code;
 	}
 
-
 	public void setCompany_code(String company_code) {
 		this.company_code = company_code;
 	}
-
-	
-
 }

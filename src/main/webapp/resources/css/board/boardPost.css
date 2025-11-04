@@ -102,27 +102,6 @@ form {
     box-sizing: border-box;
 }
 
-/* 파일 영역 설정 */
-.file-label {
-    display: flex;
-    align-items: center;
-    border: 1px dashed var(--color-font-color2);
-    border-radius: var(--border-radius-body);
-    height: 59px;
-    padding: 0 20px;
-    cursor: pointer;
-    position: relative;
-}
-
-.file-input {
-    display: none;
-}
-
-.file-text {
-    color: var(--color-font-color2);
-    font-size: 16px;
-}
-
 /* 버튼 영역 */
 .button-container {
     padding-top: 16px;

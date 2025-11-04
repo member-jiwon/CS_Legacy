@@ -16,37 +16,37 @@ public class InviteService {
 	@Autowired
 	private Job_levelService job_levelService;
 
-	// company_code ê¸°ì¤€ ì´ˆëŒ€ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
+	// company_code¿¡ µû¸¥ ÃÊ´ë ¸®½ºÆ® Á¶È¸
 	public List<InviteDTO> getInvitesByCompany(String company_code) {
 		return dao.getInvitesByCompany(company_code);
 	}
 
-	// ìŠ¹ì¸ëœ ì´ˆëŒ€ + íšŒì› ì •ë³´ ì¡°íšŒ
+	// ½ÂÀÎµÈ ÃÊ´ë + È¸¿ø Á¤º¸ Á¶È¸
 	public List<InviteDTO> getApprovedInvitesWithMember() {
 		return dao.getApprovedInvitesWithMember();
 	}
 
-	// ì´ˆëŒ€ ë“±ë¡
+	// ÃÊ´ë µî·Ï
 	@Transactional
 	public int addInvite(InviteDTO dto) {
-		dto.setStatus("ë¯¸ìŠ¹ì¸");
+		dto.setStatus("¹Ì½ÂÀÎ");
 		return dao.insertInvite(dto);
 	}
 
-	// ì´ˆëŒ€ ìƒíƒœ ë³€ê²½
+	// ÃÊ´ë »óÅÂ º¯°æ
 	@Transactional
 	public int changeInviteStatus(InviteDTO dto) {
 		int result = dao.updateInviteStatus(dto);
 
-		// ì´ˆëŒ€ê°€ ìŠ¹ì¸ëœ ê²½ìš°, MEMBER í…Œì´ë¸”ì˜ STATUSë„ 'ì§ì›'ìœ¼ë¡œ ë³€ê²½
-		if (result > 0 && "ìŠ¹ì¸".equals(dto.getStatus())) {
-			job_levelService.updateMemberStatus(dto.getEmail(), "ì§ì›", dto.getCompany_code());
+		// »óÅÂ°¡ ½ÂÀÎÀÎ °æ¿ì, MEMBER Å×ÀÌºíÀÇ STATUS¸¦ 'Á¤È¸¿ø'À¸·Î º¯°æ
+		if (result > 0 && "½ÂÀÎ".equals(dto.getStatus())) {
+			job_levelService.updateMemberStatus(dto.getEmail(), "Á¤Á÷¿ø", dto.getCompany_code());
 		}
 
 		return result;
 	}
 
-	// ì´ë©”ì¼ + íšŒì‚¬ì½”ë“œë¡œ ì´ˆëŒ€ ì •ë³´ ì¡°íšŒ
+	// ÀÌ¸ŞÀÏ + È¸»ç ÄÚµå·Î ÃÊ´ë Á¤º¸ Á¶È¸
 	public InviteDTO getInviteByEmailAndCompany(String email, String companyCode) {
 		return dao.getInviteByEmailAndCompany(email, companyCode);
 	}

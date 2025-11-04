@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 /*
  * 		근태 / 출근 / 전자결재 통계 DAO
- * 		👉 SqlSession 직접 사용하는 수동 호출 버전
+ * 		SqlSession 직접 사용하는 수동 호출 버전
  */
 
 @Repository

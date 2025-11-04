@@ -80,7 +80,6 @@ body, html {
 
 /* 내용이 늘어나도록 */
 .notice-content {
-	margin-top: 20px;
     flex: 1;
     overflow-y: auto;
 }
@@ -99,25 +98,6 @@ body, html {
 	border: 1px solid var(--color-font-color2);
 	border-radius: 5px;
 	box-sizing: border-box;
-}
-
-/* 파일 */
-.notice-files {
-	margin-top: 10px;
-    bottom: 20px;
-    padding: 10px 20px;
-    border-radius: 16px;
-}
-
-.notice-files a {
-	display: block;
-	color: var(--color-font-color2);
-	text-decoration: none;
-	margin-bottom: 5px;
-}
-
-.notice-files a:hover {
-	text-decoration: underline;
 }
 
 /* 버튼 */

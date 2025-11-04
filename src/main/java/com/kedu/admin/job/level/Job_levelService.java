@@ -13,22 +13,22 @@ public class Job_levelService {
 	@Autowired
 	private Job_levelDAO job_levelDAO;
 
-	// ì‚¬ì› ëª©ë¡ ì¡°íšŒ
+	// ½ÂÀÎµÈ È¸¿ø ¸ñ·Ï Á¶È¸
 	public List<Map<String, Object>> getApprovedMembersWithJobDetail() {
 		return job_levelDAO.getApprovedMembersWithJobDetail();
 	}
 
-	// ì§ê¸‰ ì „ì²´ ì¡°íšŒ
+	// Á÷±Ş ÀüÃ¼ Á¶È¸
 	public List<Job_levelDTO> getselect() {
 		return job_levelDAO.getselect();
 	}
 
-	// íšŒì‚¬ ì½”ë“œ ì¡°íšŒ
+	// È¸»ç ÄÚµå Á¶È¸
 	public String selectCompanyCode() {
 		return job_levelDAO.selectCompanyCode();
 	}
 
-	// ì‚¬ì› ë¶€ì„œ ì—…ë°ì´íŠ¸
+	// È¸¿ø ºÎ¼­ º¯°æ
 	public int updateMemberDept(String email, String dept_code, String company_code) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("email", email);
@@ -38,26 +38,23 @@ public class Job_levelService {
 		return job_levelDAO.updateMemberDept(paramMap);
 	}
 
-	// ì‚¬ì› ì§ê¸‰ ì—…ë°ì´íŠ¸
+	// È¸¿ø Á÷±Ş º¯°æ
 	public int updateMemberLevel(String email, String level_code, String company_code) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("email", email);
 		paramMap.put("level_code", level_code);
-		paramMap.put("company_code", company_code); // ì´ ë¡œì§ì„ ì„œë¹„ìŠ¤ì—ì„œ ì²˜ë¦¬
+		paramMap.put("company_code", company_code);
 
 		return job_levelDAO.updateMemberLevel(paramMap);
 	}
 
-	// í‡´ì‚¬ & ì§ì› ë²„íŠ¼ í´ë¦­ ì‹œ
+	// È¸¿ø »óÅÂ º¯°æ (ÀçÁ÷/Åğ»ç)
 	public int updateMemberStatus(String email, String status, String company_code) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("email", email);
-		paramMap.put("status", status); // 'ì§ì›' ë˜ëŠ” 'í‡´ì‚¬'
+		paramMap.put("status", status);
 		paramMap.put("company_code", company_code);
 
-		// DAOëŠ” paramMapì„ ë°›ë„ë¡ í•©ë‹ˆë‹¤.
 		return job_levelDAO.updateMemberStatus(paramMap);
 	}
-	
-	
 }

@@ -14,7 +14,6 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <!-- 보드디테일 css -->
 <link rel="stylesheet" href="<c:url value='/resources/css/styles.css'/>">
@@ -44,17 +43,6 @@
 						</span> <span class="notice-views">조회수: ${notice.view_count}회</span>
 					</div>
 
-					<!-- 첨부 파일 -->
-					<c:if test="${not empty notice.files}">
-						<div class="notice-files mb-3">
-							<c:forEach var="file" items="${notice.files}">
-								<a href="<c:url value='/uploads/${file.sysname}'/>"
-									download="${file.oryname}"> 📎 ${file.oryname} </a>
-								<br>
-							</c:forEach>
-						</div>
-					</c:if>
-
 					<!-- 본문 내용 -->
 					<article id="boardContent" class="notice-content mb-3">
 						<p>${notice.content}</p>
@@ -64,16 +52,25 @@
 					<div class="notice-actions">
 						<a href="<c:url value='/notice/list'/>" class="btn btn-secondary"
 							id="backBtn">뒤로가기</a>
-						<button class="btn btn-secondary d-none" id="cancelBtn">취소</button>
-						<button class="btn btn-success d-none" id="saveBtn">저장</button>
 						<button class="btn btn-danger" id="deleteBtn">삭제</button>
 						<button class="btn btn-warning" id="editBtn">수정</button>
+
+						<!-- 처음에는 숨김 -->
+						<button class="btn btn-secondary d-none" id="cancelBtn">취소</button>
+						<button class="btn btn-warning d-none" id="saveBtn">저장</button>
 					</div>
 				</section>
 			</div>
 
 		</div>
 	</div>
+
+	<script>
+        // 토큰을 사용하지 않으므로, CSRF 변수 대신 noticeSeq만 남깁니다.
+        const noticeSeq = "${notice.notice_seq}";
+        var contextPath = '${pageContext.request.contextPath}';
+   
+    </script>
 
 	<!-- JS -->
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

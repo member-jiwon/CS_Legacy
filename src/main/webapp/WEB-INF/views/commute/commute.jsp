@@ -7,12 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
 	rel="stylesheet" /><!-- 부트스트랩 -->
 <link rel="stylesheet" href="<c:url value='/resources/css/commute.css'/>"><!--css파일 -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><!--Jquery-->
 
 <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@3.1.2/plotly.min.js"></script><!-- plotly.js CDN -->
 <script src="<c:url value='/resources/js/commute.js'/>"></script>
@@ -201,14 +198,21 @@ const layout3 = {
 		  bargap: 0.35
 		};
 
-		// ✅ 반응형 옵션
+		// 반응형 옵션
 		Plotly.newPlot('approvalPlot', data3, layout3, { responsive: true });
 
 
 
 </script>
 
-
+<!-- 초대 코드 아이콘을 아무 페이지에서나 눌렀을 때 나오게 하기 위해(부트스트랩이 겹쳐서 안나와 페이지마다 주는 중) -->
+	<!-- JS -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
 
 
 </body>

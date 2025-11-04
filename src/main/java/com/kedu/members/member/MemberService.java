@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /*
- * 		사원 회원가입 및 마이페이지 구현 Service
- * */
-
+ * 		ȸ�� ����
+ */
 @Service
 public class MemberService {
+
 	@Autowired
 	private MemberDAO dao;
 
@@ -21,9 +21,8 @@ public class MemberService {
 	public MemberDTO getMemberByEmailAndCompany(String email, String companyCode) {
 		return dao.getMemberByEmailAndCompany(email, companyCode);
 	}
-	
+
 	public int updateMemberStatus(MemberDTO dto) {
 		return dao.updateMemberStatus(dto);
 	}
-
 }

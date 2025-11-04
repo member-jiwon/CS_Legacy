@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /*
-ë¨¼ìŠ¬ë¦¬ ( ì¼ì • í…Œì´ë¸” ) ê¸°ëŠ¥ êµ¬í˜„ service
-*/
-
+ * ÀÏÁ¤ (½ºÄÉÁÙ °ü¸®) °ü·Ã ¼­ºñ½º
+ */
 @Service
 public class ScheduleService {
-	@Autowired
-	private ScheduleDAO dao;
+    @Autowired
+    private ScheduleDAO dao;
+
+    // TODO: ÀÏÁ¤ µî·Ï, ¼öÁ¤, »èÁ¦ µî ºñÁî´Ï½º ·ÎÁ÷ ±¸Çö
 }

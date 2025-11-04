@@ -2,38 +2,29 @@ package com.kedu.notice;
 
 import java.sql.Timestamp;
 import java.util.List;
-
 import com.kedu.file.FileDTO;
 
 /*
-	ê³µì§€ì‚¬í•­ DTO
-*/
+ *  °øÁö»çÇ× DTO
+ */
 public class NoticeDTO {
-	private int notice_seq; // ê³µì§€ì‚¬í•­ ê³ ìœ ë²ˆí˜¸
-	private int view_count; // ì¡°íšŒìˆ˜ ( default : 0 )
-	private String writer_email;
-	private String title; // ê³µì§€ ì œëª©
-	private String content; // ê³µì§€ ë‚´ìš©
-	private String company_code; // íšŒì‚¬ ì½”ë“œ
-	private Timestamp created_at; // ê³µì§€ ì‘ì„±ì¼ ( default : sysdate )
 
-    // íŒŒì¼ ëª©ë¡ ì¶”ê°€ - ì§€ì›ì–¸ë‹ˆêº¼ í•œê±° ë³´ê³  íŒŒì¼ ëª©ë¡ ìˆ˜ì •ì˜ˆì • ìš°ì„ ....aiê°€ ì´ë ‡ê²Œ í•˜ë˜ ì˜¤ë¥˜ì˜¤ì ¸ì…”
-    private List<FileDTO> files;
+	private int notice_seq; // °øÁö»çÇ× ¹øÈ£
+	private int view_count; // Á¶È¸¼ö (default: 0)
+	private String writer_email; // ÀÛ¼ºÀÚ ÀÌ¸ŞÀÏ
+	private String title; // °øÁö Á¦¸ñ
+	private String content; // °øÁö ³»¿ë
+	private String company_code; // È¸»ç ÄÚµå
+	private Timestamp created_at; // ÀÛ¼ºÀÏÀÚ (default: sysdate)
 
-    public List<FileDTO> getFiles() {
-        return files;
-    }
+	// Ã·ºÎÆÄÀÏ ¸ñ·Ï
+	private List<FileDTO> files;
 
-    public void setFiles(List<FileDTO> files) {
-        this.files = files;
-    }
-	
 	public NoticeDTO() {
 	}
 
 	public NoticeDTO(int notice_seq, int view_count, String title, String content, String company_code,
 			String writer_email, Timestamp created_at) {
-		super();
 		this.notice_seq = notice_seq;
 		this.view_count = view_count;
 		this.title = title;
@@ -99,4 +90,11 @@ public class NoticeDTO {
 		this.created_at = created_at;
 	}
 
+	public List<FileDTO> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<FileDTO> files) {
+		this.files = files;
+	}
 }

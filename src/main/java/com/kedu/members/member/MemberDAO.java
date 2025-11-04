@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /*
- * ì‚¬ì› íšŒì›ê°€ì… ë° ë§ˆì´í˜ì´ì§€ êµ¬í˜„ DAO
+ * 		È¸¿ø Á¤º¸ °ü·Ã DAO
  */
 @Repository
 public class MemberDAO {
@@ -17,21 +17,21 @@ public class MemberDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// ì „ì²´ íšŒì› ì¡°íšŒ
+	// ÀüÃ¼ È¸¿ø Á¶È¸
 	public List<MemberDTO> getAllMembers() {
 		return sqlSession.selectList("MemberMapper.getAllMember");
 	}
 
-	// ì´ë©”ì¼ + íšŒì‚¬ì½”ë“œ ê¸°ì¤€ìœ¼ë¡œ íšŒì› ì¡°íšŒ
+	// ÀÌ¸ŞÀÏ + È¸»ç ÄÚµå ±âÁØ È¸¿ø Á¶È¸
 	public MemberDTO getMemberByEmailAndCompany(String email, String companyCode) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("email", email);
 		params.put("company_code", companyCode);
 		return sqlSession.selectOne("MemberMapper.getMemberByEmailAndCompany", params);
 	}
-	
+
+	// È¸¿ø »óÅÂ ¾÷µ¥ÀÌÆ®
 	public int updateMemberStatus(MemberDTO dto) {
 		return sqlSession.update("MemberMapper.updateMemberStatus", dto);
 	}
-
 }
