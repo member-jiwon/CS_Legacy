@@ -15,13 +15,13 @@ import com.google.cloud.storage.Storage;
 @Controller
 @RequestMapping("/file")
 public class FileController {
-	private final String bucketName = "hwi_study"; // ³ªÀÇ ¹öÅ¶ ÀÌ¸§
+	private final String bucketName = "hwi_study"; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¶ ï¿½Ì¸ï¿½
 	@Autowired
-    private Storage storage; //cpConfig¿¡¼­ ÀÚµ¿ ÁÖÀÔµÊ
+    private Storage storage; //cpConfigï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½Ôµï¿½
 	@Autowired
     private FileService fileService;
 	
-	//´Ù¿î·Îµå
+	//ï¿½Ù¿ï¿½Îµï¿½
     @RequestMapping("/download")
     public ResponseEntity<byte[]> download(String sysname, String file_type) throws Exception {
         Map<String, Object> fileData = fileService.getFileData(sysname, file_type);

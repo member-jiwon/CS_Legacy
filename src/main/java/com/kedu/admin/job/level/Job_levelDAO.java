@@ -1,14 +1,49 @@
 package com.kedu.admin.job.level;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /*
-	 ì§ê¸‰ ê´€ë ¨ ê¸°ëŠ¥ êµ¬í˜„ DAO
- */
+    Á÷±Ş °ü·Ã µ¥ÀÌÅÍ Ã³¸® DAO
+*/
 @Repository
 public class Job_levelDAO {
+
 	@Autowired
 	private SqlSessionTemplate mybatis;
+
+	// ½ÂÀÎµÈ È¸¿ø ¸ñ·Ï Á¶È¸ (map ÇüÅÂ)
+	public List<Map<String, Object>> getApprovedMembersWithJobDetail() {
+		return mybatis.selectList("Job.getApprovedMembersWithJobDetail");
+	}
+
+	// Á÷±Ş ÀüÃ¼ Á¶È¸
+	public List<Job_levelDTO> getselect() {
+		return mybatis.selectList("Job.getselect");
+	}
+
+	// È¸»ç ÄÚµå Á¶È¸
+	public String selectCompanyCode() {
+		return mybatis.selectOne("Job.selectCompanyCode");
+	}
+
+	// È¸¿ø ºÎ¼­ º¯°æ
+	public int updateMemberDept(Map<String, Object> param) {
+		return mybatis.update("Job.updateMemberDept", param);
+	}
+
+	// È¸¿ø Á÷±Ş º¯°æ
+	public int updateMemberLevel(Map<String, Object> param) {
+		return mybatis.update("Job.updateMemberLevel", param);
+	}
+
+	// È¸¿ø »óÅÂ º¯°æ (ÀçÁ÷/Åğ»ç)
+	public int updateMemberStatus(Map<String, Object> param) {
+		return mybatis.update("Job.updateMemberStatus", param);
+	}
 }

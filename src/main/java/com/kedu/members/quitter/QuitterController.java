@@ -5,12 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /*
-  	í‡´ì‚¬ ì²˜ë¦¬ ë“± ê¸°ëŠ¥ êµ¬í˜„ controller
+    Åð»çÀÚ µî·Ï¿ë Controller
 */
-
 @Controller
 @RequestMapping("")
 public class QuitterController {
+
 	@Autowired
-	private QuitterService QuitterService;
+	private QuitterService quitterService;
 }

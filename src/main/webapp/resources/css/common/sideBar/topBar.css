@@ -9,29 +9,12 @@
 	z-index: 1060;
 	box-shadow: 0px 4px 7.9px rgba(0, 0, 0, 0.1);
 	background-color: #fff;
-	display: block;
 	box-sizing: border-box;
 	font-family: Pretendard, sans-serif;
 }
 
-/* 💡 추가: 햄버거 버튼의 기본 스타일 제거 */
-.topbar-icons button#menuToggle {
-	border: none;
-	background: none;
-	padding: 0;
-	margin: 0;
-	cursor: pointer;
-	width: 24px;
-	height: 24px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 0;
-}
-
 .topbar {
 	width: 100%;
-	height: auto;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -61,8 +44,67 @@
 	gap: 12px;
 }
 
-.icon-alarm, .icon-add, .icon-menu {
+/* 버튼 스타일 초기화 */
+.icon-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	background: none;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+}
+
+.icon-alarm {
 	width: 24px;
 	height: 24px;
 	object-fit: cover;
+}
+
+.icon-button img {
+	width: 30px;
+	height: 30px;
+	object-fit: cover;
+}
+
+/* 모달 */
+/* 모달 오버레이(배경)도 탑바 위로 */
+.modal-backdrop {
+	z-index: 2000 !important;
+}
+
+/* 모달 배경 오버레이 */
+.modal-backdrop {
+	z-index: 2000 !important;
+}
+
+/* 모달 자체 */
+.modal {
+	z-index: 2100 !important;
+	position: fixed !important;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* 중앙 정렬 */
+.modal-content {
+	width: 50%;
+	max-width: 600px;
+	margin: auto;
+	border-radius: 22px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-body {
+	border-radius: 22px;
+}
+
+.invitation-container {
+	padding: 20px;
+	text-align: center; /* 내부 텍스트 중앙 정렬 */
 }

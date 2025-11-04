@@ -1,14 +1,14 @@
 package com.kedu.file;
 
 /*
-	ë””ë¹„ íŒŒì¼íƒ€ì…ì— ë“¤ì–´ê°€ëŠ” ìƒìˆ˜ê°’ ì •ë¦¬í•¨
+	µğºñ ÆÄÀÏÅ¸ÀÔ¿¡ µé¾î°¡´Â »ó¼ö°ª Á¤¸®ÇÔ
 	
-	ê° ì„œë¹„ìŠ¤ì—ì„œ FileDAO ì½œì‹œ setFile_type(); ì´ìš©í•´ì„œ íŒŒì¼ ì¢…ë¥˜ ë„£ì–´ì“°ì‹œì˜¤~
-	ë³¸ì¸ íŒŒíŠ¸ë¶€ë¶„ë§Œ ì™¸ì›Œì„œ ì“°ë©´ë©ë‹ˆë‹¤ ë‹¤ë¥¸ë¶„ë“¤ê»€ ê±´ë“¤ì§€ë§ˆì„¸ìš¥
+	°¢ ¼­ºñ½º¿¡¼­ FileDAO Äİ½Ã setFile_type(); ÀÌ¿ëÇØ¼­ ÆÄÀÏ Á¾·ù ³Ö¾î¾²½Ã¿À~
+	º»ÀÎ ÆÄÆ®ºÎºĞ¸¸ ¿Ü¿ö¼­ ¾²¸éµË´Ï´Ù ´Ù¸¥ºĞµé²« °ÇµéÁö¸¶¼¼¿é
 */
 public class FileConstants {
-	public static final String FE = "email"; // ì´ë©”ì¼ìš©
-	public static final String FC = "chat"; // ì±„íŒ…ìš©
-	public static final String FB = "borad"; // ê³µì§€ì‚¬í•­ìš©
-	public static final String FA = "approval"; //ì „ìê²°ì¬ìš©
+	public static final String FE = "email"; // ÀÌ¸ŞÀÏ¿ë
+	public static final String FC = "chat"; // Ã¤ÆÃ¿ë
+	public static final String FB = "borad"; // °øÁö»çÇ×¿ë
+	public static final String FA = "approval"; //ÀüÀÚ°áÀç¿ë
 }

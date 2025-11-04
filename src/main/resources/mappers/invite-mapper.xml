@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="InviteMapper">
+
+	<!-- company_code 기준 모든 초대 + 회원 정보 -->
+	<select id="getInvitesByCompany" parameterType="string"
+		resultType="com.kedu.admin.invite.InviteDTO">
+		SELECT
+		m.email,
+		m.name,
+		m.signup_at,
+		m.dept_code,
+		m.level_code,
+		NVL(i.status, '미승인') AS invite_status,
+		m.company_code
+		FROM member m
+		LEFT
+		JOIN invite i
+		ON m.email = i.email
+		AND m.company_code = i.company_code
+		WHERE m.company_code = #{company_code}
+		ORDER BY m.signup_at
+	</select>
+
+	<!-- 이메일, 회사 초대코드 -->
+	<select id="getInviteByEmailAndCompany" parameterType="map"
+		resultType="com.kedu.admin.invite.InviteDTO">
+		SELECT *
+		FROM invite
+		WHERE email = #{email}
+		AND company_code =
+		#{company_code}
+	</select>
+
+
+
+	<!-- insert -->
+	<insert id="insertInvite"
+		parameterType="com.kedu.admin.invite.InviteDTO">
+		<selectKey keyProperty="invite_seq" resultType="long"
+			order="BEFORE">
+			SELECT invite_seq.NEXTVAL FROM dual
+		</selectKey>
+		INSERT INTO invite(invite_seq, email, company_code, status,
+		created_at)
+		VALUES(#{invite_seq}, #{email}, #{company_code}, #{status},
+		SYSTIMESTAMP)
+	</insert>
+
+	<!-- 상태 업데이트 -->
+	<update id="updateInviteStatus"
+		parameterType="com.kedu.admin.invite.InviteDTO">
+		UPDATE invite
+		SET status = #{status}, updated_at =
+		SYSTIMESTAMP
+		WHERE invite_seq = #{invite_seq}
+	</update>
+
+
+	<!-- 승인된 초대 + 멤버 정보 조회 -->
+	<select id="getApprovedInvitesWithMember"
+		resultType="com.kedu.admin.invite.InviteDTO">
+		SELECT
+		i.invite_seq,
+		i.email,
+		i.company_code,
+		i.status,
+		i.created_at,
+		i.updated_at,
+		m.name,
+		m.signup_at,
+		m.dept_code,
+		m.level_code
+		FROM invite i
+		JOIN member m
+		ON i.email = m.email
+		AND i.company_code =
+		m.company_code
+		WHERE i.status = '승인'
+		ORDER BY
+		i.updated_at DESC
+	</select>
+
+
+
+</mapper>

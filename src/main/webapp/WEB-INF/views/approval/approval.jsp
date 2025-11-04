@@ -202,12 +202,12 @@ const statusMap = { w: "대기", y: "승인", n: "반려"};
 	      .attr("data-value", s.value)
 	      .text(s.label);
 	
-	    // ✅ 현재 상태일 경우 활성 표시
+	    // 현재 상태일 경우 활성 표시
 	    if (row.APPROVAL_STATUS === s.value) {
 	      btn.addClass("active");
 	    }
 	
-	    // ✅ 승인(y) 또는 반려(n) 상태라면 비활성화
+	    // 승인(y) 또는 반려(n) 상태라면 비활성화
 	    if (row.APPROVAL_STATUS === "y" || row.APPROVAL_STATUS === "n") {
 	      btn.prop("disabled", true); // 버튼 비활성화
 	      btn.addClass("disabled-btn"); // (선택) 스타일 추가용

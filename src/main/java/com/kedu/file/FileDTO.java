@@ -3,7 +3,7 @@ package com.kedu.file;
 	�뙆�씪 �뾽濡쒕뱶 諛� �떎�슫濡쒕뱶 DTO
 */
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class FileDTO {
 	private int file_seq; // 파일 고유번호
@@ -83,7 +83,6 @@ public class FileDTO {
 	public void setParent_seq(int parent_seq) {
 		this.parent_seq = parent_seq;
 	}
-
-	
 	
 }
+

@@ -10,9 +10,6 @@ import org.springframework.stereotype.Service;
 import com.kedu.chat.ChatDAO;
 import com.kedu.members.member.MemberDAO;
 
-/*
-癒쇱뒳由� ( �씪�젙 �뀒�씠釉� ) 湲곕뒫 援ы쁽 service
-*/
 
 @Service
 public class ScheduleService {

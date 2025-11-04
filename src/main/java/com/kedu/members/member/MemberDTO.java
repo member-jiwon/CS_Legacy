@@ -1,78 +1,106 @@
 package com.kedu.members.member;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
+/*
+ * 		È¸¿ø DTO
+ */
 public class MemberDTO {
-	private String email; // ì‚¬ì› ê³ ìœ  ì•„ì´ë””
-	private int dept_code; // ë¶€ì„œì½”ë“œ ( default : null , ê´€ë¦¬ìê°€ ë¶€ì—¬ì‹œ ê°’ë“±ë¡ )
-	private int level_code; // ì§ê¸‰ì½”ë“œ ( default : null , ê´€ë¦¬ìê°€ ë¶€ì—¬ì‹œ ê°’ë“±ë¡ )
-	private String pw; // ë¹„ë°€ë²ˆí˜¸
-	private String name; // ì´ë¦„
-	private String phoen; // ì „í™”ë²ˆí˜¸
-	private String company_code; // íšŒì‚¬ì½”ë“œ
-	private Timestamp signup_at; // ê°€ì… ë‚ ì§œ ë° ìŠ¹ì¸ ë‚ ì§œ
-	
-	public MemberDTO() {}
-	public MemberDTO(String email, int dept_code, int level_code, String pw, String name, String phoen,
-			String company_code, Timestamp signup_at) {
-		super();
+	private String email; // È¸¿ø ÀÌ¸ŞÀÏ
+	private String dept_code; // ºÎ¼­ ÄÚµå (default: null)
+	private String level_code; // Á÷±Ş ÄÚµå (default: null)
+	private String pw; // ºñ¹Ğ¹øÈ£
+	private String name; // ÀÌ¸§
+	private String phone; // ÀüÈ­¹øÈ£
+	private String company_code; // È¸»ç ÄÚµå
+	private Timestamp signup_at; // È¸¿ø °¡ÀÔ ÀÏÀÚ
+	private String status; // È¸¿ø »óÅÂ
+
+	public MemberDTO() {
+	}
+
+	public MemberDTO(String email, String dept_code, String level_code, String pw, String name, String phone,
+			String company_code, Timestamp signup_at, String status) {
 		this.email = email;
 		this.dept_code = dept_code;
 		this.level_code = level_code;
 		this.pw = pw;
 		this.name = name;
-		this.phoen = phoen;
+		this.phone = phone;
 		this.company_code = company_code;
 		this.signup_at = signup_at;
+		this.status = status;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getDept_code() {
+
+	public String getDept_code() {
 		return dept_code;
 	}
-	public void setDept_code(int dept_code) {
+
+	public void setDept_code(String dept_code) {
 		this.dept_code = dept_code;
 	}
-	public int getLevel_code() {
+
+	public String getLevel_code() {
 		return level_code;
 	}
-	public void setLevel_code(int level_code) {
+
+	public void setLevel_code(String level_code) {
 		this.level_code = level_code;
 	}
+
 	public String getPw() {
 		return pw;
 	}
+
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPhoen() {
-		return phoen;
+
+	public String getPhone() {
+		return phone;
 	}
-	public void setPhoen(String phoen) {
-		this.phoen = phoen;
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
+
 	public String getCompany_code() {
 		return company_code;
 	}
+
 	public void setCompany_code(String company_code) {
 		this.company_code = company_code;
 	}
+
 	public Timestamp getSignup_at() {
 		return signup_at;
 	}
+
 	public void setSignup_at(Timestamp signup_at) {
 		this.signup_at = signup_at;
 	}
-	
-	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }
