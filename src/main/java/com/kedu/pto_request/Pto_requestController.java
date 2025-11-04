@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.kedu.admin.department.DepartmentDTO;
 import com.kedu.admin.department.DepartmentService;
+import com.kedu.members.member.MemberService;
 import com.kedu.schedule.ScheduleService;
 
 import util.PageConfig;
@@ -29,6 +30,8 @@ public class Pto_requestController {
 	private Pto_requestService pto_requestService;
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private MemberService memberService;
     @Autowired
     private Gson gson;
     
@@ -45,7 +48,6 @@ public class Pto_requestController {
 
         // 부서 목록 조회
     	String company_code = (String)session.getAttribute("company_code");
-    	System.out.println(company_code);
         List<DepartmentDTO> depts = departmentService.getAllDeptCode(company_code);// 회사 코드 넣어서 확인
 
         // 필터링용 값 처리
@@ -76,13 +78,6 @@ public class Pto_requestController {
         // 드롭다운 선택값 유지용
         m.addAttribute("selectedDept", String.valueOf(rawDept));
         m.addAttribute("selectedStatus", rawptoStatus);
-
-        // 디버깅 로그
-        System.out.println("결재 리스트 JSON: " + gson.toJson(list));
-        System.out.println("부서 목록 JSON: " + gson.toJson(depts));
-        System.out.println("선택된 회사: " + rawDept);
-        System.out.println("선택된 상태: " + rawptoStatus);
-
         return "/pto/ptoList";
     }
     
@@ -113,6 +108,9 @@ public class Pto_requestController {
     public String toDetailApproval(@RequestParam int seq, HttpSession session, Model m) {
 
     	Pto_requestDTO result = pto_requestService.toDetailPtoRequest(seq);
+    	//이메일로 이름 가져오기
+        String name = memberService.getNameByEmail(result.getMember_email());
+        m.addAttribute("name", name);
 	    m.addAttribute("dtoJson", gson.toJson(result)); // JS 용
 	    m.addAttribute("dto", result);
 

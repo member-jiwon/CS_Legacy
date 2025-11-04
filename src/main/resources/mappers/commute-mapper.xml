@@ -4,52 +4,68 @@
 
 <mapper namespace="Commute">
   <!-- 1️.근태관리 -->
-<select id="getAttendanceStats" parameterType="map" resultType="map">
-  SELECT STATUS, COUNT(*) AS CNT
-  FROM (
-      SELECT 
-          c.MEMBER_EMAIL,
-          CASE 
-              WHEN c.WORK_AT IS NOT NULL THEN '출근'
-              WHEN c.WORK_AT IS NULL 
-                   AND EXISTS (
-                       SELECT 1 FROM PTO_REQUEST p
-                       WHERE p.MEMBER_EMAIL = c.MEMBER_EMAIL
-                         AND p.PTO_STATUS = 'y'
-                         AND TRUNC(c.COMMUTE_AT) BETWEEN TRUNC(p.PTO_START_AT) AND TRUNC(p.PTO_END_AT)
-                   )
-                   THEN '연차'
-              ELSE '결근'
-          END AS STATUS
-      FROM MEMBER m
-      JOIN COMMUTE c ON m.EMAIL = c.MEMBER_EMAIL
-      WHERE TRUNC(c.COMMUTE_AT) BETWEEN #{startDate, jdbcType=DATE} AND #{endDate, jdbcType=DATE}
-  )
-  GROUP BY STATUS
-</select>
+	<select id="getAttendanceStats" parameterType="map" resultType="map">
+		select status, count(*) as cnt
+		from (
+		    select 
+		        c.member_email,
+		        case 
+		            when c.work_at is not null then '출근'
+		            when c.work_at is null 
+		                 and exists (
+		                     select 1 from pto_request p
+		                     where p.member_email = c.member_email
+		                       and p.pto_status = 'y'
+		                       and trunc(c.commute_at) between trunc(p.pto_start_at) and trunc(p.pto_end_at)
+		                 )
+		               then '연차'
+		            else '결근'
+		        end as status
+		    from member m
+		    join commute c on m.email = c.member_email
+		    join department d on m.dept_code = d.dept_code
+		    where trunc(c.commute_at) between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}
+		      and m.company_code = #{company_code, jdbcType=VARCHAR}
+		      <if test="type != null and type != '전체'">
+		        and d.dept_name = #{type}
+		      </if>
+		)
+		group by status
+	</select>
 
   <!-- 2️. 출근관리 -->
-<select id="getWorkStats" parameterType="map" resultType="map">
-  SELECT
-    NVL(SUM(CASE WHEN c.LATENESS = 'n' THEN 1 ELSE 0 END), 0) AS "정근",
-    NVL(SUM(CASE WHEN c.LATENESS = 'y' THEN 1 ELSE 0 END), 0) AS "지각"
-  FROM COMMUTE c
-  WHERE TRUNC(c.COMMUTE_AT) BETWEEN #{start, jdbcType=DATE} AND #{end, jdbcType=DATE}
-</select>
+	<select id="getWorkStats" parameterType="map" resultType="map">
+		select
+		    nvl(sum(case when lateness = 'n' and absence = '출근' then 1 else 0 end), 0) as "정근",
+		    nvl(sum(case when lateness = 'y' and absence = '출근' then 1 else 0 end), 0) as "지각"
+		from (
+		    select c.lateness, c.absence
+		    from commute c
+		    join member m on c.member_email = m.email
+		    join department d on m.dept_code = d.dept_code
+		    where trunc(c.commute_at) between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}
+		      and m.company_code = #{company_code, jdbcType=VARCHAR}  
+		      <if test="type != null and type.trim() != '전체' and type.trim().length() > 0">
+		        and trim(d.dept_name) = trim(#{type})
+		      </if>
+		)
+	</select>
 
-<!-- 3️⃣ 전자결재 처리현황 -->
-<select id="getApprovalStats" parameterType="map" resultType="map">
-  SELECT
-    NVL(SUM(CASE WHEN a.APPROVAL_STATUS = 'w' THEN 1 ELSE 0 END), 0) AS "처리중",
-    NVL(SUM(CASE WHEN a.APPROVAL_STATUS = 'n' THEN 1 ELSE 0 END), 0) AS "반려",
-    NVL(SUM(CASE WHEN a.APPROVAL_STATUS = 'y' THEN 1 ELSE 0 END), 0) AS "승인"
-  FROM APPROVAL a
-  JOIN MEMBER m ON a.MEMBER_EMAIL = m.EMAIL
-  WHERE TRUNC(a.APPROVAL_AT) BETWEEN #{start, jdbcType=DATE} AND #{end, jdbcType=DATE}
-  <if test="type == '팀별'">
-    AND m.DEPT_CODE = #{sessionDeptCode}
-  </if>
-</select>
- 
+<!-- 3️. 전자결재 처리현황 -->
+	<select id="getApprovalStats" parameterType="map" resultType="map">
+		select
+		    nvl(sum(case when a.approval_status = 'w' then 1 else 0 end), 0) as "처리중",
+		    nvl(sum(case when a.approval_status = 'n' then 1 else 0 end), 0) as "반려",
+		    nvl(sum(case when a.approval_status = 'y' then 1 else 0 end), 0) as "승인"
+		from approval a
+		join member m on a.member_email = m.email
+		join department d on m.dept_code = d.dept_code
+		where trunc(a.approval_at) between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}
+		  and m.company_code = #{company_code, jdbcType=VARCHAR} 
+		  <if test="type != null and type.trim().length() > 0 and type != '전체'">
+		    and trim(d.dept_name) = trim(#{type})
+		  </if>
+	</select>
+
 
 </mapper>

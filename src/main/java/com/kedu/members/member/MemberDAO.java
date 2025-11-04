@@ -8,21 +8,23 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-/*
- * 		È¸¿ø Á¤º¸ °ü·Ã DAO
- */
 @Repository
 public class MemberDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
 
-	// ÀüÃ¼ È¸¿ø Á¶È¸
+	// ì´ë©”ì¼ë¡œ ì´ë¦„ ì°¾ê¸°
+	public String getNameByEmail(String member_email) {
+		return sqlSession.selectOne("MemberMapper.getNameByEmail", member_email);
+	}
+
+	// ì „ì²´ íšŒì› ëª©ë¡ ì¡°íšŒ
 	public List<MemberDTO> getAllMembers() {
 		return sqlSession.selectList("MemberMapper.getAllMember");
 	}
 
-	// ÀÌ¸ŞÀÏ + È¸»ç ÄÚµå ±âÁØ È¸¿ø Á¶È¸
+	// ì´ë©”ì¼ + íšŒì‚¬ì½”ë“œë¡œ íšŒì› ì¡°íšŒ
 	public MemberDTO getMemberByEmailAndCompany(String email, String companyCode) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("email", email);
@@ -30,7 +32,7 @@ public class MemberDAO {
 		return sqlSession.selectOne("MemberMapper.getMemberByEmailAndCompany", params);
 	}
 
-	// È¸¿ø »óÅÂ ¾÷µ¥ÀÌÆ®
+	// íšŒì› ìƒíƒœ ì—…ë°ì´íŠ¸
 	public int updateMemberStatus(MemberDTO dto) {
 		return sqlSession.update("MemberMapper.updateMemberStatus", dto);
 	}

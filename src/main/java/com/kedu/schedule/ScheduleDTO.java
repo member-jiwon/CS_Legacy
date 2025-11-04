@@ -1,108 +1,108 @@
 package com.kedu.schedule;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
-/*
- * ÀÏÁ¤ (½ºÄÉÁÙ °ü¸®) DTO
- */
 public class ScheduleDTO {
-	private int schedule_seq; // ÀÏÁ¤ ½ÃÄö½º ¹øÈ£
-	private String member_email; // ÀÏÁ¤ ÀÛ¼ºÀÚ ÀÌ¸ŞÀÏ (È¸¿ø ÀÌ¸ŞÀÏ)
-	private String title; // ÀÏÁ¤ Á¦¸ñ
-	private String content; // ÀÏÁ¤ ³»¿ë
-	private String all_day; // Á¾ÀÏ ¿©ºÎ (default: y, ºÎºĞÀÏ °æ¿ì: n)
-	private String color; // »ö»ó
-	private Timestamp start_at; // ½ÃÀÛ ³¯Â¥
-	private Timestamp end_at; // Á¾·á ³¯Â¥
-	private Timestamp created_at; // ÀÏÁ¤ »ı¼ºÀÏ (default: sysdate)
+private int schedule_seq; //ìŠ¤ì¼€ì¤„ ì‹œí€€ìŠ¤ë²ˆí˜¸
+private String member_email; // ë©¤ë²„ ì´ë©”ì¼
+private String title; //ì œëª©
+private String all_day; // í•˜ë£¨ ì•ˆì´ë©´ n, í•˜ë£¨ ì´ìƒì´ë©´ y (ì‹œê°„ê¸°ì¤€ x ë‚ ì§œê¸°ì¤€)
+private String color; // uiì— ë¿Œë ¤ì§ˆ ìƒ‰ìƒ
+private Timestamp start_at; // ì‹œì‘ì‹œê°„
+private Timestamp end_at; // ëë‚˜ëŠ” ì‹œê°„
+private Timestamp created_at; //ì…ë ¥ ì‹œê°„
+private int chat_seq;
 
-	public ScheduleDTO() {
-	}
+public ScheduleDTO() {}
 
-	public ScheduleDTO(int schedule_seq, String member_email, String title, String content, String all_day,
-			String color, Timestamp start_at, Timestamp end_at, Timestamp created_at) {
-		super();
-		this.schedule_seq = schedule_seq;
-		this.member_email = member_email;
-		this.title = title;
-		this.content = content;
-		this.all_day = all_day;
-		this.color = color;
-		this.start_at = start_at;
-		this.end_at = end_at;
-		this.created_at = created_at;
-	}
 
-	// getters & setters
-	public int getSchedule_seq() {
-		return schedule_seq;
-	}
 
-	public void setSchedule_seq(int schedule_seq) {
-		this.schedule_seq = schedule_seq;
-	}
+public ScheduleDTO(int schedule_seq, String member_email, String title, String all_day, String color,
+		Timestamp start_at, Timestamp end_at, Timestamp created_at, int chat_seq) {
+	super();
+	this.schedule_seq = schedule_seq;
+	this.member_email = member_email;
+	this.title = title;
+	this.all_day = all_day;
+	this.color = color;
+	this.start_at = start_at;
+	this.end_at = end_at;
+	this.created_at = created_at;
+	this.chat_seq = chat_seq;
+}
 
-	public String getMember_email() {
-		return member_email;
-	}
 
-	public void setMember_email(String member_email) {
-		this.member_email = member_email;
-	}
 
-	public String getTitle() {
-		return title;
-	}
+public int getSchedule_seq() {
+	return schedule_seq;
+}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+public void setSchedule_seq(int schedule_seq) {
+	this.schedule_seq = schedule_seq;
+}
 
-	public String getContent() {
-		return content;
-	}
+public String getMember_email() {
+	return member_email;
+}
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+public void setMember_email(String member_email) {
+	this.member_email = member_email;
+}
 
-	public String getAll_day() {
-		return all_day;
-	}
+public String getTitle() {
+	return title;
+}
 
-	public void setAll_day(String all_day) {
-		this.all_day = all_day;
-	}
+public void setTitle(String title) {
+	this.title = title;
+}
 
-	public String getColor() {
-		return color;
-	}
+public String getAll_day() {
+	return all_day;
+}
 
-	public void setColor(String color) {
-		this.color = color;
-	}
+public void setAll_day(String all_day) {
+	this.all_day = all_day;
+}
 
-	public Timestamp getStart_at() {
-		return start_at;
-	}
+public String getColor() {
+	return color;
+}
 
-	public void setStart_at(Timestamp start_at) {
-		this.start_at = start_at;
-	}
+public void setColor(String color) {
+	this.color = color;
+}
 
-	public Timestamp getEnd_at() {
-		return end_at;
-	}
+public Timestamp getStart_at() {
+	return start_at;
+}
 
-	public void setEnd_at(Timestamp end_at) {
-		this.end_at = end_at;
-	}
+public void setStart_at(Timestamp start_at) {
+	this.start_at = start_at;
+}
 
-	public Timestamp getCreated_at() {
-		return created_at;
-	}
+public Timestamp getEnd_at() {
+	return end_at;
+}
 
-	public void setCreated_at(Timestamp created_at) {
-		this.created_at = created_at;
-	}
+public void setEnd_at(Timestamp end_at) {
+	this.end_at = end_at;
+}
+
+public Timestamp getCreated_at() {
+	return created_at;
+}
+
+public void setCreated_at(Timestamp created_at) {
+	this.created_at = created_at;
+}
+
+public int getChat_seq() {
+	return chat_seq;
+}
+
+public void setChat_seq(int chat_seq) {
+	this.chat_seq = chat_seq;
+}
+
 }

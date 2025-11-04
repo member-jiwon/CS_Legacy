@@ -4,7 +4,7 @@
 
 <mapper namespace="Approval">
 
-  <!-- 전체 리스트 (페이징) -->
+  <!-- 전체 리스트 (페이징) 
 	<select id="selectAllFromTo" parameterType="map" resultType="map">
 	  SELECT *
 	  FROM (
@@ -35,7 +35,7 @@
 	    WHERE ROWNUM &lt;= #{end}
 	  )
 	  WHERE rnum &gt;= #{start}
-	</select>
+	</select>-->
 
 
   <!-- 필터 리스트 (상태 + 부서코드) -->

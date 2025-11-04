@@ -49,8 +49,9 @@ body, html {
 * {
 	box-sizing: border-box;
 }
+
 .subSidebar {
-	padding-top:30px;
+	padding:30px;
 	height: 100%;
 	width: 100%; 
 
@@ -60,21 +61,22 @@ body, html {
 	overflow: hidden;
   	flex-direction: column;
 }
+label{
+	margin-bottom:5px;
+}
 .dateBox{
-	margin-bottom:60px;
-	border: 1px solid yellow;
+	margin-bottom:30px;
 }
 /*서브사이드바 버튼 개당*/
 .tapWrapper{
 	width:100%;
 	height:50px;
-	border: 1px solid yellow;	
 }
 .tap {
-  all: unset;              /* 모든 기본 스타일 제거 */
-  cursor: pointer;         /* 커서 포인터 유지 */
-  display: inline-block;   /* 크기 조절 가능하게 */
-  box-sizing: border-box;  /* 박스 계산 통일 */
+  all: unset;              
+  cursor: pointer;         
+  display: inline-block;   
+  box-sizing: border-box;  
   
   padding:12px 20px;
   font-size: 16p;
@@ -93,7 +95,27 @@ body, html {
 	background-color:#eef6ff;
 	font-weight:bold;
 }
+.teamListBox {
+  border-radius: 0 !important;  
+}
+#teamListContainer {
+  margin-top: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-left:30px;
+}
 
+.list-group-item {
+  border: none !important; 
+  box-shadow: none !important;
+}
+.team-item {
+  cursor: pointer;
+}
+.team-item:hover {
+  border-left:2px solid #0090ff !important;
+  background-color: #eef6ff;
+}
 
 
 /*좌측 : 콘텐츠 */
@@ -106,10 +128,10 @@ body, html {
 }
 /*대쉬보드쪽*/
 .dashboard {
-  display: flex;                /* 좌우 레이아웃 */
-  align-items: stretch;         /* 높이 동일하게 맞추기 */
-  gap: 20px;                    /* 좌우 간격 */
-  height: 100%;                 /* 부모(content) 높이에 맞춤 */
+  display: flex;                
+  align-items: stretch;         
+  gap: 20px;                    
+  height: 100%;                 
   padding: 20px;
   background: #f6f7fb;
   box-sizing: border-box;
@@ -117,7 +139,7 @@ body, html {
 
 /* 왼쪽: 두 박스를 세로로 1:1 배분 */
 .left {
-  flex: 1;                      /* 비율 */
+  flex: 1;                     
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -125,20 +147,20 @@ body, html {
 }
 
 .left .box {
-  flex: 1;                      /* 각각 50% */
+  flex: 1;                      
   border: 1px solid black;
   border-radius : 22px;
 }
 
 /* 오른쪽: 왼쪽 전체 높이와 동일 */
 .right {
-  flex: 1.2;                    /* 넓이 비율 (원하면 1로 바꿔도 됨) */
+  flex: 1.2;                    
   display: flex;
   flex-direction: column;
 }
 
 .right .box {
-  flex: 1;                      /* 전체 높이 채우기 */
+  flex: 1;                     
   border: 1px solid black;
   border-radius : 22px;
 }
@@ -149,21 +171,35 @@ body, html {
 
 /*차트*/
 .donut-container {
+  margin-top:20px;
   width: 100%;
-  height: 280px;          /* ✅ 컨테이너 높이 고정 */
-  overflow: hidden;       /* ✅ 흰색 바탕 넘치면 자르기 */
+  height: 300px;         
+  overflow: hidden;       
   display: flex;
   justify-content: center;
   align-items: center;
 }
+#approvalPlot {
+  flex: 1;
+  width: 100%;
+  height: 80%; 
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
 .js-legend .legendtoggle rect {
-  rx: 8px !important; /* 둥근 정도 — 숫자 클수록 더 둥글게 */
+  rx: 8px !important; 
   ry: 8px !important;
 }
 h6{
 	margin-left:20px;
 	margin-top:20px;
 }
+h5{
+	color:#B0B0B0;
+}
 #margin-h6{
 	margin-bottom:55px;
 }
+
+

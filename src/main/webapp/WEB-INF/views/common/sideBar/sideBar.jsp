@@ -21,17 +21,17 @@
 		</a>
 
 		<!-- 전자결재 -->
-		<a href="<c:url value='/board/boardList' />" class="menu-item"> <img
-			src="<c:url value='/resources/imgs/sideBar/Sign_Document.svg' />"
-			class="menu-icon" alt="전자결재" /> <span class="menu-label">전자결재</span>
-		</a>
+      <a href="<c:url value='/approval' />" class="menu-item"> <img
+         src="<c:url value='/resources/imgs/sideBar/Sign_Document.svg' />"
+         class="menu-icon" alt="전자결재" /> <span class="menu-label">전자결재</span>
+      </a>
 
 		<!-- 연차 결재 -->
-		<a href="<c:url value='/pto' />" class="menu-item"> <img
-			src="<c:url value='/resources/imgs/sideBar/Document.svg' />"
-			class="menu-icon" alt="연차 결재" /> <span class="menu-label">연차
-				결재</span>
-		</a>
+      <a href="<c:url value='/pto' />" class="menu-item"> <img
+         src="<c:url value='/resources/imgs/sideBar/Document.svg' />"
+         class="menu-icon" alt="연차 결재" /> <span class="menu-label">연차
+            결재</span>
+      </a>
 
 		<!-- 초대 관리 -->
 		<a href="<c:url value='/invite/list' />" class="menu-item"> <img

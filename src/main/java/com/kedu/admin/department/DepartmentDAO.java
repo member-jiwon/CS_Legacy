@@ -37,7 +37,7 @@ public class DepartmentDAO {
 
 	// 존재하는 모든 부서코드 리스트로 조회
 	public List<DepartmentDTO> getAllDeptCode(String company_code) {
-		return mybatis.selectList("Department.getAllDeptCode", company_code);
+		return mybatis.selectList("Dept.getAllDeptCode", company_code);
 	}
 
 }

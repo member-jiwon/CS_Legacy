@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 import com.kedu.approval.ApprovalDTO;
 import com.kedu.schedule.ScheduleService;
 
-/*
- * 연차 요청 관련 비즈니스 로직 서비스
- */
+
 
 @Service
 public class Pto_requestService {
@@ -24,11 +22,8 @@ public class Pto_requestService {
 	private Pto_requestDAO dao;
 	@Autowired
     private ScheduleService scheduleService;
-    /**
-     * DB 결과값을 JSON 직렬화-friendly한 Map으로 변환
-     * - CLOB, TIMESTAMP 등 안전하게 문자열로 변환
-     * - JSP에서 Gson으로 JSON 출력 시 에러 방지
-     */
+
+    // DB 결과값을 JSON 직렬화
     private List<Map<String, Object>> sanitizeForJson(List<Map<String, Object>> list) {
         List<Map<String, Object>> sanitized = new ArrayList<>();
         if (list == null) return sanitized;
@@ -63,21 +58,19 @@ public class Pto_requestService {
         return sanitized;
     }
 	
-    /**
-     * 페이지 범위 내 전체 리스트 조회
-     */
-    public List<Map<String, Object>> selectAllFromTo(int start, int end) {
-        Map<String, Object> param = new HashMap<>();
-        param.put("start", start);
-        param.put("end", end);
 
-        List<Map<String, Object>> result = dao.selectAllFromTo(param);
-        return sanitizeForJson(result);
-    }
+     //페이지 범위 내 전체 리스트 조회
+		/*
+		 * public List<Map<String, Object>> selectAllFromTo(int start, int end) {
+		 * Map<String, Object> param = new HashMap<>(); param.put("start", start);
+		 * param.put("end", end);
+		 * 
+		 * List<Map<String, Object>> result = dao.selectAllFromTo(param); return
+		 * sanitizeForJson(result); }
+		 */
     
-    /**
-     * 필터 조건(status, deptCode)에 따른 조회
-     */
+
+     //필터 조건(status, deptCode)에 따른 조회
     public List<Map<String, Object>> selectByFilterFromTo(String status, String deptCode, int start, int end, String company_code) {
         Map<String, Object> param = new HashMap<>();
         param.put("status", status);
@@ -93,9 +86,9 @@ public class Pto_requestService {
     /**
      * 전체 레코드 개수 조회
      */
-    public int getRecordTotalCount() {
-        return dao.getCount();
-    }
+//    public int getRecordTotalCount() {
+//        return dao.getCount();
+//    }
 
     /**
      * 필터 조건 적용 시 총 개수 조회
@@ -125,23 +118,42 @@ public class Pto_requestService {
     
     
     // 연차 승인 + 거절 로직
-    public String processStatusUpdate(int targetseq, String newStatus,int pto_used,String member_email,Timestamp pto_start_at,Timestamp pto_end_at) {
-    	    if ("y".equals(newStatus)) {
-    	        int temp = subtractPto(pto_used, member_email); // PTO 차감
-    	        if (temp > 0) {
-    	            int result = updateStatus(targetseq, newStatus); // 상태 업데이트
-    	            if (result > 0) {
-    	            	// 여기 수정해볼려고 했는데 안보임요... 병합 쪽에 어디있는지 insertProSchedule가 안보여 그래서 주석 처리했어..
-    	                // scheduleService.insertPtoSchedule(member_email, pto_start_at, pto_end_at); // 스케줄 등록
+    public String processStatusUpdate( int targetseq, String newStatus, int pto_used,
+    	    							String member_email, Timestamp pto_start_at, Timestamp pto_end_at) {
+    	    try {
+    	        if ("y".equals(newStatus)) {//승인 이면
+    	            //1. PTO 차감
+    	            int temp = subtractPto(pto_used, member_email);
+    	            if (temp <= 0) {
+    	                System.out.println("PTO 잔여일 부족 또는 차감 실패");
+    	                return "lack";
     	            }
+    	            // 2️. 상태 업데이트
+    	            int result = updateStatus(targetseq, newStatus);
+    	            if (result <= 0) {
+    	                System.out.println("상태 업데이트 실패");
+    	                return "fail";
+    	            }
+    	            // 3️. 스케줄 등록
+    	            try {
+    	                scheduleService.insertPtoSchedule(member_email, pto_start_at, pto_end_at);
+    	            } catch (Exception e) {
+    	                e.printStackTrace();
+    	                System.out.println("스케줄 등록 실패 (승인은 완료)");
+    	            }
+    	            return newStatus;
+
+    	            
+    	        } else if ("n".equals(newStatus)) {// 반려라면
+    	            updateStatus(targetseq, newStatus);
+    	            return newStatus;
     	        }
-    	        return newStatus;
-    	    } else if ("n".equals(newStatus)) {
-    	        updateStatus(targetseq, newStatus);
-    	        return newStatus;
-    	    } else {
-    	        return "fail";
+
+    	    } catch (Exception e) {
+    	        e.printStackTrace();
     	    }
+
+    	    return "fail";
     	}
 
     

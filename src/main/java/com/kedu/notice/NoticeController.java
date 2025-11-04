@@ -15,7 +15,7 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 
-	/* 공지사항 목록 */
+	/* 怨듭��궗�빆 紐⑸줉 */
 	@GetMapping("/list")
 	public String noticeList(Model model) {
 		List<NoticeDTO> notices = noticeService.getAllNotices();
@@ -23,28 +23,26 @@ public class NoticeController {
 		return "board/boardList";
 	}
 
-	/* 공지사항 작성 페이지 */
+	/* 怨듭��궗�빆 �옉�꽦 �럹�씠吏� */
 	@GetMapping("/post")
 	public String boardPost() {
 		return "board/boardPost";
 	}
 
-	/* 공지사항 작성 처리 */
+	/* 怨듭��궗�빆 �옉�꽦 泥섎━ */
 	@PostMapping("/post")
 	public String boardPost(@ModelAttribute NoticeDTO dto, HttpSession session) {
-		String email = (String) session.getAttribute("loginEmail");
-		if (email == null)
-			email = "admin@company.com";
-
+		String email = (String) session.getAttribute("id");
+		String company_code = (String) session.getAttribute("company_code");
+		
 		dto.setWriter_email(email);
-		dto.setCompany_code("COMP001");
+		dto.setCompany_code(company_code);
 
 		noticeService.insertNotice(dto);
-
 		return "redirect:/notice/list";
 	}
 
-	/* 공지사항 상세 페이지 */
+	/* 怨듭��궗�빆 �긽�꽭 �럹�씠吏� */
 	@GetMapping("/detail")
 	public String editNotice(@RequestParam("notice_seq") int notice_seq, Model model) {
 		NoticeDTO notice = noticeService.selectNoticeById(notice_seq);
@@ -52,7 +50,7 @@ public class NoticeController {
 		return "board/boardDatail";
 	}
 
-	/* 공지사항 수정 처리 */
+	/* 怨듭��궗�빆 �닔�젙 泥섎━ */
 	@PostMapping("/update")
 	@ResponseBody
 	public String updateNotice(@ModelAttribute NoticeDTO dto, HttpSession session) {
@@ -63,11 +61,11 @@ public class NoticeController {
 		dto.setWriter_email(email);
 		noticeService.updateNotice(dto);
 
-		// "success" 문자열 반환
+		// "success" 臾몄옄�뿴 諛섑솚
 		return "success";
 	}
 
-	/* 공지사항 삭제 처리 */
+	/* 怨듭��궗�빆 �궘�젣 泥섎━ */
 	@PostMapping("/delete")
 	public String deleteNotice(@RequestParam("notice_seq") int noticeSeq) {
 		noticeService.deleteNotice(noticeSeq);

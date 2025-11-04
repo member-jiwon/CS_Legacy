@@ -1,15 +1,49 @@
 package com.kedu.schedule;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/*
- * ÀÏÁ¤ (½ºÄÉÁÙ °ü¸®) °ü·Ã ¼­ºñ½º
- */
+import com.kedu.chat.ChatDAO;
+import com.kedu.members.member.MemberDAO;
+
+
 @Service
 public class ScheduleService {
-    @Autowired
-    private ScheduleDAO dao;
-
-    // TODO: ÀÏÁ¤ µî·Ï, ¼öÁ¤, »èÁ¦ µî ºñÁî´Ï½º ·ÎÁ÷ ±¸Çö
+	@Autowired
+	private ScheduleDAO dao;
+	@Autowired
+	private ChatDAO chatDao;
+	@Autowired
+	private MemberDAO memDao;
+	
+	//ìŠ¤ì¼€ì¤„ ì—…ë°ì´íŠ¸ ì‹œí‚¤ê¸°
+	public int insertPtoSchedule(String member_email, Timestamp pto_start_at,Timestamp pto_end_at) {
+		
+		//1. í•´ë‹¹ ë©¤ë²„ê°€ ë“¤ì–´ì‡ëŠ” ì±„íŒ…ë°© ì‹œí€€ìŠ¤ ë°°ì—´ë¡œ ë½‘ì•„ì˜¤ê¸°
+		List<Integer> seqList = chatDao.getAllChatSeq(member_email);
+	    if (seqList == null || seqList.isEmpty()) return 0;
+		
+		//2.í•˜ë£¨ ì´ìƒì¸ì§€ ì•„ë‹Œì§€ êµ¬ë³„
+	    LocalDate startDate = pto_start_at.toLocalDateTime().toLocalDate();
+	    LocalDate endDate = pto_end_at.toLocalDateTime().toLocalDate();
+	    String multiDay = endDate.isAfter(startDate) ? "y" : "n";
+	    Timestamp adjustedEnd = Timestamp.valueOf(endDate.plusDays(1).atStartOfDay());//ì¢…ë£Œì‹œê°„ ê·¸ë‚ ì˜ ìì •ìœ¼ë¡œ ë³€ê²½í•´ë†“ìŒ
+	    
+		//3. ì±„íŒ…ë°©ì‹œí€€ìŠ¤ ë°°ì—´í¬ë¦¬ì¹˜ ëŒë¦¬ë©° ì¸ì„œíŠ¸
+	    int insertedCount = 0;
+	    for (int seq : seqList) {
+	    	//ì´ë©”ì¼ë¡œ ì´ë¦„ ê°€ì ¸ì˜¤ê¸°
+	    	String name = memDao.getNameByEmail(member_email);
+	        ScheduleDTO schedule = new ScheduleDTO( 0,member_email, name + " íœ´ê°€",multiDay,"#007AFF",pto_start_at,adjustedEnd,null,seq);
+	        insertedCount += dao.insertPtoSchedule(schedule);
+	    }
+	    return insertedCount;
+	}
+	
+	
+	
 }

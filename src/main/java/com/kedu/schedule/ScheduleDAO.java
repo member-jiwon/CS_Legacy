@@ -4,11 +4,17 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-/*
- * ÀÏÁ¤ (½ºÄÉÁÙ °ü¸®) °ü·Ã DAO
- */
+
 @Repository
 public class ScheduleDAO {
-	@Autowired
-	private SqlSession mybatis;
+@Autowired
+private SqlSession mybatis;
+
+//ìŠ¤ì¼€ì¤„ ìž…ë ¥
+public int insertPtoSchedule(ScheduleDTO dto) {
+	return mybatis.insert("Schedule.insertPtoSchedule", dto);
 }
+
+
+}
+

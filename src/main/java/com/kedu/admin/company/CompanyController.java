@@ -27,11 +27,8 @@ public class CompanyController {
 		CompanyDTO result = CompanyService.login(dto);
 		if (result != null) {
 			session.setAttribute("id", result.getAdmin_email());
-			// m.addAttribute("id", dto.getAdmin_email());
-			// 모델에 붙이면 쿼리 파라미터로 값이 전달되어서 제거함
 
 			// 세션에 회사 이름(코드)도 저장해야 해당 이름으로 구분할 수 있음
-			System.out.println("회사코드: " + result.getCompany_code());
 			session.setAttribute("company_code", result.getCompany_code());
 			return "redirect:/commute"; // 근태관리 컨트롤러로 리다이렉트 (지원 수정)
 		} else {

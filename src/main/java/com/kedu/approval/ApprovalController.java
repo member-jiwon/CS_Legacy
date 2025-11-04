@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.kedu.admin.department.DepartmentDTO;
 import com.kedu.admin.department.DepartmentService;
+import com.kedu.file.FileConstants;
 import com.kedu.file.FileDTO;
+import com.kedu.file.FileService;
+import com.kedu.members.member.MemberService;
 
 import util.PageConfig;
 
@@ -27,9 +30,10 @@ public class ApprovalController {
     private ApprovalService approvalService;
     @Autowired
     private DepartmentService departmentService;
-//    @Autowired
-//    private FileService fileService;
-    
+    @Autowired
+    private FileService fileService;
+    @Autowired
+    private MemberService memberService;
     @Autowired
     private Gson gson;
 
@@ -76,12 +80,6 @@ public class ApprovalController {
         m.addAttribute("selectedDept", String.valueOf(rawDept));
         m.addAttribute("selectedStatus", rawStatus);
 
-        // 디버깅 로그
-        System.out.println("결재 리스트 JSON: " + gson.toJson(list));
-        System.out.println("부서 목록 JSON: " + gson.toJson(depts));
-        System.out.println("선택된 회사: " + rawDept);
-        System.out.println("선택된 상태: " + rawStatus);
-
         return "/approval/approval";
     }
 
@@ -98,19 +96,22 @@ public class ApprovalController {
     }
 
     /* 디테일 페이지로 이동 */
-//    @RequestMapping("/detail")
-//    public String toDetailApproval(@RequestParam int seq, HttpSession session, Model m) {
-//        // 1. 전자결재 내용
-//        ApprovalDTO result = approvalService.toDetailApproval(seq);
-//        m.addAttribute("dtoJson", gson.toJson(result)); // JS 용
-//        m.addAttribute("dto", result);
-//
-//        // 2. 파일 리스트 내용
-//        List<FileDTO> fileList = fileService.getFilesByParent(seq, FileConstants.FA);
-//        m.addAttribute("dtofiles", gson.toJson(fileList)); // JS 용
-//        m.addAttribute("files", fileList);
-//        System.out.println("파일 리스트: " + gson.toJson(fileList));
-//
-//        return "/approval/approvalDetail";
-//    }
+    @RequestMapping("/detail")
+    public String toDetailApproval(@RequestParam int seq, HttpSession session, Model m) {
+        // 1. 전자결재 내용
+        ApprovalDTO result = approvalService.toDetailApproval(seq);
+        m.addAttribute("dtoJson", gson.toJson(result)); // JS 용
+        m.addAttribute("dto", result);
+
+        // 2. 파일 리스트 내용
+        List<FileDTO> fileList = fileService.getFilesByParent(seq, FileConstants.FA);
+        m.addAttribute("dtofiles", gson.toJson(fileList)); // JS 용
+        m.addAttribute("files", fileList);
+        
+        //3. 이메일로 이름 가져오기
+        String name = memberService.getNameByEmail(result.getMember_email());
+        m.addAttribute("name", name);
+
+        return "/approval/approvalDetail";
+    }
 }

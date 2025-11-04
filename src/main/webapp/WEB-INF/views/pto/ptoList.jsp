@@ -1,120 +1,113 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>전자결재</title>
-<script src="<c:url value='/resources/js/pto/pto.js'/>"></script>
+<title>Insert title here</title>
+	<script src="<c:url value='/resources/js/pto/pto.js'/>"></script>
 
-<link rel="stylesheet"
-	href="<c:url value='/resources/css/common/pageNaviBar/pageNaviBar.css'/>">
-<!--페이지 네비 css 파일-->
 
-<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-<!-- dayjs라이브러리 -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet" crossorigin="anonymous">
-<!-- 부트스트랩 -->
 
-<link rel="stylesheet"
-	href="<c:url value='/resources/css/pto/pto.css'/>">
+	<link rel="stylesheet" href="<c:url value='/resources/css/common/pageNaviBar/pageNaviBar.css'/>"> <!--페이지 네비 css 파일-->
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <!-- jqeruy -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script><!-- dayjs라이브러리 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+            crossorigin="anonymous"><!-- 부트스트랩 -->
+	<link rel="stylesheet" href="<c:url value='/resources/css/pto/pto.css'/>">
 
 </head>
 <body>
-	<!-- 탑바 -->
-	<header class="header d-flex align-items-center">
-		<jsp:include page="/WEB-INF/views/common/sideBar/topBar.jsp" />
-	</header>
-	<!-- 탑바 제외 영역 -->
-	<div class="container-fluid body-wrapper">
-		<div class="row g-0">
-
-			<!-- 사이드바 -->
-			<div class="col-2 px-0">
-				<div class="sidebarbox">
-					<jsp:include page="/WEB-INF/views/common/sideBar/sideBar.jsp" />
-				</div>
-			</div>
-
-			<!-- 사이드바 제외 우측 영역 -->
-			<div class="col-10 px-0 content">
-				<div class="board-container">
-
-
-					<!-- 1층 헤더 -->
-					<div class="board-header">
-						<h2 class="board-title">전자결재</h2>
-						<form id="filterForm" method="get" action="/pto"
-							class="d-flex gap-2">
-							<!-- 사용자 선택용 -->
-							<select id="ptoStatusTypeSelect" class="form-select">
-								<option value="all"
-									<c:if test="${selectedStatus eq 'all'}">selected</c:if>>전체</option>
-								<option value="w"
-									<c:if test="${selectedStatus eq 'w'}">selected</c:if>>대기중</option>
-								<option value="y"
-									<c:if test="${selectedStatus eq 'y'}">selected</c:if>>완료</option>
-								<option value="n"
-									<c:if test="${selectedStatus eq 'n'}">selected</c:if>>반려</option>
-							</select> <select id="departmentTypeSelect" class="form-select">
-								<!-- 부서 동적으로 붙이기 -->
-							</select>
-
-							<!-- 실제 제출용 -->
-							<input type="hidden" id="ptoStatusType" name="status"
-								value="${selectedStatus}" /> <input type="hidden"
-								id="departmentType" name="departmentType"
-								value="${selectedDept}" />
-						</form>
-					</div>
-
-					<!-- 2층 바디 영역-->
-					<div class="board-table">
-
-						<!-- 보드 테이블의 헤더 -->
-						<div class="board-table-header">
-							<div class="col-num">번호</div>
-							<div class="col-title">제목</div>
-							<div class="col-name">이름</div>
-							<div class="col-dept">부서</div>
-							<div class="col-level">직급</div>
-							<div class="col-date">날짜</div>
-							<div class="col-status">결재상황</div>
-						</div>
-
-						<div class="board-table-box">
-							<!-- 반복문 돌려서 추가시키는 영역 -->
-						</div>
-
-						<!-- footer - 페이지 네비게이션 -->
-						<div class="pagination">
-							<jsp:include
-								page="/WEB-INF/views/common/pageNaviBar/pageNaviBar.jsp">
-								<jsp:param name="action" value="/pto" />
-								<jsp:param name="recordTotalCount" value="${recordTotalCount}" />
-								<jsp:param name="recordCountPerPage"
-									value="${recordCountPerPage}" />
-								<jsp:param name="naviCountPerPage" value="5" />
-								<jsp:param name="currentPage" value="${currentPage}" />
-								<jsp:param name="status" value="${selectedStatus}" />
-								<jsp:param name="departmentType" value="${selectedDept}" />
-							</jsp:include>
-						</div>
-
-					</div>
-				</div>
-			</div>
-
-
-		</div>
+<!-- 탑바 -->
+   <header class="header d-flex align-items-center">
+      <jsp:include page="/WEB-INF/views/common/sideBar/topBar.jsp" />
+   </header>
+<!-- 탑바 제외 영역 -->
+   <div class="container-fluid body-wrapper">
+      <div class="row g-0">
+      
+<!-- 사이드바 -->      
+         <div class="col-2 px-0">
+            <div class="sidebarbox">
+               <jsp:include page="/WEB-INF/views/common/sideBar/sideBar.jsp" />
+            </div>
+         </div>      
+      
+ <!-- 사이드바 제외 우측 영역 -->     	
+      	<div class="col-10 px-0 content">
+            <div class="board-container">
+            
+            
+               <!-- 1층 헤더 -->
+               <div class="board-header">
+                  <h2 class="board-title">연차 결재</h2>
+                    <form id="filterForm" method="get" action="/pto" class="d-flex gap-2">
+                     <!-- 사용자 선택용 -->
+                     <select id="ptoStatusTypeSelect" class="form-select">
+                        <option value="all"
+                        <c:if test="${selectedStatus eq 'all'}">selected</c:if>>전체</option>
+                        <option value="w"
+                        <c:if test="${selectedStatus eq 'w'}">selected</c:if>>대기</option>
+                        <option value="y"
+                        <c:if test="${selectedStatus eq 'y'}">selected</c:if>>승인</option>
+                        <option value="n"
+                        <c:if test="${selectedStatus eq 'n'}">selected</c:if>>반려</option>
+                      </select>
+                           
+                      <select id="departmentTypeSelect" class="form-select">
+                      <!-- 부서 동적으로 붙이기 -->
+                      </select>
+                           
+                      <!-- 실제 제출용 -->
+                      <input type="hidden" id="ptoStatusType" name="status" value="${selectedStatus}" />
+                      <input type="hidden" id="departmentType" name="departmentType" value="${selectedDept}" />
+                    </form>               
+               </div>            
+            
+               <!-- 2층 바디 영역-->
+               <div class="board-table">
+               	
+               	<!-- 보드 테이블의 헤더 -->
+                  <div class="board-table-header">
+                     <div class="col-num">번호</div>
+                     <div class="col-title">제목</div>
+                     <div class="col-name">이름</div>
+                     <div class="col-dept">부서</div>
+                     <div class="col-level">직급</div>
+                     <div class="col-date">날짜</div>
+                     <div class="col-status">결재상황</div>
+                  </div>
+               	
+               	 <div class="board-table-box">
+                     <!-- 반복문 돌려서 추가시키는 영역 -->
+               	 </div>
+               	 
+                 <!-- footer - 페이지 네비게이션 -->
+                 <div class="pagination">
+                       <jsp:include page="/WEB-INF/views/common/pageNaviBar/pageNaviBar.jsp">
+                            <jsp:param name="action" value="/pto" />
+                             <jsp:param name="recordTotalCount" value="${recordTotalCount}" />
+                             <jsp:param name="recordCountPerPage" value="${recordCountPerPage}" />
+                             <jsp:param name="naviCountPerPage" value="5" />
+                             <jsp:param name="currentPage" value="${currentPage}" />
+                             <jsp:param name="status" value="${selectedStatus}" />
+                             <jsp:param name="departmentType" value="${selectedDept}" />
+                        </jsp:include>
+                 </div>
+               
+               </div>
+            </div>
+        </div>
+      
+      
+      </div>
 	</div>
+	
 
 
-
-	<script>
+<script>
 	let recordTotalCount =${recordTotalCount};
 	let selectedDept = "${selectedDept}";
 	console.log(recordTotalCount);
@@ -198,7 +191,7 @@
 	
 	  const name = $("<div>").addClass("col-name").text(row.MEMBER_NAME);
 	  const dept = $("<div>").addClass("col-dept").text(row.DEPT_NAME);
-	  const level = $("<div>").addClass("col-level").text(row.LEVEL_CODE);
+	  const level = $("<div>").addClass("col-level").text(row.LEVEL_CODE || row.level_code);
 	  const date = $("<div>").addClass("col-date")
 	  const start =$("<span>").text(dayjs(row.PTO_START_AT).format("YY-MM-DD HH:mm")).append("~");
 	  const end =$("<span>").text(dayjs(row.PTO_END_AT).format("YY-MM-DD HH:mm"));
@@ -241,34 +234,66 @@
     
 	  // 상태 변경 AJAX
 	  $(document).on("click", ".status-btn", function () {
-	    const newStatus = $(this).data("value");
-	    const targetseq = $(this).closest(".board-table-row").find(".col-num").text();
-		const pto_used = $(this).closest(".board-table-row").data("pto-used");
-		const pto_start_at = $(this).closest(".board-table-row").data("pto-start-at");
-		const pto_end_at = $(this).closest(".board-table-row").data("pto-end-at");
-	    $.ajax({
-	      url: "/pto/updatestatus",
-	      type: "post",
-	      data: { targetseq, newStatus ,pto_used,member_email, pto_start_at,pto_end_at},
-	      success: function () {
-	    	alert(statusMap[newStatus] + "상태로 변경되었습니다.");
-	        location.reload();
-	      },
-	      error: function () {
-	        alert("업데이트 실패");
+	  const newStatus = $(this).data("value");
+	  const row = $(this).closest(".board-table-row");
+	
+	  const targetseq = row.find(".col-num").text();
+	  const pto_used = row.data("pto-used");
+	  const pto_start_at = row.data("pto-start-at");
+	  const pto_end_at = row.data("pto-end-at");
+	  const member_email = row.data("member-email");
+	
+	  $.ajax({
+	    url: "/pto/updatestatus",
+	    type: "post",
+	    data: { targetseq, newStatus, pto_used, member_email, pto_start_at, pto_end_at },
+	    success: function (resp) {
+	      const statusMap = { w: "대기", y: "승인", n: "반려" };
+	
+	      // 잔여 연차 부족 시 → 자동 반려 처리
+	      if (resp === "lack") {
+	        alert("연차가 부족합니다. 자동으로 반려 처리됩니다.");
+	
+	        // 서버에 다시 반려로 업데이트 요청
+	        $.ajax({
+	          url: "/pto/updatestatus",
+	          type: "post",
+	          data: { targetseq, newStatus: "n", pto_used, member_email, pto_start_at, pto_end_at },
+	          success: function () {
+	            alert("자동으로 반려 처리되었습니다.");
+	            row.find(".status-btn").prop("disabled", true).addClass("disabled-btn");
+	            row.find(".status-btn").removeClass("active");
+	            row.find(`.status-btn[data-value='n']`).addClass("active");
+	          },
+	          error: function () {
+	            alert("자동 반려 처리 중 오류 발생");
+	          },
+	        });
+	
+	        return;
 	      }
-	    });
+	
+	      // 일반 실패
+	      if (resp === "fail" || !statusMap[resp]) {
+	        alert("업데이트 실패");
+	        return;
+	      }
+	
+	      // 성공 시
+	      alert(statusMap[resp] + " 상태로 변경되었습니다.");
+	      row.find(".status-btn").removeClass("active");
+	      row.find(`.status-btn[data-value='${resp}']`).addClass("active");
+	      row.find(".status-btn").prop("disabled", true).addClass("disabled-btn");
+	      location.reload();
+	    },
+	    error: function () {
+	      alert("서버 요청 실패");
+	    },
 	  });
+});
 	
 </script>
 
-	<!-- JS -->
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-	<script>
-        var contextPath = '${pageContext.request.contextPath}';
-    </script>
 
 </body>
 </html>
