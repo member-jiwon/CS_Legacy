@@ -2,13 +2,38 @@ package com.kedu.members.quitter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.kedu.admin.job.level.Job_levelService;
 
 /*
-	í‡´ì‚¬ ì²˜ë¦¬ ë“± ê¸°ëŠ¥ êµ¬í˜„ service
+    Åğ»çÀÚ µî·Ï¿ë Service
 */
-
 @Service
 public class QuitterService {
+
 	@Autowired
 	private QuitterDAO dao;
+
+	@Autowired
+	private Job_levelService job_levelService;
+
+	// Åğ»ç Ã³¸®: È¸¿ø »óÅÂ º¯°æ + Åğ»çÀÚ DB µî·Ï
+	@Transactional
+	public int processQuitter(String email, String company_code) {
+
+		// memberÀÇ status¸¦ 'Åğ»ç'·Î º¯°æ
+		int statusUpdate = job_levelService.updateMemberStatus(email, "Åğ»ç", company_code);
+
+		if (statusUpdate > 0) {
+			// Åğ»çÀÚ DB µî·Ï (Åğ»çÀÏÀÚ: ÇöÀç ½Ã°£)
+			QuitterDTO dto = new QuitterDTO();
+			dto.setMember_email(email);
+			dto.setCompany_code(company_code);
+			dto.setQuit_at(new java.sql.Timestamp(System.currentTimeMillis()));
+
+			return dao.insertQuitter(dto);
+		}
+		return 0;
+	}
 }

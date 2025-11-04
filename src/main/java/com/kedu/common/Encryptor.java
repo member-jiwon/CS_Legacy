@@ -5,7 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Encryptor {
-	public static String encrypt(String text) { //SHA 암호화
+	public static String encrypt(String text) { //SHA �븫�샇�솕
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-512");
 			byte[] bytes = text.getBytes(StandardCharsets.UTF_8);
@@ -18,7 +18,7 @@ public class Encryptor {
 			return builder.toString();
 
 		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException("SHA-512 암호화 실패", e);
+			throw new RuntimeException("SHA-512 암호와 실패", e);
 		}
 	}
 }

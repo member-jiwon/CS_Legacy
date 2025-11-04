@@ -1,0 +1,236 @@
+@charset "UTF-8";
+
+/* 기본 스타일 */
+body, html {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	font-family: var(--font-family);
+}
+
+
+/* 1. 모달 내용 전체 Wrapper */
+.dept-post-content-wrapper {
+	height: 100%;
+	width: 100%;
+	padding: 30px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	
+	overflow: hidden;
+}
+
+/* 2. 모달 헤더 (제목) */
+.dept-post-header {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 0;
+	box-sizing: border-box;
+	text-align: left;
+	font-size: 22px;
+	color: var(--color-font-color1);
+}
+
+/* 부서 추가 */
+.dept-post-title {
+	position: relative;
+	text-transform: capitalize;
+	font-weight: bold;
+	margin: 0;
+}
+
+/* 3. 부서 추가 폼 섹션 */
+.dept-post-form-section {
+	width: 100%;
+}
+
+.dept-post-form-row {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+}
+
+.dept-post-label {
+	display: flex;
+	align-items: center;
+	position: relative;
+	text-transform: capitalize;
+	font-size: 18px;
+	color: var(--color-font-color1);
+}
+
+.dept-post-input-group {
+	align-self: stretch;
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	font-size: 16px;
+}
+
+.dept-post-input-field {
+	height: 40px;
+	flex: 1;
+	border-radius: var(--border-radius-main);
+	border: 1px solid var(--color-font-color2);
+	background-color: var(--color-white);
+	box-sizing: border-box;
+	padding: 16px;
+	text-transform: capitalize;
+	outline: none;
+}
+
+.dept-post-add-btn {
+	height: 40px;
+	width: 121px;
+	border-radius: var(--border-radius-main);
+	background-color: var(--color-font-back);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+	box-sizing: border-box;
+	color: var(--color-white);
+	border: none;
+	cursor: pointer;
+}
+
+.dept-post-add-btn:hover{
+	background-color: var(--color-back-hover);
+} 
+
+/* 4. 기존 부서 목록 섹션 */
+.dept-post-list-section {
+	width: 100%;
+	height: 300px;
+	text-align: left;
+	font-size: 16px;
+}
+
+.dept-post-list-wrapper {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+/* 목록 배경 */
+.dept-post-list-wrapper::after {
+	content: "";
+	position: absolute;
+	top: 26px;
+	left: 0px;
+	border-radius: 16px;
+	border: 1px solid var(--color-font-color2);
+	box-sizing: border-box;
+	width: 100%;
+	height: calc(100% - 26px);
+	z-index: -1;
+}
+
+.dept-post-list-title {
+	font-size: 18px;
+	text-transform: capitalize;
+	color: var(--color-font-color1);
+	display: flex;
+	align-items: center;
+	margin: 0;
+	margin-bottom: 8px;
+}
+
+.dept-post-list-item-group {
+	position: relative;
+	top: auto;
+	left: auto;
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 10px 16px;
+	overflow-y: auto;
+	box-sizing: border-box;
+	border-radius: var(--border-radius-body);
+	border: 1px solid var(--color-font-color2);
+}
+
+.dept-post-list-item {
+	width: 100%;
+	height: 24px;
+	position: relative;
+	padding-bottom: 16px;
+}
+
+.dept-post-item-name {
+	position: absolute;
+	top: 0;
+	left: 0px;
+	text-transform: capitalize;
+	display: flex;
+	align-items: center;
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.dept-post-item-delete-icon {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 20px;
+	height: 20px;
+	object-fit: cover;
+	cursor: pointer;
+}
+
+/* 5. 하단 액션 버튼 그룹 */
+.dept-post-action-btns {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 25px;
+	color: #fff;
+	margin-top: auto;
+}
+
+.dept-post-btn {
+	height: 48px;
+	flex: 1;
+	border-radius: 22px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+	box-sizing: border-box;
+	border: none;
+	cursor: pointer;
+	font-family: Pretendard;
+	font-size: 18px;
+	text-transform: capitalize;
+}
+
+/* 뒤로가기 버튼 스타일 */
+.dept-post-btn--secondary {
+	background-color: var(--color-font-back);
+	color: #fff;
+}
+
+.dept-post-btn--secondary:hover{
+	background-color: var(--color-back-hover);
+}
+
+/* 완료 버튼 스타일 */
+.dept-post-btn--primary {
+	background-color: var(--color-primary);
+	font-weight: 800;
+	color: #fff;
+}
+
+.dept-post-btn--primary:hover{
+	background-color: var(--color-hover);
+}
+

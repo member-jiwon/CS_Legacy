@@ -1,66 +1,100 @@
 package com.kedu.notice;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+import java.util.List;
+import com.kedu.file.FileDTO;
 
 /*
-	ê³µì§€ì‚¬í•­ DTO
-*/
+ *  °øÁö»çÇ× DTO
+ */
 public class NoticeDTO {
-private int notice_seq; // ê³µì§€ì‚¬í•­ ê³ ìœ ë²ˆí˜¸
-private int view_count; // ì¡°íšŒìˆ˜ ( default : 0 )
-private String title; // ê³µì§€ ì œëª©
-private String content; // ê³µì§€ ë‚´ìš©
-private int company_code; // íšŒì‚¬ ì½”ë“œ
-private Timestamp created_at; // ê³µì§€ ì‘ì„±ì¼ ( default : sysdate )
 
-public NoticeDTO() {}
-public NoticeDTO(int notice_seq, int view_count, String title, String content, int company_code,
-		Timestamp created_at) {
-	super();
-	this.notice_seq = notice_seq;
-	this.view_count = view_count;
-	this.title = title;
-	this.content = content;
-	this.company_code = company_code;
-	this.created_at = created_at;
-}
-public int getNotice_seq() {
-	return notice_seq;
-}
-public void setNotice_seq(int notice_seq) {
-	this.notice_seq = notice_seq;
-}
-public int getView_count() {
-	return view_count;
-}
-public void setView_count(int view_count) {
-	this.view_count = view_count;
-}
-public String getTitle() {
-	return title;
-}
-public void setTitle(String title) {
-	this.title = title;
-}
-public String getContent() {
-	return content;
-}
-public void setContent(String content) {
-	this.content = content;
-}
-public int getCompany_code() {
-	return company_code;
-}
-public void setCompany_code(int company_code) {
-	this.company_code = company_code;
-}
-public Timestamp getCreated_at() {
-	return created_at;
-}
-public void setCreated_at(Timestamp created_at) {
-	this.created_at = created_at;
-}
+	private int notice_seq; // °øÁö»çÇ× ¹øÈ£
+	private int view_count; // Á¶È¸¼ö (default: 0)
+	private String writer_email; // ÀÛ¼ºÀÚ ÀÌ¸ŞÀÏ
+	private String title; // °øÁö Á¦¸ñ
+	private String content; // °øÁö ³»¿ë
+	private String company_code; // È¸»ç ÄÚµå
+	private Timestamp created_at; // ÀÛ¼ºÀÏÀÚ (default: sysdate)
 
+	// Ã·ºÎÆÄÀÏ ¸ñ·Ï
+	private List<FileDTO> files;
 
+	public NoticeDTO() {
+	}
 
+	public NoticeDTO(int notice_seq, int view_count, String title, String content, String company_code,
+			String writer_email, Timestamp created_at) {
+		this.notice_seq = notice_seq;
+		this.view_count = view_count;
+		this.title = title;
+		this.content = content;
+		this.company_code = company_code;
+		this.writer_email = writer_email;
+		this.created_at = created_at;
+	}
+
+	public int getNotice_seq() {
+		return notice_seq;
+	}
+
+	public void setNotice_seq(int notice_seq) {
+		this.notice_seq = notice_seq;
+	}
+
+	public int getView_count() {
+		return view_count;
+	}
+
+	public void setView_count(int view_count) {
+		this.view_count = view_count;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getCompany_code() {
+		return company_code;
+	}
+
+	public void setCompany_code(String company_code) {
+		this.company_code = company_code;
+	}
+
+	public String getWriter_email() {
+		return writer_email;
+	}
+
+	public void setWriter_email(String writer_email) {
+		this.writer_email = writer_email;
+	}
+
+	public Timestamp getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(Timestamp created_at) {
+		this.created_at = created_at;
+	}
+
+	public List<FileDTO> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<FileDTO> files) {
+		this.files = files;
+	}
 }

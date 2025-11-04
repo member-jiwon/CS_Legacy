@@ -6,14 +6,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /*
- * 	 ì„¸ì…˜ í™•ì¸í•´ì„œ ë¡œê·¸ì¸í•œ ìœ ì €ì¸ì§€ í™•ì¸í•˜ëŠ” ë­ ê·¸ëŸ°ê±°ìˆì–ì•„ ê·¸ê±°ì„ ã…‡ã…‡
+ *  ·Î±×ÀÎ °ËÁõÀ» À§ÇØ »ç¿ëµÇ´Â ÀÎÅÍ¼ÁÅÍ
+ *  ¼¼¼Ç¿¡ ·Î±×ÀÎ Á¤º¸°¡ ¾øÀ¸¸é Á¢±ÙÀ» Â÷´ÜÇÏ´Â ¿ªÇÒ
  */
+public class LoginValidator implements HandlerInterceptor {
 
-public class LoginValidator implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
+		// true¸¦ ¹İÈ¯ÇÏ¸é ´ÙÀ½ ÄÁÆ®·Ñ·¯·Î ÁøÇà
+		// false¸¦ ¹İÈ¯ÇÏ¸é ¿äÃ»À» ¸·À½
 		return false;
 	}
 }

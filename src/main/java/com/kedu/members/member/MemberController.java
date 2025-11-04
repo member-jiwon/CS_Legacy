@@ -5,13 +5,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /*
- * 		ì‚¬ì› íšŒì›ê°€ì… ë° ë§ˆì´í˜ì´ì§€ êµ¬í˜„ Controller
- * */
-
+ * 		È¸¿ø Á¤º¸ Á¶È¸ ¹× °ü¸®¿ë Controller
+ */
 @RequestMapping("")
 @RestController
 public class MemberController {
+
 	@Autowired
-	private MemberService MemberService;
-	// ì•Œì•„ ê³ ì³ì“¸ë ¤ë©´ ì•Œì•„ì„œ ê³ ì³ì“°ì†Œ
+	private MemberService memberService;
+
+	// È¸¿ø ¸ñ·Ï Á¶È¸, È¸¿ø »óÅÂ º¯°æ µî ±â´É ±¸Çö ¿¹Á¤
 }

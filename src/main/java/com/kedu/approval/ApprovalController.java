@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.kedu.admin.department.DepartmentDTO;
 import com.kedu.admin.department.DepartmentService;
-import com.kedu.file.FileConstants;
 import com.kedu.file.FileDTO;
-import com.kedu.file.FileService;
 
 import util.PageConfig;
 
@@ -29,8 +27,9 @@ public class ApprovalController {
     private ApprovalService approvalService;
     @Autowired
     private DepartmentService departmentService;
-    @Autowired
-    private FileService fileService;
+//    @Autowired
+//    private FileService fileService;
+    
     @Autowired
     private Gson gson;
 
@@ -99,19 +98,19 @@ public class ApprovalController {
     }
 
     /* 디테일 페이지로 이동 */
-    @RequestMapping("/detail")
-    public String toDetailApproval(@RequestParam int seq, HttpSession session, Model m) {
-        // 1. 전자결재 내용
-        ApprovalDTO result = approvalService.toDetailApproval(seq);
-        m.addAttribute("dtoJson", gson.toJson(result)); // JS 용
-        m.addAttribute("dto", result);
-
-        // 2. 파일 리스트 내용
-        List<FileDTO> fileList = fileService.getFilesByParent(seq, FileConstants.FA);
-        m.addAttribute("dtofiles", gson.toJson(fileList)); // JS 용
-        m.addAttribute("files", fileList);
-        System.out.println("파일 리스트: " + gson.toJson(fileList));
-
-        return "/approval/approvalDetail";
-    }
+//    @RequestMapping("/detail")
+//    public String toDetailApproval(@RequestParam int seq, HttpSession session, Model m) {
+//        // 1. 전자결재 내용
+//        ApprovalDTO result = approvalService.toDetailApproval(seq);
+//        m.addAttribute("dtoJson", gson.toJson(result)); // JS 용
+//        m.addAttribute("dto", result);
+//
+//        // 2. 파일 리스트 내용
+//        List<FileDTO> fileList = fileService.getFilesByParent(seq, FileConstants.FA);
+//        m.addAttribute("dtofiles", gson.toJson(fileList)); // JS 용
+//        m.addAttribute("files", fileList);
+//        System.out.println("파일 리스트: " + gson.toJson(fileList));
+//
+//        return "/approval/approvalDetail";
+//    }
 }

@@ -5,12 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
-
+<title>전자결재 디테일</title>
 
 <script src="<c:url value='/resources/js/pto/ptoDetail.js'/>"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><!-- jqeruy -->
 
 <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script><!-- dayjs라이브러리 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -137,6 +134,13 @@ $(document).ready(function () {
 	});
 </script>
 
+	<!-- JS -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
 
 </body>
 </html>

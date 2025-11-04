@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+/* 초대 코드 컨테이너 */
+.invitation-container {
+	background-color: #fff;
+	padding: 30px 20px;
+	border-radius: 22px;
+	text-align: center;
+}
+
+.invitation-header h1 {
+	font-weight: bold;
+	letter-spacing: 2px;
+	margin-bottom: 10px;
+	font-size: 30px;
+}
+
+.invitation-header p {
+	color: var(--color-font-color2);
+	padding-left: 16px;
+	font-size: 16px;
+}
+
+.invitation-code-section {
+	margin: 30px 0;
+	text-align: left;
+}
+
+.invitation-code-section label {
+	margin-bottom: 8px;
+	font-size: 16px;
+	color: var(--color-font-color2);
+}
+
+.invitation-code {
+	height: 48px;
+	display: flex;
+	align-items: center;
+	padding: 0 16px;
+	border: 1px solid var(--color-font-color2);
+	background-color: #fff;
+	font-size: 16px;
+	color: var(--color-font-color1);
+	border-radius: 30px;
+}
+
+.invitation-actions {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+.invitation-actions .btn {
+	flex: 1;
+	border-radius: 22px;
+	padding: 12px 0;
+	font-weight: 700;
+	background-color: var(--color-font-back);
+	border: none;
+}
+
+.invitation-actions .btn:hover {
+	background-color: var(--color-back-hover);
+}

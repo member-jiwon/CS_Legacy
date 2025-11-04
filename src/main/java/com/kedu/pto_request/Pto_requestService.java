@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service;
 import com.kedu.approval.ApprovalDTO;
 import com.kedu.schedule.ScheduleService;
 
-
 /*
- * 		�뿰李� �떊泥� 湲곕뒫 愿��젴 service
- * */
+ * 연차 요청 관련 비즈니스 로직 서비스
+ */
 
 @Service
 public class Pto_requestService {
@@ -132,7 +131,8 @@ public class Pto_requestService {
     	        if (temp > 0) {
     	            int result = updateStatus(targetseq, newStatus); // 상태 업데이트
     	            if (result > 0) {
-    	                scheduleService.insertPtoSchedule(member_email, pto_start_at, pto_end_at); // 스케줄 등록
+    	            	// 여기 수정해볼려고 했는데 안보임요... 병합 쪽에 어디있는지 insertProSchedule가 안보여 그래서 주석 처리했어..
+    	                // scheduleService.insertPtoSchedule(member_email, pto_start_at, pto_end_at); // 스케줄 등록
     	            }
     	        }
     	        return newStatus;

@@ -1,40 +1,46 @@
 package com.kedu.members.quitter;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 /*
-  	í‡´ì‚¬ì DTO
+    Åğ»çÀÚ DTO
 */
 public class QuitterDTO {
-	private String member_email; // ì‚¬ì› ê³ ìœ  ì•„ì´ë””
-	private String company_code; // íšŒì‚¬ ê³ ìœ  ì½”ë“œ
-	private Timestamp quit_at; // í‡´ì‚¬ ë‚ ì§œ 
-	
-	public QuitterDTO() {}
+
+	private String member_email; // È¸¿ø ÀÌ¸ŞÀÏ
+	private String company_code; // È¸»ç ÄÚµå
+	private Timestamp quit_at; // Åğ»ç ÀÏÀÚ
+
+	public QuitterDTO() {
+	}
+
 	public QuitterDTO(String member_email, String company_code, Timestamp quit_at) {
-		super();
 		this.member_email = member_email;
 		this.company_code = company_code;
 		this.quit_at = quit_at;
 	}
+
 	public String getMember_email() {
 		return member_email;
 	}
+
 	public void setMember_email(String member_email) {
 		this.member_email = member_email;
 	}
+
 	public String getCompany_code() {
 		return company_code;
 	}
+
 	public void setCompany_code(String company_code) {
 		this.company_code = company_code;
 	}
+
 	public Timestamp getQuit_at() {
 		return quit_at;
 	}
+
 	public void setQuit_at(Timestamp quit_at) {
 		this.quit_at = quit_at;
 	}
-	
-	
 }

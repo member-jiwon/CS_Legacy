@@ -3,87 +3,106 @@ package com.kedu.schedule;
 import java.security.Timestamp;
 
 /*
-	ë¨¼ìŠ¬ë¦¬ ( ì¼ì • í…Œì´ë¸” ) DTO
-*/
-
+ * ÀÏÁ¤ (½ºÄÉÁÙ °ü¸®) DTO
+ */
 public class ScheduleDTO {
-private int schedule_seq; // ì¼ì • ê³ ìœ ë²ˆí˜¸
-private String member_email; // ì¼ì • ìƒì„±ì ì•„ì•„ë””( ì‚¬ì› ê³ ìœ  ì•„ì´ë”” )
-private String title; // ì¼ì • ì œëª©?
-private String content; // ì¼ì • ë‚´ìš©
-private String all_day; // ì¢…ì¼ ì—¬ë¶€ ( default : y, ì•„ë‹ì‹œ n )
-private String color; // ìƒ‰ìƒ
-private Timestamp start_at; // ì‹œì‘ ë‚ ì§œ
-private Timestamp end_at; // ì¢…ë£Œë‚ ì§œ
-private Timestamp created_at; // ì¼ì • ìƒì„± ë‚ ì§œ ( default : sysdate )
+	private int schedule_seq; // ÀÏÁ¤ ½ÃÄö½º ¹øÈ£
+	private String member_email; // ÀÏÁ¤ ÀÛ¼ºÀÚ ÀÌ¸ŞÀÏ (È¸¿ø ÀÌ¸ŞÀÏ)
+	private String title; // ÀÏÁ¤ Á¦¸ñ
+	private String content; // ÀÏÁ¤ ³»¿ë
+	private String all_day; // Á¾ÀÏ ¿©ºÎ (default: y, ºÎºĞÀÏ °æ¿ì: n)
+	private String color; // »ö»ó
+	private Timestamp start_at; // ½ÃÀÛ ³¯Â¥
+	private Timestamp end_at; // Á¾·á ³¯Â¥
+	private Timestamp created_at; // ÀÏÁ¤ »ı¼ºÀÏ (default: sysdate)
 
-public ScheduleDTO() {}
-public ScheduleDTO(int schedule_seq, String member_email, String title, String content, String all_day,
-		String color, Timestamp start_at, Timestamp end_at, Timestamp created_at) {
-	super();
-	this.schedule_seq = schedule_seq;
-	this.member_email = member_email;
-	this.title = title;
-	this.content = content;
-	this.all_day = all_day;
-	this.color = color;
-	this.start_at = start_at;
-	this.end_at = end_at;
-	this.created_at = created_at;
-}
-public int getSchedule_seq() {
-	return schedule_seq;
-}
-public void setSchedule_seq(int schedule_seq) {
-	this.schedule_seq = schedule_seq;
-}
-public String getMember_email() {
-	return member_email;
-}
-public void setMember_email(String member_email) {
-	this.member_email = member_email;
-}
-public String getTitle() {
-	return title;
-}
-public void setTitle(String title) {
-	this.title = title;
-}
-public String getContent() {
-	return content;
-}
-public void setContent(String content) {
-	this.content = content;
-}
-public String getAll_day() {
-	return all_day;
-}
-public void setAll_day(String all_day) {
-	this.all_day = all_day;
-}
-public String getColor() {
-	return color;
-}
-public void setColor(String color) {
-	this.color = color;
-}
-public Timestamp getStart_at() {
-	return start_at;
-}
-public void setStart_at(Timestamp start_at) {
-	this.start_at = start_at;
-}
-public Timestamp getEnd_at() {
-	return end_at;
-}
-public void setEnd_at(Timestamp end_at) {
-	this.end_at = end_at;
-}
-public Timestamp getCreated_at() {
-	return created_at;
-}
-public void setCreated_at(Timestamp created_at) {
-	this.created_at = created_at;
-}
+	public ScheduleDTO() {
+	}
 
+	public ScheduleDTO(int schedule_seq, String member_email, String title, String content, String all_day,
+			String color, Timestamp start_at, Timestamp end_at, Timestamp created_at) {
+		super();
+		this.schedule_seq = schedule_seq;
+		this.member_email = member_email;
+		this.title = title;
+		this.content = content;
+		this.all_day = all_day;
+		this.color = color;
+		this.start_at = start_at;
+		this.end_at = end_at;
+		this.created_at = created_at;
+	}
+
+	// getters & setters
+	public int getSchedule_seq() {
+		return schedule_seq;
+	}
+
+	public void setSchedule_seq(int schedule_seq) {
+		this.schedule_seq = schedule_seq;
+	}
+
+	public String getMember_email() {
+		return member_email;
+	}
+
+	public void setMember_email(String member_email) {
+		this.member_email = member_email;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getAll_day() {
+		return all_day;
+	}
+
+	public void setAll_day(String all_day) {
+		this.all_day = all_day;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public Timestamp getStart_at() {
+		return start_at;
+	}
+
+	public void setStart_at(Timestamp start_at) {
+		this.start_at = start_at;
+	}
+
+	public Timestamp getEnd_at() {
+		return end_at;
+	}
+
+	public void setEnd_at(Timestamp end_at) {
+		this.end_at = end_at;
+	}
+
+	public Timestamp getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(Timestamp created_at) {
+		this.created_at = created_at;
+	}
 }
